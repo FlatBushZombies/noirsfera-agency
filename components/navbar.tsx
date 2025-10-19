@@ -67,7 +67,7 @@ export function NavBar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              /NOIRSFERA
+              /noirsfera
             </motion.a>
 
             {/* Desktop Navigation */}
