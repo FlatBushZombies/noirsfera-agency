@@ -96,7 +96,7 @@ export default function Footer() {
                   Works
                 </a>
                 <a href="#support" className="hover:text-cyan-400 transition-colors duration-200">
-                  Support
+                  Contact
                 </a>
               </nav>
 
@@ -111,9 +111,7 @@ export default function Footer() {
                 <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Instagram">
                   <Instagram size={20} />
                 </a>
-                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="GitHub">
-                  <Github size={20} />
-                </a>
+                
               </div>
             </div>
 

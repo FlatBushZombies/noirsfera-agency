@@ -50,61 +50,91 @@ export function NavBar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+      <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-black/80 backdrop-blur-md shadow-lg" : "bg-transparent"
+          isScrolled ? "px-4 sm:px-6 lg:px-8 pt-4" : "px-0 pt-0"
         }`}
       >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <motion.a
-              href="#"
-              className="text-xl md:text-2xl font-bold tracking-tight"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+        <motion.nav
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className={`transition-all duration-300 ${
+            isScrolled
+              ? "rounded-full bg-black/90 backdrop-blur-lg shadow-2xl border border-white/10 max-w-7xl mx-auto"
+              : "rounded-none bg-black/60 backdrop-blur-md border-b border-white/5"
+          }`}
+        >
+          <div
+            className={`transition-all duration-300 ${
+              isScrolled ? "container mx-auto px-4 sm:px-6 lg:px-8" : "px-4 sm:px-6 lg:px-8"
+            }`}
+          >
+            <div
+              className={`flex items-center justify-between transition-all duration-300 ${
+                isScrolled ? "h-14 md:h-16" : "h-16 md:h-20"
+              }`}
             >
-              /noirsfera
-            </motion.a>
+              {/* Logo */}
+              <motion.a
+                href="#"
+                className="text-lg md:text-xl font-bold tracking-tight flex-shrink-0 text-white"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                /noirsfera
+              </motion.a>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleNavClick(link.href)
-                  }}
-                  className={`text-sm font-medium transition-colors hover:text-[#0EC8F3] ${
-                    activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-foreground"
-                  }`}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ y: 0 }}
+              <div className="hidden md:flex items-center justify-center flex-1 space-x-6 lg:space-x-8">
+                {navLinks.map((link) => (
+                  <motion.a
+                    key={link.name}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleNavClick(link.href)
+                    }}
+                    className={`text-sm font-medium transition-colors hover:text-[#0EC8F3] relative text-white ${
+                      activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-foreground"
+                    }`}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0 }}
+                  >
+                    {link.name}
+                    {activeSection === link.href.substring(1) && (
+                      <motion.span
+                        layoutId="activeSection"
+                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EC8F3] rounded-full"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </motion.a>
+                ))}
+              </div>
+
+              <div className="hidden md:flex items-center flex-shrink-0">
+                <Button
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium rounded-full px-6"
+                  size="sm"
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-              <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium" size="sm">
-                Book a Call
-              </Button>
-            </div>
+                  Book a Call
+                </Button>
+              </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-foreground hover:text-[#0EC8F3] transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+              {/* Mobile Menu Button */}
+              <button
+                className="md:hidden p-2 text-foreground hover:text-[#0EC8F3] transition-colors"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
-        </div>
-      </motion.nav>
+        </motion.nav>
+      </div>
+
+      <div className={`transition-all duration-300 ${isScrolled ? "h-20 md:h-24" : "h-16 md:h-20"}`} />
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -140,7 +170,10 @@ export function NavBar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1 }}
               >
-                <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium" size="lg">
+                <Button
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium rounded-full px-8"
+                  size="lg"
+                >
                   Book a Call
                 </Button>
               </motion.div>
