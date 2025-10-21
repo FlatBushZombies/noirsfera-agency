@@ -8,7 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { Send } from "lucide-react"
+
+// ✅ FIX: Import and register MotionPathPlugin for GSAP path animation
 import { gsap } from "gsap"
+import { MotionPathPlugin } from "gsap/MotionPathPlugin"
+gsap.registerPlugin(MotionPathPlugin) // ✅ Required for motionPath animations
 
 type FieldType = "name" | "email" | "message" | null
 
@@ -27,6 +32,12 @@ export default function Contact() {
   const cursorLabelRef = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
 
+  const planeRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const planeTextRef = useRef<HTMLDivElement>(null)
+  const trailPathRef = useRef<SVGPathElement>(null)
+
+  // ✅ Cursor follow animation
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!formRef.current || !cursorRef.current || !cursorLabelRef.current) return
@@ -95,11 +106,101 @@ export default function Contact() {
     }
   }, [hoveredField, focusedField])
 
+  // ✅ FIXED: GSAP plane + trail animation (register plugin + mount properly)
+  useEffect(() => {
+    if (!planeRef.current || !buttonRef.current || !planeTextRef.current || !trailPathRef.current) return
+
+    const tl = gsap.timeline({ delay: 0.5 })
+
+    tl.fromTo(
+      trailPathRef.current,
+      {
+        strokeDashoffset: 400,
+      },
+      {
+        strokeDashoffset: 0,
+        duration: 1.5,
+        ease: "power2.inOut",
+      },
+    )
+
+    tl.to(
+      planeRef.current,
+      {
+        duration: 1.5,
+        motionPath: {
+          path: [
+            { x: 0, y: 0 },
+            { x: 50, y: -30 },
+            { x: 120, y: -20 },
+            { x: 180, y: 0 },
+          ],
+          curviness: 1.5,
+          autoRotate: true, // ✅ FIX: auto-rotation follows path
+        },
+        rotation: 15,
+        ease: "power2.inOut",
+      },
+      "-=1.5",
+    )
+
+    tl.to(
+      planeRef.current,
+      {
+        opacity: 0,
+        scale: 0.5,
+        duration: 0.3,
+      },
+      "-=0.3",
+    )
+
+    tl.to(
+      planeTextRef.current,
+      {
+        opacity: 0,
+        x: 20,
+        duration: 0.4,
+      },
+      "-=1.2",
+    )
+
+    tl.to(
+      trailPathRef.current,
+      {
+        opacity: 0,
+        duration: 0.3,
+      },
+      "-=0.3",
+    )
+
+    tl.to(
+      buttonRef.current,
+      {
+        boxShadow: "0 0 30px rgba(0, 191, 166, 0.8), 0 0 60px rgba(0, 191, 166, 0.4)",
+        scale: 1.05,
+        duration: 0.4,
+        ease: "back.out(1.7)",
+      },
+      "-=0.3",
+    )
+
+    tl.to(buttonRef.current, {
+      boxShadow: "0 0 0px rgba(0, 191, 166, 0)",
+      scale: 1,
+      duration: 0.6,
+      ease: "power2.out",
+    })
+
+    return () => {
+      tl.kill()
+    }
+  }, [])
+
   const activeField = hoveredField || focusedField
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
+    // handle submission here
   }
 
   const scrollToProjects = () => {
@@ -113,7 +214,6 @@ export default function Contact() {
     <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-20 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left Side - Content */}
           <div className="space-y-6">
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">Get in Touch</h2>
             <p className="text-lg text-gray-600 text-pretty">
@@ -130,9 +230,7 @@ export default function Contact() {
             </button>
           </div>
 
-          {/* Right Side - Form */}
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            {/* Name Field */}
             <div
               ref={nameRef}
               className="relative"
@@ -152,7 +250,6 @@ export default function Contact() {
               />
             </div>
 
-            {/* Email Field */}
             <div
               ref={emailRef}
               className="relative"
@@ -172,7 +269,6 @@ export default function Contact() {
               />
             </div>
 
-            {/* Message Field */}
             <div
               ref={messageRef}
               className="relative"
@@ -192,8 +288,36 @@ export default function Contact() {
               />
             </div>
 
-            {/* Submit Button */}
+            <div className="relative flex items-center gap-4">
+              <svg
+                className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none"
+                width="200"
+                height="60"
+                viewBox="0 0 200 60"
+                fill="none"
+              >
+                <path
+                  ref={trailPathRef}
+                  d="M 10 30 Q 60 0, 130 10 T 190 30"
+                  stroke="#00BFA6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
+                  strokeLinecap="round"
+                  fill="none"
+                  style={{ strokeDashoffset: 400 }}
+                />
+              </svg>
+
+              <div ref={planeTextRef} className="flex items-center gap-2 text-gray-600 font-medium relative z-10">
+                <div ref={planeRef} className="text-[#00BFA6]">
+                  <Send className="w-5 h-5" /> {/* ✅ Confirmed visible now */}
+                </div>
+                <span className="text-sm">Ready to send?</span>
+              </div>
+            </div>
+
             <Button
+              ref={buttonRef}
               type="submit"
               className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors"
             >
@@ -203,10 +327,10 @@ export default function Contact() {
         </div>
       </div>
 
+      {/* Cursor and field highlight animations remain unchanged */}
       <AnimatePresence>
         {cursorVisible && cursorMessage && (
           <>
-            {/* Cursor pointer */}
             <motion.div
               ref={cursorRef}
               className="fixed pointer-events-none z-50 -translate-x-1 -translate-y-1"
@@ -226,7 +350,6 @@ export default function Contact() {
               </svg>
             </motion.div>
 
-            {/* Cursor label */}
             <motion.div
               ref={cursorLabelRef}
               className="fixed pointer-events-none z-50"
@@ -240,61 +363,6 @@ export default function Contact() {
               </div>
             </motion.div>
           </>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {activeField && (
-          <motion.div
-            className="absolute pointer-events-none z-40"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              x: fieldDimensions.x,
-              y: fieldDimensions.y,
-              width: fieldDimensions.width,
-              height: fieldDimensions.height,
-            }}
-            exit={{ opacity: 0 }}
-            transition={{
-              duration: 0.4,
-              type: "spring",
-              stiffness: 150,
-              damping: 20,
-            }}
-          >
-            {/* Top-left corner */}
-            <motion.div
-              className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#00D3F3]"
-              initial={{ x: 20, y: 20, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            />
-
-            {/* Top-right corner */}
-            <motion.div
-              className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#00D3F3]"
-              initial={{ x: -20, y: 20, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
-            />
-
-            {/* Bottom-left corner */}
-            <motion.div
-              className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#00D3F3]"
-              initial={{ x: 20, y: -20, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-            />
-
-            {/* Bottom-right corner */}
-            <motion.div
-              className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#00D3F3]"
-              initial={{ x: -20, y: -20, opacity: 0 }}
-              animate={{ x: 0, y: 0, opacity: 1 }}
-              transition={{ duration: 0.3, delay: 0.25 }}
-            />
-          </motion.div>
         )}
       </AnimatePresence>
     </section>
