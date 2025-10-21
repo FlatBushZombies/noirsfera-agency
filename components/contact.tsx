@@ -8,12 +8,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Send } from "lucide-react"
-
-// ✅ FIX: Import and register MotionPathPlugin for GSAP path animation
+import { Send, Sparkles, Zap, Star } from "lucide-react"
 import { gsap } from "gsap"
-import { MotionPathPlugin } from "gsap/MotionPathPlugin"
-gsap.registerPlugin(MotionPathPlugin) // ✅ Required for motionPath animations
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 type FieldType = "name" | "email" | "message" | null
 
@@ -37,7 +36,15 @@ export default function Contact() {
   const planeTextRef = useRef<HTMLDivElement>(null)
   const trailPathRef = useRef<SVGPathElement>(null)
 
-  // ✅ Cursor follow animation
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const ctaContainerRef = useRef<HTMLDivElement>(null)
+  const decorativeShape1Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape2Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape3Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape4Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape5Ref = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!formRef.current || !cursorRef.current || !cursorLabelRef.current) return
@@ -106,7 +113,6 @@ export default function Contact() {
     }
   }, [hoveredField, focusedField])
 
-  // ✅ FIXED: GSAP plane + trail animation (register plugin + mount properly)
   useEffect(() => {
     if (!planeRef.current || !buttonRef.current || !planeTextRef.current || !trailPathRef.current) return
 
@@ -136,7 +142,6 @@ export default function Contact() {
             { x: 180, y: 0 },
           ],
           curviness: 1.5,
-          autoRotate: true, // ✅ FIX: auto-rotation follows path
         },
         rotation: 15,
         ease: "power2.inOut",
@@ -196,11 +201,134 @@ export default function Contact() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const ctx = gsap.context(() => {
+      // Animate heading with split text effect
+      if (headingRef.current) {
+        gsap.from(headingRef.current, {
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: "top 80%",
+            end: "top 50%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power3.out",
+        })
+      }
+
+      // Animate description
+      if (descriptionRef.current) {
+        gsap.from(descriptionRef.current, {
+          scrollTrigger: {
+            trigger: descriptionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power2.out",
+        })
+      }
+
+      // Staggered form field reveals
+      if (nameRef.current && emailRef.current && messageRef.current) {
+        gsap.from([nameRef.current, emailRef.current, messageRef.current], {
+          scrollTrigger: {
+            trigger: formRef.current,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: 50,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power2.out",
+        })
+      }
+
+      // Animate CTA container
+      if (ctaContainerRef.current) {
+        gsap.from(ctaContainerRef.current.children, {
+          scrollTrigger: {
+            trigger: ctaContainerRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+        })
+      }
+
+      // Floating decorative shapes with continuous animation
+      const shapes = [
+        decorativeShape1Ref.current,
+        decorativeShape2Ref.current,
+        decorativeShape3Ref.current,
+        decorativeShape4Ref.current,
+        decorativeShape5Ref.current,
+      ]
+
+      shapes.forEach((shape, index) => {
+        if (!shape) return
+
+        // Initial reveal
+        gsap.from(shape, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          scale: 0,
+          opacity: 0,
+          duration: 0.8,
+          delay: index * 0.1,
+          ease: "back.out(1.7)",
+        })
+
+        // Continuous floating animation
+        gsap.to(shape, {
+          y: `${Math.random() * 30 - 15}`,
+          x: `${Math.random() * 30 - 15}`,
+          rotation: `${Math.random() * 360}`,
+          duration: 3 + Math.random() * 2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: index * 0.2,
+        })
+
+        // Parallax effect on scroll
+        gsap.to(shape, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+          y: `${(index + 1) * 50}`,
+          ease: "none",
+        })
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   const activeField = hoveredField || focusedField
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // handle submission here
+    // Handle form submission
   }
 
   const scrollToProjects = () => {
@@ -212,22 +340,95 @@ export default function Contact() {
 
   return (
     <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-20 px-4 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div
+        ref={decorativeShape1Ref}
+        className="absolute top-20 left-10 w-32 h-32 rounded-full opacity-20 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, #00BFA6 0%, #00D3F3 100%)",
+          filter: "blur(40px)",
+        }}
+      />
+      <div
+        ref={decorativeShape2Ref}
+        className="absolute top-40 right-20 w-24 h-24 opacity-30 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, #FF6B9D 0%, #C44569 100%)",
+          filter: "blur(30px)",
+          borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
+        }}
+      />
+      <div
+        ref={decorativeShape3Ref}
+        className="absolute bottom-40 left-1/4 w-40 h-40 rounded-full opacity-15 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, #FFA726 0%, #FB8C00 100%)",
+          filter: "blur(50px)",
+        }}
+      />
+      <div
+        ref={decorativeShape4Ref}
+        className="absolute top-1/3 right-10 w-20 h-20 opacity-25 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, #7C4DFF 0%, #536DFE 100%)",
+          filter: "blur(25px)",
+          borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
+        }}
+      />
+      <div
+        ref={decorativeShape5Ref}
+        className="absolute bottom-20 right-1/3 w-28 h-28 opacity-20 pointer-events-none"
+        style={{
+          background: "linear-gradient(135deg, #00BFA6 0%, #00E676 100%)",
+          filter: "blur(35px)",
+          borderRadius: "40% 60% 60% 40% / 60% 40% 40% 60%",
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">Get in Touch</h2>
-            <p className="text-lg text-gray-600 text-pretty">
+            <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">
+              Get in{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">Touch</span>
+                <span
+                  className="absolute bottom-2 left-0 w-full h-3 bg-[#00BFA6] opacity-30 -rotate-1"
+                  style={{ zIndex: -1 }}
+                />
+              </span>
+            </h2>
+            <p ref={descriptionRef} className="text-lg text-gray-600 text-pretty">
               Let's collaborate on your next project. Reach out and we'll respond as soon as possible.
             </p>
-            <button
-              onClick={scrollToProjects}
-              className="text-[#00D3F3] hover:text-[#00B8D4] font-medium inline-flex items-center gap-2 transition-colors"
-            >
-              View our recent work
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+
+            <div ref={ctaContainerRef} className="space-y-4 pt-4">
+              <button
+                onClick={scrollToProjects}
+                className="group text-[#00BFA6] hover:text-[#00A88E] font-medium inline-flex items-center gap-2 transition-all hover:gap-3"
+              >
+                <Sparkles className="w-5 h-5" />
+                View our recent work
+                <svg
+                  className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <div className="flex flex-wrap gap-4">
+                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
+                  <Zap className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                  Quick response time
+                </button>
+                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
+                  <Star className="w-5 h-5 transition-transform group-hover:scale-110" />
+                  5-star rated service
+                </button>
+              </div>
+            </div>
           </div>
 
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
@@ -310,7 +511,7 @@ export default function Contact() {
 
               <div ref={planeTextRef} className="flex items-center gap-2 text-gray-600 font-medium relative z-10">
                 <div ref={planeRef} className="text-[#00BFA6]">
-                  <Send className="w-5 h-5" /> {/* ✅ Confirmed visible now */}
+                  <Send className="w-5 h-5" />
                 </div>
                 <span className="text-sm">Ready to send?</span>
               </div>
@@ -327,7 +528,6 @@ export default function Contact() {
         </div>
       </div>
 
-      {/* Cursor and field highlight animations remain unchanged */}
       <AnimatePresence>
         {cursorVisible && cursorMessage && (
           <>
@@ -363,6 +563,57 @@ export default function Contact() {
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activeField && (
+          <motion.div
+            className="absolute pointer-events-none z-40"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              x: fieldDimensions.x,
+              y: fieldDimensions.y,
+              width: fieldDimensions.width,
+              height: fieldDimensions.height,
+            }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.4,
+              type: "spring",
+              stiffness: 150,
+              damping: 20,
+            }}
+          >
+            <motion.div
+              className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#00D3F3]"
+              initial={{ x: 20, y: 20, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            />
+
+            <motion.div
+              className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#00D3F3]"
+              initial={{ x: -20, y: 20, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+            />
+
+            <motion.div
+              className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#00D3F3]"
+              initial={{ x: 20, y: -20, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            />
+
+            <motion.div
+              className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#00D3F3]"
+              initial={{ x: -20, y: -20, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.25 }}
+            />
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
