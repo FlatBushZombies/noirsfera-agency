@@ -13,9 +13,9 @@ export const NAV_LINKS: NavLink[] = [
 export const faq = [
   {
     id: '0',
-    question: 'How quickly can we start a project with your team?',
+    question: 'Who is behind noir?',
     answer:
-      'Our process is designed for speed and clarity — most projects can kick off within 48 hours after initial consultation.',
+      'noir is led by a dedicated team of two co-founders: Lucki, the project manager and creative mind behind every design, and Brian, our talented lead developer. Our mission is to help brands big or small reach their full potential by creating visually stunning and impactful software. The best part is that every design is specifically tailored to our clients’ needs. So whether you’re rebranding or just starting out, we can help you connect with your target audience.',
   },
   {
     id: '1',

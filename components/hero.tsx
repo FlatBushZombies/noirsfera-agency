@@ -4,7 +4,6 @@ import type React from "react"
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Eye } from "lucide-react"
 
 export function Hero() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -17,29 +16,16 @@ export function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-      // Heading animation
       tl.from(headingRef.current, { opacity: 0, y: 50, duration: 1, delay: 0.3 })
-        // Description animation
-        .from(
-          descriptionRef.current,
-          { opacity: 0, y: 30, duration: 0.8 },
-          "-=0.5"
-        )
-        // Avatars animation
-        .from(
-          avatarsRef.current,
-          { opacity: 0, y: 20, duration: 0.6 },
-          "-=0.4"
-        )
-        // Buttons animation (fixed using fromTo)
+        .from(descriptionRef.current, { opacity: 0, y: 30, duration: 0.8 }, "-=0.5")
+        .from(avatarsRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
         .fromTo(
           Array.from(buttonsRef.current?.children || []),
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, stagger: 0.15, duration: 0.6 },
-          "-=0.3"
+          "-=0.3",
         )
 
-      // Floating avatars animation
       gsap.to(avatarsRef.current, {
         y: -8,
         duration: 2,
@@ -54,7 +40,7 @@ export function Hero() {
 
   const handleButtonHover = (e: React.MouseEvent<HTMLButtonElement>) => {
     gsap.to(e.currentTarget, {
-      scale: 1.05,
+      scale: 1.02,
       duration: 0.3,
       ease: "power2.out",
     })
@@ -76,18 +62,15 @@ export function Hero() {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
-          {/* Heading */}
           <div className="space-y-6">
             <h1
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance"
             >
-              Modernising business through{" "}
-              <span className="text-[#0EC8F3]">futuristic</span> software
+              Modernising business through <span className="text-[#0EC8F3]">futuristic</span> software
             </h1>
           </div>
 
-          {/* Description with avatars */}
           <div ref={avatarsRef} className="flex flex-col items-center gap-4">
             <div className="flex -space-x-3">
               {[1, 2, 3].map((i) => (
@@ -97,37 +80,19 @@ export function Hero() {
                 />
               ))}
             </div>
-            <p
-              ref={descriptionRef}
-              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl"
-            >
+            <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl">
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>
 
-          {/* Buttons */}
-          <div
-            ref={buttonsRef}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-6"
-          >
+          <div ref={buttonsRef} className="flex justify-center items-center pt-6">
             <Button
               size="lg"
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
-              className="bg-black text-white hover:bg-black/90 border-2 border-[#0EC8F3] hover:border-[#0EC8F3]/80 transition-all group text-xl font-semibold px-12 py-8 h-auto rounded-full shadow-lg shadow-[#0EC8F3]/20"
+              className="relative bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 transition-all text-lg font-semibold px-10 py-6 h-auto rounded-lg shadow-[0_0_20px_rgba(14,200,243,0.5)] hover:shadow-[0_0_30px_rgba(14,200,243,0.7)]"
             >
-              Get Feedback
-              <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onMouseEnter={handleButtonHover}
-              onMouseLeave={handleButtonLeave}
-              className="border-2 border-foreground hover:bg-foreground hover:text-background transition-all group bg-transparent text-xl font-semibold px-12 py-8 h-auto rounded-full"
-            >
-              <Eye className="mr-3 h-6 w-6" />
-              See our Work
+              Connect on Telegram
             </Button>
           </div>
         </div>
