@@ -45,6 +45,9 @@ export default function Contact() {
   const decorativeShape4Ref = useRef<HTMLDivElement>(null)
   const decorativeShape5Ref = useRef<HTMLDivElement>(null)
 
+  const fireworksContainerRef = useRef<HTMLDivElement>(null)
+  const fireworksTimelineRef = useRef<gsap.core.Timeline | null>(null)
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!formRef.current || !cursorRef.current || !cursorLabelRef.current) return
@@ -205,7 +208,6 @@ export default function Contact() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      // Animate heading with split text effect
       if (headingRef.current) {
         gsap.from(headingRef.current, {
           scrollTrigger: {
@@ -221,7 +223,6 @@ export default function Contact() {
         })
       }
 
-      // Animate description
       if (descriptionRef.current) {
         gsap.from(descriptionRef.current, {
           scrollTrigger: {
@@ -237,7 +238,6 @@ export default function Contact() {
         })
       }
 
-      // Staggered form field reveals
       if (nameRef.current && emailRef.current && messageRef.current) {
         gsap.from([nameRef.current, emailRef.current, messageRef.current], {
           scrollTrigger: {
@@ -253,7 +253,6 @@ export default function Contact() {
         })
       }
 
-      // Animate CTA container
       if (ctaContainerRef.current) {
         gsap.from(ctaContainerRef.current.children, {
           scrollTrigger: {
@@ -269,7 +268,6 @@ export default function Contact() {
         })
       }
 
-      // Floating decorative shapes with continuous animation
       const shapes = [
         decorativeShape1Ref.current,
         decorativeShape2Ref.current,
@@ -281,7 +279,6 @@ export default function Contact() {
       shapes.forEach((shape, index) => {
         if (!shape) return
 
-        // Initial reveal
         gsap.from(shape, {
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -295,7 +292,6 @@ export default function Contact() {
           ease: "back.out(1.7)",
         })
 
-        // Continuous floating animation
         gsap.to(shape, {
           y: `${Math.random() * 30 - 15}`,
           x: `${Math.random() * 30 - 15}`,
@@ -307,7 +303,6 @@ export default function Contact() {
           delay: index * 0.2,
         })
 
-        // Parallax effect on scroll
         gsap.to(shape, {
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -323,6 +318,56 @@ export default function Contact() {
 
     return () => ctx.revert()
   }, [])
+
+  const handleButtonHover = () => {
+    if (!fireworksContainerRef.current) return
+
+    if (fireworksTimelineRef.current) {
+      fireworksTimelineRef.current.kill()
+    }
+
+    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
+
+    const tl = gsap.timeline()
+    fireworksTimelineRef.current = tl
+
+    particles.forEach((particle, index) => {
+      const angle = (index / particles.length) * Math.PI * 2
+      const distance = 60 + Math.random() * 40
+      const x = Math.cos(angle) * distance
+      const y = Math.sin(angle) * distance
+
+      tl.fromTo(
+        particle,
+        {
+          x: 0,
+          y: 0,
+          scale: 0,
+          opacity: 1,
+        },
+        {
+          x,
+          y,
+          scale: 1,
+          opacity: 0,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        index * 0.02,
+      )
+    })
+  }
+
+  const handleButtonLeave = () => {
+    if (fireworksTimelineRef.current) {
+      fireworksTimelineRef.current.kill()
+    }
+
+    if (!fireworksContainerRef.current) return
+
+    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
+    gsap.set(particles, { x: 0, y: 0, scale: 0, opacity: 0 })
+  }
 
   const activeField = hoveredField || focusedField
 
@@ -517,13 +562,36 @@ export default function Contact() {
               </div>
             </div>
 
-            <Button
-              ref={buttonRef}
-              type="submit"
-              className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors"
-            >
-              Send Message
-            </Button>
+            <div className="relative inline-block">
+              <Button
+                ref={buttonRef}
+                type="submit"
+                className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors relative z-10"
+                onMouseEnter={handleButtonHover}
+                onMouseLeave={handleButtonLeave}
+              >
+                Send Message
+              </Button>
+
+              <div
+                ref={fireworksContainerRef}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                style={{ zIndex: 5 }}
+              >
+                {Array.from({ length: 12 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="firework-particle absolute top-0 left-0 w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: "#00BFA6",
+                      boxShadow: "0 0 8px #00BFA6, 0 0 12px #00BFA6",
+                      opacity: 0,
+                      transform: "scale(0)",
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           </form>
         </div>
       </div>
