@@ -13,62 +13,63 @@ export const NAV_LINKS: NavLink[] = [
 export const faq = [
   {
     id: '0',
-    question: 'How quickly can I get started with your services?',
+    question: 'How quickly can we start a project with your team?',
     answer:
-      'Our onboarding process is designed to be seamless — you can get started within 24 hours with minimal setup.',
+      'Our process is designed for speed and clarity — most projects can kick off within 48 hours after initial consultation.',
   },
   {
     id: '1',
-    question: 'Can your solutions integrate with existing platforms?',
+    question: 'Do you design both web and mobile applications?',
     answer:
-      'Absolutely! We integrate with tools like Slack, Notion, HubSpot, and most major CRMs to streamline your workflow.',
+      'Absolutely! We specialize in full-stack development for web platforms, mobile apps (iOS & Android), and progressive web apps with seamless performance.',
   },
   {
     id: '2',
-    question: 'Do you offer custom solutions for complex projects?',
+    question: 'Can you create custom UI/UX tailored to our brand?',
     answer:
-      'Yes. We analyze your requirements and provide tailored solutions that scale with your business.',
+      'Yes. Our design team crafts intuitive and engaging interfaces that align with your brand identity and enhance user experience.',
   },
   {
     id: '3',
-    question: 'What is your refund or satisfaction policy?',
+    question: 'Do you provide end-to-end solutions for complex systems?',
     answer:
-      'Customer satisfaction is our priority. If you’re not fully satisfied within the first 30 days, we offer a hassle-free refund.',
+      'We analyze your requirements, design scalable architectures, and deliver full-stack solutions that evolve with your business needs.',
   },
   {
     id: '4',
-    question: 'Do you provide support for enterprise clients?',
+    question: 'How secure are the apps and systems you build?',
     answer:
-      'We offer dedicated support and account management for enterprise clients, including SLA-backed response times.',
+      'Security is built in from day one. We follow best practices including encryption, authentication, and compliance with GDPR and other relevant standards.',
   },
   {
     id: '5',
-    question: 'Can I switch or upgrade my plan later?',
+    question: 'Can we upgrade or expand our software later?',
     answer:
-      'Absolutely! Plans are flexible and can be upgraded or modified anytime without losing your data.',
+      'Absolutely! Our systems are modular and scalable, allowing you to add features, integrate new tools, or migrate platforms without hassle.',
   },
   {
     id: '6',
-    question: 'How do I collaborate with my team?',
+    question: 'Do you provide post-launch support?',
     answer:
-      'Invite your team with a single click and manage permissions easily through our intuitive dashboard.',
+      'Yes. We offer ongoing maintenance, performance monitoring, and quick fixes to ensure your software runs smoothly after launch.',
   },
   {
     id: '7',
-    question: 'Do you offer training or onboarding resources?',
+    question: 'Do you assist with onboarding our team on the new systems?',
     answer:
-      'Yes. We provide video guides, documentation, and live onboarding sessions to ensure your team gets up to speed quickly.',
+      'Definitely. We provide documentation, training sessions, and live support to ensure your team can use the systems efficiently.',
   },
   {
     id: '8',
-    question: 'How secure is your platform?',
+    question: 'Can you integrate our software with existing tools?',
     answer:
-      'We follow industry best practices including end-to-end encryption, regular audits, and GDPR compliance to keep your data safe.',
+      'Yes. We integrate with popular platforms like Slack, Notion, HubSpot, and CRMs to streamline workflows and data management.',
   },
   {
     id: '9',
-    question: 'Who do I contact for support or questions?',
+    question: 'Who can we contact for questions or project updates?',
     answer:
-      'Our support team is available 24/7 via chat and email to assist with any questions or issues.',
+      'Your dedicated account manager and our support team are available to assist via email, chat, or video call throughout the project lifecycle.',
   },
 ];
+
