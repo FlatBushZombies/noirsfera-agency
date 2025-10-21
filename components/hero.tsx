@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { Button } from "@/components/ui/button"
@@ -18,41 +17,29 @@ export function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-      tl.from(headingRef.current, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 0.3,
-      })
+      // Heading animation
+      tl.from(headingRef.current, { opacity: 0, y: 50, duration: 1, delay: 0.3 })
+        // Description animation
         .from(
           descriptionRef.current,
-          {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-          },
-          "-=0.5",
+          { opacity: 0, y: 30, duration: 0.8 },
+          "-=0.5"
         )
+        // Avatars animation
         .from(
           avatarsRef.current,
-          {
-            opacity: 0,
-            y: 20,
-            duration: 0.6,
-          },
-          "-=0.4",
+          { opacity: 0, y: 20, duration: 0.6 },
+          "-=0.4"
         )
-        .from(
-          buttonsRef.current?.children || [],
-          {
-            opacity: 0,
-            y: 20,
-            stagger: 0.15,
-            duration: 0.6,
-          },
-          "-=0.3",
+        // Buttons animation (fixed using fromTo)
+        .fromTo(
+          Array.from(buttonsRef.current?.children || []),
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, stagger: 0.15, duration: 0.6 },
+          "-=0.3"
         )
 
+      // Floating avatars animation
       gsap.to(avatarsRef.current, {
         y: -8,
         duration: 2,
@@ -95,7 +82,8 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance"
             >
-              Modernising business through <span className="text-[#0EC8F3]">futuristic</span> software
+              Modernising business through{" "}
+              <span className="text-[#0EC8F3]">futuristic</span> software
             </h1>
           </div>
 
@@ -109,12 +97,19 @@ export function Hero() {
                 />
               ))}
             </div>
-            <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl">
+            <p
+              ref={descriptionRef}
+              className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl"
+            >
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>
 
-          <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-6">
+          {/* Buttons */}
+          <div
+            ref={buttonsRef}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-6"
+          >
             <Button
               size="lg"
               onMouseEnter={handleButtonHover}

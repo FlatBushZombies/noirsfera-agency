@@ -1,7 +1,9 @@
 import Contact from '@/components/contact'
+import FAQ from '@/components/faq'
 import Footer from '@/components/footer'
 import { Hero } from '@/components/hero'
 import { NavBar } from '@/components/navbar'
+import { Services } from '@/components/services'
 import { Testimonials } from '@/components/testimonials'
 
 import React from 'react'
@@ -12,7 +14,9 @@ const Home = () => {
       <NavBar />
       <div className='flex-1'>
       <Hero />
+      <Services />
       <Testimonials />
+      <FAQ />
       <Contact />
       </div>
       <Footer />

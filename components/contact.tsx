@@ -12,7 +12,7 @@ import { gsap } from "gsap"
 
 type FieldType = "name" | "email" | "message" | null
 
-export default function ContactSection() {
+export default function Contact() {
   const [hoveredField, setHoveredField] = useState<FieldType>(null)
   const [focusedField, setFocusedField] = useState<FieldType>(null)
   const [fieldDimensions, setFieldDimensions] = useState({ width: 0, height: 0, x: 0, y: 0 })
