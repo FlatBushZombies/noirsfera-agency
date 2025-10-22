@@ -24,7 +24,7 @@ const projects: Project[] = [
     tags: ["Web Design", "Development"],
     duration: "6 weeks",
     industry: "SaaS",
-    image: "/modern-saas-dashboard-dark-theme.jpg",
+    image: "/demo.jfif",
     imageAlt: "TechFlow SaaS Platform Dashboard",
   },
   {
@@ -34,7 +34,7 @@ const projects: Project[] = [
     tags: ["Product Design", "AI/ML"],
     duration: "8 weeks",
     industry: "Artificial Intelligence",
-    image: "/ai-analytics-dashboard-futuristic.jpg",
+    image: "/demmo-1.jfif",
     imageAlt: "NexusAI Analytics Dashboard",
   },
 ]

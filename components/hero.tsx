@@ -67,7 +67,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance"
             >
-              Modernising business through <span className="text-[#0EC8F3]">futuristic</span> software
+              Modernising businesses through <span className="text-[#0EC8F3]">futuristic</span> software
             </h1>
           </div>
 

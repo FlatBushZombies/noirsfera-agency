@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
+import { TiLocationArrow } from "react-icons/ti"
 import { Button } from "@/components/ui/button"
 
 const navLinks = [
@@ -76,16 +77,18 @@ export function NavBar() {
               }`}
             >
               {/* Logo */}
+              <TiLocationArrow color="white" size={24} />
               <motion.a
                 href="#"
-                className="text-lg md:text-xl font-bold tracking-tight flex-shrink-0 text-white"
+                className="text-lg md:text-xl font-bold font-general tracking-tight flex-shrink-0 text-white"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                /noirsfera
+                
+                noirsfera
               </motion.a>
 
-              <div className="hidden md:flex items-center justify-center flex-1 space-x-6 lg:space-x-8">
+              <div className="hidden md:flex items-center font-general justify-center flex-1 space-x-6 lg:space-x-8">
                 {navLinks.map((link) => (
                   <motion.a
                     key={link.name}
@@ -114,7 +117,7 @@ export function NavBar() {
 
               <div className="hidden md:flex items-center flex-shrink-0">
                 <Button
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium rounded-full px-6"
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-general rounded-full px-6"
                   size="sm"
                 >
                   Book a Call
@@ -158,7 +161,7 @@ export function NavBar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`text-2xl font-medium transition-colors hover:text-[#0EC8F3] ${
+                  className={`text-2xl font-medium font-general transition-colors hover:text-[#0EC8F3] ${
                     activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-white"
                   }`}
                 >
