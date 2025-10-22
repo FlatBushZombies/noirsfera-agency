@@ -3,11 +3,12 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Twitter, Facebook, Instagram, Github } from "lucide-react"
+import { Twitter, Instagram } from "lucide-react"
 import { TiLocationArrow } from "react-icons/ti"
 
 export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [isButtonHovered, setIsButtonHovered] = useState(false)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -45,9 +46,9 @@ export default function Footer() {
             {/* Content */}
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-balance">
-                If you scrolled this far, 
+                If you scrolled this far,
                 <br />
-                we should queue up a time to cha
+                we should queue up a time to chat
               </h2>
 
               {/* CTA Button with Hover Effect */}
@@ -70,8 +71,12 @@ export default function Footer() {
                   </svg>
                 </div>
 
-                <button className="relative px-8 py-4 bg-black border-2 border-white rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]">
-                  Get Started
+                <button
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                  className="relative px-8 py-4 bg-black border-2 border-white rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
+                >
+                  {isButtonHovered ? "Let's Go" : "Get Started"}
                 </button>
               </div>
             </div>
@@ -81,26 +86,41 @@ export default function Footer() {
           <div className="border-t border-white/10 pt-12">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
               {/* Logo */}
-              
-              <div className="text-xl font-bold tracking-wider">
-                <TiLocationArrow size={24} color="white"/>
-                noirsfera
-                </div>
 
-             
+              <div className="text-xl font-bold tracking-wider flex items-center gap-2">
+                <TiLocationArrow size={24} color="white" />
+                noirsfera
+              </div>
 
               {/* Social Icons */}
               <div className="flex gap-4">
-                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Twitter">
+                <a
+                  href="https://x.com/from_noirsfera"
+                  className="hover:text-cyan-400 transition-colors duration-200"
+                  aria-label="Twitter"
+                >
                   <Twitter size={20} />
                 </a>
-                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Facebook">
-                  <Facebook size={20} />
-                </a>
-                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Instagram">
+
+                <a
+                  href="https://www.instagram.com/noirsfera/"
+                  className="hover:text-cyan-400 transition-colors duration-200"
+                  aria-label="Instagram"
+                >
                   <Instagram size={20} />
                 </a>
-                
+                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Telegram">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="white"
+                    viewBox="0 0 24 24"
+                    className="transition-colors duration-200"
+                  >
+                    <path d="M9.036 15.47 8.89 19.03c.322 0 .461-.143.629-.314l1.507-1.467 3.126 2.278c.573.316.98.15 1.134-.53l2.053-9.645h.001c.182-.845-.306-1.177-.868-.972l-12.03 4.63c-.822.318-.809.776-.139.983l3.084.961 7.163-4.516c.337-.226.644-.101.392.125l-5.876 4.577z" />
+                  </svg>
+                </a>
               </div>
             </div>
 
