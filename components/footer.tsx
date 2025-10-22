@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { Twitter, Facebook, Instagram, Github } from "lucide-react"
+import { TiLocationArrow } from "react-icons/ti"
 
 export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -44,11 +45,9 @@ export default function Footer() {
             {/* Content */}
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-balance">
-                Drop us a line or two, we are
+                If you scrolled this far, 
                 <br />
-                open for creative minds and
-                <br />
-                collaborations!
+                we should queue up a time to cha
               </h2>
 
               {/* CTA Button with Hover Effect */}
@@ -82,23 +81,13 @@ export default function Footer() {
           <div className="border-t border-white/10 pt-12">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
               {/* Logo */}
-              <div className="text-xl font-bold tracking-wider">/noirsfera</div>
+              
+              <div className="text-xl font-bold tracking-wider">
+                <TiLocationArrow size={24} color="white"/>
+                noirsfera
+                </div>
 
-              {/* Navigation Links */}
-              <nav className="flex flex-wrap justify-center gap-8 text-sm md:text-base">
-                <a href="#about" className="hover:text-cyan-400 transition-colors duration-200">
-                  About
-                </a>
-                <a href="#features" className="hover:text-cyan-400 transition-colors duration-200">
-                  Features
-                </a>
-                <a href="#works" className="hover:text-cyan-400 transition-colors duration-200">
-                  Works
-                </a>
-                <a href="#support" className="hover:text-cyan-400 transition-colors duration-200">
-                  Contact
-                </a>
-              </nav>
+             
 
               {/* Social Icons */}
               <div className="flex gap-4">

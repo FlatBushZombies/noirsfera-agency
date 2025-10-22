@@ -136,6 +136,9 @@
   .g5 {
     background: linear-gradient(#334679, #162561);
   }
+  .g7 {
+    background: linear-gradient(#1b275a, #0e1434);
+  }
   .faq-line_after {
     @apply after:absolute after:-top-1.5 after:left-[calc(50%-5px)] after:z-4 after:size-2.5 after:rounded-full after:border-2 after:border-[#0C1838] after:bg-[#080D27] after:content-[''];
   }
@@ -147,4 +150,5 @@
   .faq-glow_before {
     @apply before:absolute before:left-[calc(50%-160px)] before:top-[-160px] before:size-[320px] before:bg-[#1959AD]/25 before:mix-blend-soft-light before:blur-[200px] before:content-[''];
   }
+  
 }

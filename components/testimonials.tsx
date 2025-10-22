@@ -79,7 +79,7 @@ export function Testimonials() {
             Client Testimonials
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-4 max-w-2xl mx-auto">
-            Real feedback from satisfied clients who trusted us with their digital transformation
+            People we’ve worked with have said some nice things….
           </h2>
         </motion.div>
 

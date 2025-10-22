@@ -443,7 +443,7 @@ export default function Contact() {
               </span>
             </h2>
             <p ref={descriptionRef} className="text-lg text-gray-600 text-pretty">
-              Let's collaborate on your next project. Reach out and we'll respond as soon as possible.
+              Ready to start a project with Us? Let’s create something amazing together.
             </p>
 
             <div ref={ctaContainerRef} className="space-y-4 pt-4">
