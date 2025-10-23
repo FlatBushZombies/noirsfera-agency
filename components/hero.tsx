@@ -105,33 +105,43 @@ export function Hero() {
             </p>
           </div>
           <div ref={buttonsRef} className="flex justify-center items-center pt-4 font-guminert">
-            <Button
-              size="default"
-              onMouseEnter={handleButtonHover}
-              onMouseLeave={handleButtonLeave}
-              onClick={handleTelegramClick}
-              className="relative bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 transition-all text-lg font-semibold px-8 py-4 h-auto rounded-lg shadow-[0_0_20px_rgba(14,200,243,0.5)] hover:shadow-[0_0_30px_rgba(14,200,243,0.7)]"
-            >
-              <div className="flex items-center gap-3">
-                {/* Profile image - only visible on hover */}
-                <div
-                  className={`relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3] transition-all duration-300 ${
-                    isHovered ? "opacity-100 scale-100" : "opacity-0 scale-0"
-                  }`}
-                >
-                  <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
-                </div>
+  <Button
+    size="default"
+    aria-label="Connect on Telegram"
+    onMouseEnter={handleButtonHover}
+    onMouseLeave={handleButtonLeave}
+    onClick={handleTelegramClick}
+    className="relative group bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 transition-all text-lg font-semibold px-8 py-4 h-auto rounded-lg shadow-[0_0_20px_rgba(14,200,243,0.5)] hover:shadow-[0_0_30px_rgba(14,200,243,0.7)]"
+  >
+    <div className="flex items-center gap-3">
 
-                {/* Text content */}
-                <div className="flex items-center gap-2">
-                  <span className="transition-all duration-300">{isHovered ? "Let's go" : "Connect to Telegram"}</span>
-                  {isHovered && <span className="text-muted-foreground">
-                    +
-                     You</span>}
-                </div>
-              </div>
-            </Button>
-          </div>
+      {/* Profile image - always visible */}
+      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3]">
+        <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
+      </div>
+
+      {/* DEFAULT TEXT (visible when NOT hovered) */}
+      <span
+        className={`transition-all duration-300 
+          ${isHovered ? "opacity-0 scale-95 max-w-0" : "opacity-100 scale-100 max-w-[200px]"}
+        `}
+      >
+        Connect to Telegram
+      </span>
+
+      
+      <div
+        className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
+          ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
+        `}
+      >
+        <span className="text-muted-foreground">+ You</span>
+        <span>Let's chat</span>
+      </div>
+    </div>
+  </Button>
+</div>
+
         </div>
       </div>
     </section>

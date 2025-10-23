@@ -110,8 +110,8 @@ function PricingCard({ data }: { data: PricingCardData }) {
 
   return (
     <div className="flex flex-col">
-      <Card className="relative bg-white border-2 border-[#054F56] overflow-hidden group hover:border-[#054F56]/80 hover:shadow-xl transition-all duration-500">
-        <div className="relative p-10">
+      <Card className="relative bg-white border-2 border-[#054F56] overflow-hidden group hover:border-[#054F56]/80 hover:shadow-xl transition-all duration-500 h-full flex flex-col">
+        <div className="relative p-10 flex flex-col h-full">
           <h3 className="text-xl font-semibold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
 
           <div className="flex items-center gap-1 mb-10 bg-gray-100 rounded-full p-1 w-fit mx-auto">
@@ -140,7 +140,7 @@ function PricingCard({ data }: { data: PricingCardData }) {
             <div className="text-gray-500 text-sm font-medium tracking-wide">{currentPlan.period}</div>
           </div>
 
-          <div className="space-y-5 mb-10">
+          <div className="space-y-5 mb-10 flex-1">
             {currentPlan.features.map((feature, index) => (
               <div
                 key={index}

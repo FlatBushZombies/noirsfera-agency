@@ -20,7 +20,7 @@ const testimonials: Testimonial[] = [
     id: 1,
     name: "Yulia",
     company: "tutschool.ru",
-    image: "/professional-woman-diverse.png",
+    image: "/Yulia.jpg",
     rating: 5,
     text: "We love Landingfolio! Our designers were using it for their projects, so we already knew what kind of design they want.",
   },

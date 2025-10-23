@@ -49,7 +49,7 @@ export default function Portfolio() {
   })
 
   return (
-    <section id="section" ref={sectionRef} className="w-full bg-black py-24 px-6">
+    <section id="section" ref={sectionRef} className="w-full bg-black py-24 px-6 rounded-3xl">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
@@ -96,12 +96,12 @@ export default function Portfolio() {
                     }
               }
               transition={{
-                duration: 0.8,
-                delay: index * 0.2,
+                duration: 0.4,
+                delay: index * 0.1,
                 ease: [0.25, 0.46, 0.45, 0.94],
                 rotate: {
-                  duration: 0.6,
-                  delay: 0.4,
+                  duration: 0.3,
+                  delay: 0.2,
                   ease: "easeInOut",
                 },
               }}
