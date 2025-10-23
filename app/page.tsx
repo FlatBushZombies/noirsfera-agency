@@ -15,43 +15,44 @@ import Banner from "@/components/banner";
 const Home: React.FC = () => {
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
-      {/* Navbar */}
+      {/* Navbar & Banner */}
       <NavBar />
       <Banner />
-      {/* Page Content */}
-      <div className="flex-1 flex flex-col">
+
+      {/* Page Content Wrapper */}
+      <div className="flex-1 flex flex-col w-full px-4 sm:px-6 lg:px-16">
         {/* Hero Section */}
-        <section className="w-full min-h-[60vh] sm:min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-16">
+        <section className="w-full flex flex-col items-center justify-center">
           <Hero />
         </section>
 
         {/* Services Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        <section className="w-full flex flex-col items-center justify-center pt-6 md:pt-12 pb-16">
           <Services />
         </section>
 
         {/* Portfolio Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-8">
+        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
           <Portfolio />
         </section>
 
-        {/* Pricing Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-4">
+        
+        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
           <Pricing />
         </section>
 
-        {/* Testimonials Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-4">
+        
+        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
           <Testimonials />
         </section>
 
-        {/* FAQ Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        
+        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
           <FAQ />
         </section>
 
         
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        <section className="w-full flex flex-col items-center justify-center pt-12 pb-20">
           <Contact />
         </section>
       </div>

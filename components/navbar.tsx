@@ -62,8 +62,8 @@ export function NavBar() {
           transition={{ duration: 0.5 }}
           className={`transition-all duration-300 ${
             isScrolled
-              ? "rounded-full bg-black/90 backdrop-blur-lg shadow-2xl border border-white/10 max-w-7xl mx-auto"
-              : "rounded-none bg-black/60 backdrop-blur-md border-b border-white/5"
+              ? "rounded-full bg-black backdrop-blur-lg shadow-2xl border border-white/10 max-w-7xl mx-auto"
+              : "rounded-none bg-black backdrop-blur-md border-b border-white/5"
           }`}
         >
           <div
