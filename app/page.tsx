@@ -11,11 +11,13 @@ import Pricing from "@/components/pricing";
 import { Services } from "@/components/services";
 import { Testimonials } from "@/components/testimonials";
 
+
 const Home: React.FC = () => {
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
       {/* Navbar */}
       <NavBar />
+      
 
       {/* Page Content */}
       <div className="flex-1 flex flex-col">
