@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect, useState as useReactState } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
@@ -45,10 +45,19 @@ const testimonials: Testimonial[] = [
 export function Testimonials() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const sectionRef = useRef(null)
+
+  // ✅ Detect mobile safely
+  const [isMobile, setIsMobile] = useReactState(false)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 768)
+    }
+  }, [])
+
+  // ✅ Fixed intersection observer for mobile
   const isInView = useInView(sectionRef, {
-    once: false,
-    amount: 0.3,
-    margin: "-100px",
+    once: true,
+    amount: 0.1, // earlier trigger
   })
 
   return (
@@ -62,7 +71,9 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <p className="text-[#0EC8F3] text-sm font-semibold uppercase tracking-wider mb-4">Client Testimonials</p>
+          <p className="text-[#0EC8F3] text-sm font-semibold uppercase tracking-wider mb-4">
+            Client Testimonials
+          </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-4 max-w-2xl mx-auto">
             People we've worked with have said some nice things….
           </h2>
@@ -85,7 +96,7 @@ export function Testimonials() {
                 scale: 0.8,
               }}
               animate={
-                isInView
+                isInView || isMobile
                   ? {
                       opacity: 1,
                       x: 0,

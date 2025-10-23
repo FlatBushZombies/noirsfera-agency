@@ -163,12 +163,19 @@ function PricingCard({ data }: { data: PricingCardData }) {
         <Button className="flex-1 bg-[#054F56] text-white hover:bg-[#054F56]/90 font-medium py-6 text-sm transition-all duration-300 rounded-lg">
           Schedule a Meeting
         </Button>
+         <a
+          href="https://t.me/@itslucki"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1"
+  >
         <Button
           variant="outline"
           className="flex-1 border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56]/5 hover:border-[#054F56]/80 font-medium py-6 text-sm transition-all duration-300 rounded-lg bg-transparent"
         >
           Connect on Telegram
         </Button>
+        </a>
       </div>
     </div>
   )

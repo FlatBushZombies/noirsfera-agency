@@ -61,7 +61,7 @@ export function Hero() {
   }
 
   const handleTelegramClick = () => {
-    window.open("https://t.me/yourusername", "_blank")
+    window.open("https://t.me/@itslucki", "_blank")
   }
 
   return (

@@ -70,7 +70,12 @@ export default function Footer() {
                     />
                   </svg>
                 </div>
-
+                 <a
+                 href="https://t.me/@itslucki"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="flex-1"
+                  >
                 <button
                   onMouseEnter={() => setIsButtonHovered(true)}
                   onMouseLeave={() => setIsButtonHovered(false)}
@@ -78,6 +83,7 @@ export default function Footer() {
                 >
                   {isButtonHovered ? "Let's Go" : "Get Started"}
                 </button>
+                </a>
               </div>
             </div>
           </div>
