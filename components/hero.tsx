@@ -68,7 +68,7 @@ export function Hero() {
     <section
       id="about"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background pt-8"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
@@ -79,7 +79,7 @@ export function Hero() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                 </span>
-                <span className="text-sm font-medium text-green-500">Available for New projects</span>
+                <span className="text-sm font-medium text-green-500 font-guminert">Available for New projects</span>
               </div>
             </div>
 
@@ -87,7 +87,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance"
             >
-              Modernising businesses through <span className="text-[#0EC8F3]">futuristic</span> software
+              Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span> software
             </h1>
           </div>
 
@@ -100,11 +100,11 @@ export function Hero() {
                 />
               ))}
             </div>
-            <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl">
+            <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl font-guminert">
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>
-          <div ref={buttonsRef} className="flex justify-center items-center pt-4">
+          <div ref={buttonsRef} className="flex justify-center items-center pt-4 font-guminert">
             <Button
               size="default"
               onMouseEnter={handleButtonHover}

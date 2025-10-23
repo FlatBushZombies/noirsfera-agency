@@ -32,17 +32,17 @@ const Home: React.FC = () => {
         </section>
 
         {/* Portfolio Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-8">
           <Portfolio />
         </section>
 
         {/* Pricing Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-4">
           <Pricing />
         </section>
 
         {/* Testimonials Section */}
-        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-12">
+        <section className="w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-16 py-4">
           <Testimonials />
         </section>
 

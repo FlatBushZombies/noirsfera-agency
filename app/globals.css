@@ -6,6 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-space-boards: "space-boards", sans-serif;
+  --font-guminert: "guminert", sans-serif;
   --font-general: "general", sans-serif;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -118,6 +120,15 @@
   src: url("/fonts/general.woff2") format("woff2");
 }
 
+@font-face {
+  font-family: "guminert";
+  src: url("/fonts/Guminert.ttf") format("ttf");
+}
+
+@font-face {
+  font-family: "space-boards";
+  src: url("/fonts/Space-Boards.ttf") format("otf");
+}
 
 @layer base {
   * {
