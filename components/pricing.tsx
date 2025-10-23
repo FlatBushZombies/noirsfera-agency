@@ -83,7 +83,7 @@ const pricingData: PricingCardData[] = [
 
 export default function Pricing() {
   return (
-    <section className="relative min-h-screen bg-white py-32 px-4">
+    <section className="relative min-h-screen bg-white pt-2 md:pt-12 pb-16 px-4">
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">

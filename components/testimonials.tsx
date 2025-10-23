@@ -61,7 +61,7 @@ export function Testimonials() {
   })
 
   return (
-    <section id="services" ref={sectionRef} className="py-20 md:py-32 bg-background">
+    <section id="services" ref={sectionRef} className="md:pt-6 pb-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <motion.div

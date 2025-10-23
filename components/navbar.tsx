@@ -7,7 +7,6 @@ import { TiLocationArrow } from "react-icons/ti"
 import { Button } from "@/components/ui/button"
 
 const navLinks = [
-  { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
   { name: "Pricing", href: "#pricing" },
   { name: "Portfolio", href: "#portfolio" },

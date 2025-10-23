@@ -67,9 +67,9 @@ export const faq = [
   },
   {
     id: '9',
-    question: 'Who can we contact for questions or project updates?',
+    question: 'Can I customize the package?',
     answer:
-      'Your dedicated account manager and our support team are available to assist via email, chat, or video call throughout the project lifecycle.',
+      'Absolutely! We can create a package tailored to your specific needs. Just let us know what you’re looking for, and we’ll design a solution that best fits your business.',
   },
 ];
 
