@@ -49,7 +49,7 @@ export default function Portfolio() {
   })
 
   return (
-    <section id="section" ref={sectionRef} className="w-full bg-black py-24 px-6 rounded-3xl">
+    <section id="portfolio" ref={sectionRef} className="w-full bg-black py-24 px-6 rounded-3xl">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

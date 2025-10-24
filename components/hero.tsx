@@ -68,7 +68,7 @@ export function Hero() {
     <section
       id="about"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background pt-8"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background pt-2"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
         <div className="max-w-4xl mx-auto text-center space-y-10">
@@ -98,7 +98,9 @@ export function Hero() {
                   key={i}
                   className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0EC8F3] to-[#0EA5C8] border-2 border-background"
                 />
+                
               ))}
+              <h6 className="text-white">H</h6>
             </div>
             <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl font-guminert">
               Building Digital Experiences that moves Brands Forward
