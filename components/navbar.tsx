@@ -79,7 +79,7 @@ export function NavBar() {
               <TiLocationArrow color="white" size={24} />
               <motion.a
                 href="#"
-                className="text-lg md:text-xl font-bold font-general tracking-tight flex-shrink-0 text-white"
+                className="text-lg md:text-xl font-bold font-inter tracking-tight flex-shrink-0 text-white"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -87,7 +87,7 @@ export function NavBar() {
                 noirsfera
               </motion.a>
 
-              <div className="hidden md:flex items-center font-general justify-center flex-1 space-x-6 lg:space-x-8">
+              <div className="hidden md:flex items-center font-inter text-[18px] font-normal leading-[27.18px] text-[rgba(0,0,0,0.525)] justify-center flex-1 space-x-6 lg:space-x-8">
                 {navLinks.map((link) => (
                   <motion.a
                     key={link.name}
@@ -116,7 +116,7 @@ export function NavBar() {
 
               <div className="hidden md:flex items-center flex-shrink-0">
                 <Button
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-general rounded-full px-6"
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6"
                   size="sm"
                 >
                   Book a Call
@@ -160,7 +160,7 @@ export function NavBar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`text-2xl font-medium font-general transition-colors hover:text-[#0EC8F3] ${
+                  className={`text-2xl font-medium font-inter transition-colors hover:text-[#0EC8F3] ${
                     activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-white"
                   }`}
                 >
@@ -173,7 +173,7 @@ export function NavBar() {
                 transition={{ delay: navLinks.length * 0.1 }}
               >
                 <Button
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium rounded-full px-8"
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-8"
                   size="lg"
                 >
                   Book a Call

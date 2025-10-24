@@ -85,7 +85,7 @@ export function Hero() {
 
             <h1
               ref={headingRef}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance"
+              className="text-[100px] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[120px] text-balance font-inter font-bold"
             >
               Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span> software
             </h1>
@@ -100,9 +100,9 @@ export function Hero() {
                 />
                 
               ))}
-              <h6 className="text-white">H</h6>
+              
             </div>
-            <p ref={descriptionRef} className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl font-guminert">
+            <p ref={descriptionRef} className="text-[rgba(0,0,0,0.5)] md:text-lg lg:text-xl text-muted-foreground max-w-2xl text-[28px] font-medium leading-[40.6px]">
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>
@@ -118,7 +118,7 @@ export function Hero() {
     <div className="flex items-center gap-3">
 
       {/* Profile image - always visible */}
-      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3]">
+      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3] font-inter">
         <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
       </div>
 
