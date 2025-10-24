@@ -12,28 +12,22 @@ export const NAV_LINKS: NavLink[] = [
 
 export const faq = [
   {
-    id: '0',
+    id: '1',
     question: 'Who is behind noir?',
     answer:
       'noir is led by a dedicated team of two co-founders: Lucki, the project manager and creative mind behind every design, and Brian, our talented lead developer. Our mission is to help brands big or small reach their full potential by creating visually stunning and impactful software. The best part is that every design is specifically tailored to our clients’ needs. So whether you’re rebranding or just starting out, we can help you connect with your target audience.',
   },
   {
-    id: '1',
-    question: 'Do you design both web and mobile applications?',
-    answer:
-      'Absolutely! We specialize in full-stack development for web platforms, mobile apps (iOS & Android), and progressive web apps with seamless performance.',
-  },
-  {
     id: '2',
-    question: 'Can you create custom UI/UX tailored to our brand?',
+    question: 'How long does it take to complete a project?',
     answer:
-      'Yes. Our design team crafts intuitive and engaging interfaces that align with your brand identity and enhance user experience.',
+      'and full websites, and 2–4 weeks for MVPs, depending on the complexity of each project. A detailed project timeline is always provided after our initial consultation.',
   },
   {
     id: '3',
-    question: 'Do you provide end-to-end solutions for complex systems?',
+    question: 'Do you design both web and mobile applications?',
     answer:
-      'We analyze your requirements, design scalable architectures, and deliver full-stack solutions that evolve with your business needs.',
+      'Absolutely! We specialize in full-stack development for web platforms, mobile apps (iOS & Android), and progressive web apps with seamless performance.',
   },
   {
     id: '4',
@@ -43,30 +37,18 @@ export const faq = [
   },
   {
     id: '5',
-    question: 'Can we upgrade or expand our software later?',
+    question: 'Do you offer post-launch support?',
     answer:
-      'Absolutely! Our systems are modular and scalable, allowing you to add features, integrate new tools, or migrate platforms without hassle.',
+      'Yes, clients on our subscription based plan receive ongoing support at all times. Those who have completed a one time project with us can also reach out anytime for additional support or upgrades as needed.',
   },
   {
     id: '6',
-    question: 'Do you provide post-launch support?',
-    answer:
-      'Yes. We offer ongoing maintenance, performance monitoring, and quick fixes to ensure your software runs smoothly after launch.',
-  },
-  {
-    id: '7',
-    question: 'Do you assist with onboarding our team on the new systems?',
-    answer:
-      'Definitely. We provide documentation, training sessions, and live support to ensure your team can use the systems efficiently.',
-  },
-  {
-    id: '8',
     question: 'Can you integrate our software with existing tools?',
     answer:
       'Yes. We integrate with popular platforms like Slack, Notion, HubSpot, and CRMs to streamline workflows and data management.',
   },
   {
-    id: '9',
+    id: '7',
     question: 'Can I customize the package?',
     answer:
       'Absolutely! We can create a package tailored to your specific needs. Just let us know what you’re looking for, and we’ll design a solution that best fits your business.',

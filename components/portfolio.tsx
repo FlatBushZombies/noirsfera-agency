@@ -19,12 +19,12 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "TechFlow",
+    title: "TutSchool",
     description: "SaaS Platform That Increased User Engagement by 240% in 2 Months",
     tags: ["Web Design", "Development"],
     duration: "6 weeks",
     industry: "SaaS",
-    image: "/demo-2.jpg",
+    image: "/tutschool-tile.png",
     imageAlt: "TechFlow SaaS Platform Dashboard",
   },
   {

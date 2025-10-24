@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Twitter, Instagram } from "lucide-react"
+import { Twitter, Instagram, Send } from "lucide-react"
 import { TiLocationArrow } from "react-icons/ti"
 
 export default function Footer() {
@@ -100,34 +100,18 @@ export default function Footer() {
 
               {/* Social Icons */}
               <div className="flex gap-4">
-                <a
-                  href="https://x.com/from_noirsfera"
-                  className="hover:text-cyan-400 transition-colors duration-200"
-                  aria-label="Twitter"
-                >
-                  <Twitter size={20} />
-                </a>
+  <a href="https://x.com/from_noirsfera" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Twitter">
+    <Twitter size={20} />
+  </a>
 
-                <a
-                  href="https://www.instagram.com/noirsfera/"
-                  className="hover:text-cyan-400 transition-colors duration-200"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={20} />
-                </a>
-                <a href="#" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Telegram">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="white"
-                    viewBox="0 0 24 24"
-                    className="transition-colors duration-200"
-                  >
-                    <path d="M9.036 15.47 8.89 19.03c.322 0 .461-.143.629-.314l1.507-1.467 3.126 2.278c.573.316.98.15 1.134-.53l2.053-9.645h.001c.182-.845-.306-1.177-.868-.972l-12.03 4.63c-.822.318-.809.776-.139.983l3.084.961 7.163-4.516c.337-.226.644-.101.392.125l-5.876 4.577z" />
-                  </svg>
-                </a>
-              </div>
+  <a href="https://www.instagram.com/noirsfera/" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Instagram">
+    <Instagram size={20} />
+  </a>
+
+  <a href="https://t.me/noirsfera" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+    <Send size={20} />
+  </a>
+</div>
             </div>
 
             {/* Bottom Section */}

@@ -46,7 +46,6 @@ export function Testimonials() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const sectionRef = useRef(null)
 
-  // ✅ Detect mobile safely
   const [isMobile, setIsMobile] = useReactState(false)
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -54,16 +53,14 @@ export function Testimonials() {
     }
   }, [])
 
-  // ✅ Fixed intersection observer for mobile
   const isInView = useInView(sectionRef, {
     once: true,
-    amount: 0.1, // earlier trigger
+    amount: 0.1,
   })
 
   return (
     <section id="services" ref={sectionRef} className="md:pt-6 pb-16 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -83,12 +80,10 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
-              className="group relative"
+              className="group relative h-full"
               onMouseEnter={() => setHoveredCard(testimonial.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              style={{
-                perspective: "1000px",
-              }}
+              style={{ perspective: "1000px" }}
               initial={{
                 opacity: 0,
                 x: index === 0 ? 200 : index === 2 ? -200 : 0,
@@ -104,12 +99,7 @@ export function Testimonials() {
                       scale: 1,
                       rotate: index === 1 ? [0, -2, 2, -2, 2, 0] : 0,
                     }
-                  : {
-                      opacity: 0,
-                      x: index === 0 ? 200 : index === 2 ? -200 : 0,
-                      y: index === 1 ? 100 : 0,
-                      scale: 0.8,
-                    }
+                  : {}
               }
               transition={{
                 duration: 0.8,
@@ -123,7 +113,7 @@ export function Testimonials() {
               }}
             >
               <div
-                className="relative transition-all duration-700 ease-out"
+                className="relative transition-all duration-700 ease-out h-full"
                 style={{
                   transform:
                     hoveredCard === testimonial.id
@@ -132,20 +122,17 @@ export function Testimonials() {
                   transformStyle: "preserve-3d",
                 }}
               >
-                <Card className="h-full border-2 border-border hover:border-[#0EC8F3] transition-all duration-300 group">
-                  <CardContent className="p-6 md:p-8 space-y-6">
-                    {/* Rating */}
-                    <div className="flex gap-1" aria-label={`${testimonial.rating} out of 5 stars`}>
+                <Card className="h-full flex flex-col border-2 border-border hover:border-[#0EC8F3] transition-all duration-300 group">
+                  <CardContent className="p-6 md:p-8 space-y-6 flex flex-col h-full">
+                    <div className="flex gap-1">
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
                         <Star key={i} className="w-5 h-5 fill-[#0EC8F3] text-[#0EC8F3]" />
                       ))}
                     </div>
 
-                    {/* Testimonial Text */}
                     <p className="text-foreground/90 leading-relaxed">"{testimonial.text}"</p>
 
-                    {/* Author */}
-                    <div className="flex items-center gap-4 pt-4 border-t border-border">
+                    <div className="flex items-center gap-4 pt-4 border-t border-border mt-auto">
                       <Image
                         src={testimonial.image || "/placeholder.svg"}
                         alt={testimonial.name}
