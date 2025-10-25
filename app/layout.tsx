@@ -10,7 +10,7 @@ const geistSans = Geist({
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-inter', // optional: for Tailwind
+  variable: '--font-inter', 
   display: 'swap',
 });
 

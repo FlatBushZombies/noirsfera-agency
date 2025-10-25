@@ -39,7 +39,7 @@ export function Services() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card, index) => {
+      cardsRef.current.forEach((card) => {
         if (!card) return
 
         gsap.fromTo(
@@ -55,7 +55,7 @@ export function Services() {
               start: "top 80%",
               end: "top 20%",
               toggleActions: "play reverse play reverse",
-              scrub: 0.5,
+              scrub: window.innerWidth > 768 ? 0.2 : false,
             },
           },
         )
@@ -75,7 +75,7 @@ export function Services() {
               start: "top 80%",
               end: "top 20%",
               toggleActions: "play reverse play reverse",
-              scrub: 0.5,
+              scrub: window.innerWidth > 768 ? 0.5 : false,
             },
           },
         )
@@ -86,14 +86,41 @@ export function Services() {
   }, [])
 
   const toggleAccordion = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndex((prev) => {
+      const el = document.querySelector(`#details-${index}`) as HTMLElement
+
+      if (!el) return prev
+
+      // Close if already open
+      if (prev === index) {
+        gsap.to(el, { height: 0, duration: 0.3, ease: "power2.out" })
+        return null
+      }
+
+      // Open new panel
+      requestAnimationFrame(() => {
+        gsap.fromTo(
+          el,
+          { height: 0 },
+          { height: el.scrollHeight, duration: 0.35, ease: "power2.out" }
+        )
+      })
+
+      // Close previous panel, if any
+      if (prev !== null) {
+        const prevEl = document.querySelector(`#details-${prev}`) as HTMLElement
+        prevEl && gsap.to(prevEl, { height: 0, duration: 0.25, ease: "power2.inOut" })
+      }
+
+      return index
+    })
   }
 
   return (
     <section ref={sectionRef} id="services" className="pt-2 md:pt-12 pb-14 md:pb-32 px-6 md:px-12 bg-white">
       <div className="max-w-[1400px] mx-auto space-y-16">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight text-balance font-guminert">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight text-balance font-inter">
             How Simple It Can Be To Get Your Projects Done
           </h2>
         </div>
@@ -150,7 +177,7 @@ export function Services() {
 
               <div className="relative space-y-6">
                 <div className="space-y-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight">{service.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">{service.title}</h3>
                   <p className="text-base text-gray-600 leading-relaxed">{service.subtitle}</p>
                 </div>
 
@@ -164,9 +191,9 @@ export function Services() {
                 </button>
 
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                  }`}
+                  id={`details-${index}`}
+                  className="overflow-hidden"
+                  style={{ height: openIndex === index ? "auto" : 0 }}
                 >
                   <ul className="space-y-3 pt-2">
                     {service.details.map((detail, detailIndex) => (
@@ -183,12 +210,12 @@ export function Services() {
         </div>
 
         <div ref={ctaRef} className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20">
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance font-inter">
             Ready to transform your digital presence?
           </h3>
           <Button
             size="lg"
-            className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+            className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter"
           >
             Let's Get Started
           </Button>

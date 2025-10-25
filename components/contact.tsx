@@ -31,12 +31,7 @@ export default function Contact() {
 
   const buttonRef = useRef<HTMLButtonElement>(null)
   const ctaContainerRef = useRef<HTMLDivElement>(null)
-  const decorativeShape1Ref = useRef<HTMLDivElement>(null)
-  const decorativeShape2Ref = useRef<HTMLDivElement>(null)
-  const decorativeShape3Ref = useRef<HTMLDivElement>(null)
-  const decorativeShape4Ref = useRef<HTMLDivElement>(null)
-  const decorativeShape5Ref = useRef<HTMLDivElement>(null)
-
+  const decorativeShapeRefs = useRef<(HTMLDivElement | null)[]>([])
   const fireworksContainerRef = useRef<HTMLDivElement>(null)
   const fireworksTimelineRef = useRef<gsap.core.Timeline | null>(null)
 
@@ -56,8 +51,8 @@ export default function Contact() {
 
       if (isOverForm) {
         setCursorVisible(true)
-        gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.3, ease: "power2.out" })
-        gsap.to(cursorLabelRef.current, { x: e.clientX + 25, y: e.clientY - 10, duration: 0.4, ease: "power2.out" })
+        gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.2, ease: "power2.out" })
+        gsap.to(cursorLabelRef.current, { x: e.clientX + 25, y: e.clientY - 10, duration: 0.25, ease: "power2.out" })
       } else {
         setCursorVisible(false)
       }
@@ -89,34 +84,109 @@ export default function Contact() {
     }
   }, [hoveredField, focusedField])
 
-  // Scroll-triggered animations
+  // Scroll-triggered animations optimized for mobile & desktop
   useEffect(() => {
     if (!sectionRef.current) return
     const ctx = gsap.context(() => {
-      if (headingRef.current) gsap.from(headingRef.current, { scrollTrigger: { trigger: headingRef.current, start: "top 90%", end: "top 50%", toggleActions: "play none none reverse" }, opacity: 0, y: 30, duration: 0.8, ease: "power3.out" })
-      if (descriptionRef.current) gsap.from(descriptionRef.current, { scrollTrigger: { trigger: descriptionRef.current, start: "top 90%", toggleActions: "play none none reverse" }, opacity: 0, y: 20, duration: 0.6, delay: 0.1, ease: "power2.out" })
+      const isDesktop = window.innerWidth > 768
 
+      // Heading
+      if (headingRef.current)
+        gsap.from(headingRef.current, {
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: "top 90%",
+            end: "top 50%",
+            toggleActions: "play none none reverse",
+            scrub: isDesktop ? 0.2 : false,
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          ease: "power3.out",
+        })
+
+      // Description
+      if (descriptionRef.current)
+        gsap.from(descriptionRef.current, {
+          scrollTrigger: {
+            trigger: descriptionRef.current,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 20,
+          duration: 0.6,
+          delay: 0.1,
+          ease: "power2.out",
+        })
+
+      // Form fields
       if (nameRef.current && emailRef.current && messageRef.current) {
-        gsap.from([nameRef.current, emailRef.current, messageRef.current], { scrollTrigger: { trigger: formRef.current, start: "top 80%", toggleActions: "play none none reverse" }, opacity: 0, x: 60, duration: 0.6, stagger: 0.1, ease: "power2.out" })
+        gsap.from([nameRef.current, emailRef.current, messageRef.current], {
+          scrollTrigger: {
+            trigger: formRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          x: 60,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power2.out",
+        })
       }
 
+      // CTA container
       if (ctaContainerRef.current) {
-        gsap.from(ctaContainerRef.current.children, { scrollTrigger: { trigger: ctaContainerRef.current, start: "top 90%", toggleActions: "play none none reverse" }, opacity: 0, y: 15, duration: 0.5, stagger: 0.05, ease: "back.out(1.5)" })
+        gsap.from(ctaContainerRef.current.children, {
+          scrollTrigger: {
+            trigger: ctaContainerRef.current,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+          opacity: 0,
+          y: 15,
+          duration: 0.45,
+          stagger: 0.05,
+          ease: "back.out(1.5)",
+        })
       }
 
-      const shapes = [decorativeShape1Ref.current, decorativeShape2Ref.current, decorativeShape3Ref.current, decorativeShape4Ref.current, decorativeShape5Ref.current]
-      shapes.forEach((shape, i) => {
+      // Decorative shapes
+      decorativeShapeRefs.current.forEach((shape, i) => {
         if (!shape) return
-        gsap.from(shape, { scrollTrigger: { trigger: sectionRef.current, start: "top 90%", toggleActions: "play none none reverse" }, scale: 0.5, opacity: 0, duration: 0.6, delay: i * 0.05, ease: "back.out(1.7)" })
-        gsap.to(shape, { y: `${Math.random() * 40 - 20}`, x: `${Math.random() * 40 - 20}`, rotation: `${Math.random() * 360}`, duration: 2 + Math.random(), repeat: -1, yoyo: true, ease: "sine.inOut", delay: i * 0.1 })
+        gsap.from(shape, {
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          },
+          scale: 0.5,
+          opacity: 0,
+          duration: 0.6,
+          delay: i * 0.05,
+          ease: "back.out(1.7)",
+        })
+        gsap.to(shape, {
+          y: `${Math.random() * 40 - 20}`,
+          x: `${Math.random() * 40 - 20}`,
+          rotation: `${Math.random() * 360}`,
+          duration: 2 + Math.random(),
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: i * 0.1,
+        })
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
+  // Fireworks animation
   const handleButtonHover = () => {
     if (!fireworksContainerRef.current) return
-    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
+    fireworksTimelineRef.current?.kill()
     const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
     const tl = gsap.timeline()
     fireworksTimelineRef.current = tl
@@ -125,97 +195,108 @@ export default function Contact() {
       const distance = 70 + Math.random() * 50
       const x = Math.cos(angle) * distance
       const y = Math.sin(angle) * distance
-      tl.fromTo(particle, { x: 0, y: 0, scale: 0, opacity: 1 }, { x, y, scale: 1, opacity: 0, duration: 0.5, ease: "power2.out" }, i * 0.02)
+      tl.fromTo(
+        particle,
+        { x: 0, y: 0, scale: 0, opacity: 1 },
+        { x, y, scale: 1, opacity: 0, duration: 0.5, ease: "power2.out" },
+        i * 0.02,
+      )
     })
   }
 
   const handleButtonLeave = () => {
-    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
+    fireworksTimelineRef.current?.kill()
     if (!fireworksContainerRef.current) return
     const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
     gsap.set(particles, { x: 0, y: 0, scale: 0, opacity: 0 })
   }
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault() }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+  }
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-24 px-4 overflow-hidden">
-      {/* Decorative shapes */}
-      <div ref={decorativeShape1Ref} className="absolute top-20 left-10 w-40 h-40 rounded-full opacity-20 pointer-events-none" style={{ background: "linear-gradient(135deg, #00BFA6 0%, #00D3F3 100%)", filter: "blur(50px)" }} />
-      <div ref={decorativeShape2Ref} className="absolute top-40 right-20 w-32 h-32 opacity-30 pointer-events-none" style={{ background: "linear-gradient(135deg, #FF6B9D 0%, #C44569 100%)", filter: "blur(40px)", borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%" }} />
-      <div ref={decorativeShape3Ref} className="absolute bottom-40 left-1/4 w-48 h-48 rounded-full opacity-15 pointer-events-none" style={{ background: "linear-gradient(135deg, #FFA726 0%, #FB8C00 100%)", filter: "blur(60px)" }} />
-      <div ref={decorativeShape4Ref} className="absolute top-1/3 right-10 w-28 h-28 opacity-25 pointer-events-none" style={{ background: "linear-gradient(135deg, #7C4DFF 0%, #536DFE 100%)", filter: "blur(30px)", borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%" }} />
-      <div ref={decorativeShape5Ref} className="absolute bottom-20 right-1/3 w-36 h-36 opacity-20 pointer-events-none" style={{ background: "linear-gradient(135deg, #00BFA6 0%, #00E676 100%)", filter: "blur(40px)", borderRadius: "40% 60% 60% 40% / 60% 40% 40% 60%" }} />
-
-      {/* Form + CTA content */}
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="relative min-h-screen bg-white py-24 px-4 overflow-hidden font-inter"
+    >
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left side content */}
+          {/* Left Content */}
           <div className="space-y-6">
-            <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">Get in <span className="relative inline-block"><span className="relative z-10">Touch</span><span className="absolute bottom-2 left-0 w-full h-3 bg-[#00BFA6] opacity-30 -rotate-1" style={{ zIndex: -1 }} /></span></h2>
-            <p ref={descriptionRef} className="text-lg text-gray-600 text-pretty">Ready to start a project with Us? Let’s create something amazing together.</p>
+            <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">
+              Get in{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">Touch</span>
+                <span className="absolute bottom-2 left-0 w-full h-3 bg-[#00BFA6] opacity-30 -rotate-1" />
+              </span>
+            </h2>
+            <p ref={descriptionRef} className="text-lg text-gray-600 font-normal">
+              Ready to start a project with us? Let’s create something amazing together.
+            </p>
+
             <div ref={ctaContainerRef} className="space-y-4 pt-4">
-              <button className="group text-[#00BFA6] hover:text-[#00A88E] font-medium inline-flex items-center gap-2 transition-all hover:gap-3"><Sparkles className="w-5 h-5" />View our recent work<svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg></button>
-              <div className="flex flex-wrap gap-4"><button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all"><Zap className="w-5 h-5 transition-transform group-hover:rotate-12" />Quick response time</button><button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all"><Star className="w-5 h-5 transition-transform group-hover:scale-110" />5-star rated service</button></div>
+              <button className="group text-[#00BFA6] hover:text-[#00A88E] font-medium inline-flex items-center gap-2 transition-all hover:gap-3">
+                <Sparkles className="w-5 h-5" />
+                View our recent work
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+              <div className="flex flex-wrap gap-4">
+                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
+                  <Zap className="w-5 h-5 transition-transform group-hover:rotate-12" />
+                  Quick response time
+                </button>
+                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
+                  <Star className="w-5 h-5 transition-transform group-hover:scale-110" />
+                  5-star rated service
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* Form */}
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div
-              ref={nameRef}
-              className="relative"
-              onMouseEnter={() => setHoveredField("name")}
-              onMouseLeave={() => setHoveredField(null)}
-            >
-              <Label htmlFor="name" className="text-gray-700 font-medium mb-2 block">
-                Name
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Your name"
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
-                onFocus={() => setFocusedField("name")}
-                onBlur={() => setFocusedField(null)}
-              />
-            </div>
+            {["name", "email", "message"].map((field) => {
+              const refMap: Record<string, React.RefObject<HTMLDivElement>> = { name: nameRef, email: emailRef, message: messageRef }
+              const labelMap: Record<string, string> = { name: "Name", email: "Email", message: "Message" }
+              const placeholderMap: Record<string, string> = { name: "Your name", email: "your.email@example.com", message: "Tell us about your project..." }
 
-            <div
-              ref={emailRef}
-              className="relative"
-              onMouseEnter={() => setHoveredField("email")}
-              onMouseLeave={() => setHoveredField(null)}
-            >
-              <Label htmlFor="email" className="text-gray-700 font-medium mb-2 block">
-                Email
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your.email@example.com"
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
-                onFocus={() => setFocusedField("email")}
-                onBlur={() => setFocusedField(null)}
-              />
-            </div>
-
-            <div
-              ref={messageRef}
-              className="relative"
-              onMouseEnter={() => setHoveredField("message")}
-              onMouseLeave={() => setHoveredField(null)}
-            >
-              <Label htmlFor="message" className="text-gray-700 font-medium mb-2 block">
-                Message
-              </Label>
-              <Textarea
-                id="message"
-                placeholder="Tell us about your project..."
-                rows={6}
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3] resize-none"
-                onFocus={() => setFocusedField("message")}
-                onBlur={() => setFocusedField(null)}
-              />
-            </div>
+              const isTextarea = field === "message"
+              const ref = refMap[field]
+              return (
+                <div
+                  key={field}
+                  ref={ref}
+                  className="relative"
+                  onMouseEnter={() => setHoveredField(field as FieldType)}
+                  onMouseLeave={() => setHoveredField(null)}
+                >
+                  <Label htmlFor={field} className="text-gray-700 font-medium mb-2 block">{labelMap[field]}</Label>
+                  {isTextarea ? (
+                    <Textarea
+                      id={field}
+                      placeholder={placeholderMap[field]}
+                      rows={6}
+                      className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3] resize-none"
+                      onFocus={() => setFocusedField(field as FieldType)}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  ) : (
+                    <Input
+                      id={field}
+                      type={field === "email" ? "email" : "text"}
+                      placeholder={placeholderMap[field]}
+                      className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
+                      onFocus={() => setFocusedField(field as FieldType)}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  )}
+                </div>
+              )
+            })}
 
             <div className="relative inline-block">
               <Button

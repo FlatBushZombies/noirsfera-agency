@@ -45,7 +45,7 @@ export default function Footer() {
 
             {/* Content */}
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight text-balance">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-8 leading-tight text-balance">
                 If you scrolled this far,
                 <br />
                 we should queue up a time to chat
@@ -79,7 +79,7 @@ export default function Footer() {
                 <button
                   onMouseEnter={() => setIsButtonHovered(true)}
                   onMouseLeave={() => setIsButtonHovered(false)}
-                  className="relative px-8 py-4 bg-black border-2 border-white rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
+                  className="relative px-8 py-4 bg-black border-2 border-white font-inter rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
                 >
                   {isButtonHovered ? "Let's Go" : "Get Started"}
                 </button>

@@ -8,8 +8,8 @@ import { Button } from "@/components/ui/button"
 
 const navLinks = [
   { name: "Services", href: "#services" },
-  { name: "Pricing", href: "#pricing" },
   { name: "Portfolio", href: "#portfolio" },
+  { name: "Pricing", href: "#pricing" },
   { name: "Contact", href: "#contact" },
 ]
 

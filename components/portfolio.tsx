@@ -59,13 +59,13 @@ export default function Portfolio() {
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-black" />
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 border-2 border-black" />
             </div>
-            <span className="text-sm text-white/70">50+ clients trusted us</span>
+            <span className="text-sm text-white/70 font-inter">50+ clients trusted us</span>
           </div>
 
-          <h2 className="text-6xl md:text-7xl font-bold text-white mb-4">Case Studies</h2>
+          <h2 className="text-6xl md:text-7xl font-bold text-white mb-4 font-inter">Case Studies</h2>
         </div>
 
-        {/* Projects Grid - 3D Floating Cards with Scroll Animations */}
+        
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <motion.div
@@ -78,7 +78,7 @@ export default function Portfolio() {
               }}
               initial={{
                 opacity: 0,
-                x: index === 0 ? 200 : 0, // First card from right
+                x: index === 0 ? 200 : 0, 
                 scale: 0.8,
               }}
               animate={
@@ -106,7 +106,7 @@ export default function Portfolio() {
                 },
               }}
             >
-              {/* 3D Card Container */}
+              
               <div
                 className="relative transition-all duration-700 ease-out"
                 style={{
@@ -117,7 +117,7 @@ export default function Portfolio() {
                   transformStyle: "preserve-3d",
                 }}
               >
-                {/* Card with rounded corners and shadow */}
+                
                 <div className="relative rounded-[2.5rem] overflow-hidden bg-neutral-900 shadow-2xl border border-white/10">
                   {/* Project Image - Full card */}
                   <div className="relative aspect-[4/3] w-full">
@@ -137,7 +137,7 @@ export default function Portfolio() {
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="px-3 py-1 bg-white/10 backdrop-blur-sm text-white/90 rounded-full text-xs font-medium border border-white/20"
+                            className="px-3 py-1 bg-white/10 backdrop-blur-sm text-white/90 rounded-full text-xs font-medium border border-white/20 font-inter"
                           >
                             {tag}
                           </span>
@@ -145,14 +145,14 @@ export default function Portfolio() {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 font-inter">{project.title}</h3>
 
                       {/* Description */}
-                      <p className="text-sm text-white/80 leading-relaxed mb-4">{project.description}</p>
+                      <p className="text-sm text-white/80 leading-relaxed mb-4 font-inter">{project.description}</p>
 
                       {/* View Case Study Link */}
                       <button
-                        className={`inline-flex items-center gap-2 text-white font-semibold transition-all duration-300 ${
+                        className={`inline-flex items-center gap-2 text-white font-semibold transition-all duration-300 font-inter ${
                           hoveredProject === project.id ? "gap-4" : "gap-2"
                         }`}
                       >

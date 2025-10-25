@@ -85,7 +85,7 @@ export function Hero() {
 
             <h1
               ref={headingRef}
-              className="text-[100px] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[120px] text-balance font-inter font-bold"
+              className="text-[76px] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[120px] text-balance font-inter font-bold"
             >
               Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span> software
             </h1>
@@ -102,7 +102,7 @@ export function Hero() {
               ))}
               
             </div>
-            <p ref={descriptionRef} className="text-[rgba(0,0,0,0.5)] md:text-lg lg:text-xl text-muted-foreground max-w-2xl text-[28px] font-medium leading-[40.6px]">
+            <p ref={descriptionRef} className="text-[rgba(0,0,0,0.5)] md:text-lg lg:text-xl text-muted-foreground max-w-2xl text-[16px] font-medium leading-[40.6px]">
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>

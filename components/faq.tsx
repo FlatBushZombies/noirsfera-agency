@@ -13,7 +13,6 @@ const founders = [
 const FAQ = () => {
   const [activeId, setActiveId] = useState<string | number | null>(null)
   const halfLength = Math.floor(faq.length / 2)
-
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -24,11 +23,16 @@ const FAQ = () => {
   }, [])
 
   return (
-    <section className="relative rounded-3xl overflow-hidden">
+    <section className="relative rounded-3xl overflow-hidden font-inter">
       <div className="mx-auto max-w-[1252px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-4 relative z-2 py-28">
         <div className="max-w-[calc(50%-40px)] max-lg:max-w-full">
-          <h3 className="text-[64px] font-black leading-[64px] max-md:h5 mb-7 text-p4">Frequently asked questions</h3>
-          <p className="text-[22px] leading-[36px]">You've got questions we've got answers</p>
+          {/* Changed from font-black (900) to font-bold (700) for better Inter rendering */}
+          <h3 className="text-[64px] font-bold leading-[64px] max-md:h5 mb-7 text-p4">
+            Frequently asked questions
+          </h3>
+          <p className="text-[22px] leading-[36px] font-normal">
+            You've got questions, we've got answers
+          </p>
         </div>
         <div className="faq-line_after w-0.5 h-full absolute left-[calc(50%-1px)] top-0 -z-1 bg-[#0C1838] max-lg:hidden" />
       </div>
@@ -59,7 +63,13 @@ const FAQ = () => {
 
           <div className="relative flex-1 pt-24">
             {faq.slice(0, halfLength).map((item, index) => (
-              <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
+              <FaqItem
+                key={item.id}
+                item={item}
+                index={index}
+                activeId={activeId}
+                setActiveId={setActiveId}
+              />
             ))}
           </div>
 

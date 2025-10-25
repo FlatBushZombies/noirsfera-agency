@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
     company: "tutschool.ru",
     image: "/Yulia.jpg",
     rating: 5,
-    text: "We love Landingfolio! Our designers were using it for their projects, so we already knew what kind of design they want.",
+    text: "I contacted the company noirsfera with a request to create a website for a language studio. First, we discussed the technical requirements. The team asked many questions to take all my wishes into account. In the end, I really liked the result — a stylish and modern website with all the necessary information and the ability to post promotions on built-in banners. I’m very happy with the collaboration and grateful for the excellent result!",
   },
   {
     id: 2,
@@ -59,7 +59,7 @@ export function Testimonials() {
   })
 
   return (
-    <section id="services" ref={sectionRef} className="md:pt-6 pb-16 bg-background">
+    <section id="services" ref={sectionRef} className="md:pt-6 pb-16 bg-background font-inter">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -130,7 +130,9 @@ export function Testimonials() {
                       ))}
                     </div>
 
-                    <p className="text-foreground/90 leading-relaxed">"{testimonial.text}"</p>
+                    <p className="text-[16px] font-normal leading-[22.4px] text-[#0000007D]">
+                      "{testimonial.text}"
+                    </p>
 
                     <div className="flex items-center gap-4 pt-4 border-t border-border mt-auto">
                       <Image
@@ -144,7 +146,7 @@ export function Testimonials() {
                         <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                           {testimonial.name}
                         </p>
-                        <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                        <p className="text-sm font-medium text-muted-foreground">{testimonial.company}</p>
                       </div>
                     </div>
                   </CardContent>
