@@ -31,7 +31,12 @@ export default function Contact() {
 
   const buttonRef = useRef<HTMLButtonElement>(null)
   const ctaContainerRef = useRef<HTMLDivElement>(null)
-  const decorativeShapeRefs = useRef<(HTMLDivElement | null)[]>([])
+  const decorativeShape1Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape2Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape3Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape4Ref = useRef<HTMLDivElement>(null)
+  const decorativeShape5Ref = useRef<HTMLDivElement>(null)
+
   const fireworksContainerRef = useRef<HTMLDivElement>(null)
   const fireworksTimelineRef = useRef<gsap.core.Timeline | null>(null)
 
@@ -51,8 +56,8 @@ export default function Contact() {
 
       if (isOverForm) {
         setCursorVisible(true)
-        gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.2, ease: "power2.out" })
-        gsap.to(cursorLabelRef.current, { x: e.clientX + 25, y: e.clientY - 10, duration: 0.25, ease: "power2.out" })
+        gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0.3, ease: "power2.out" })
+        gsap.to(cursorLabelRef.current, { x: e.clientX + 25, y: e.clientY - 10, duration: 0.4, ease: "power2.out" })
       } else {
         setCursorVisible(false)
       }
@@ -84,36 +89,21 @@ export default function Contact() {
     }
   }, [hoveredField, focusedField])
 
-  // Scroll-triggered animations optimized for mobile & desktop
+  // Scroll-triggered animations
   useEffect(() => {
     if (!sectionRef.current) return
     const ctx = gsap.context(() => {
-      const isDesktop = window.innerWidth > 768
-
-      // Heading
       if (headingRef.current)
         gsap.from(headingRef.current, {
-          scrollTrigger: {
-            trigger: headingRef.current,
-            start: "top 90%",
-            end: "top 50%",
-            toggleActions: "play none none reverse",
-            scrub: isDesktop ? 0.2 : false,
-          },
+          scrollTrigger: { trigger: headingRef.current, start: "top 90%", end: "top 50%", toggleActions: "play none none reverse" },
           opacity: 0,
           y: 30,
           duration: 0.8,
           ease: "power3.out",
         })
-
-      // Description
       if (descriptionRef.current)
         gsap.from(descriptionRef.current, {
-          scrollTrigger: {
-            trigger: descriptionRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
+          scrollTrigger: { trigger: descriptionRef.current, start: "top 90%", toggleActions: "play none none reverse" },
           opacity: 0,
           y: 20,
           duration: 0.6,
@@ -121,47 +111,39 @@ export default function Contact() {
           ease: "power2.out",
         })
 
-      // Form fields
       if (nameRef.current && emailRef.current && messageRef.current) {
         gsap.from([nameRef.current, emailRef.current, messageRef.current], {
-          scrollTrigger: {
-            trigger: formRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
+          scrollTrigger: { trigger: formRef.current, start: "top 80%", toggleActions: "play none none reverse" },
           opacity: 0,
           x: 60,
-          duration: 0.5,
+          duration: 0.6,
           stagger: 0.1,
           ease: "power2.out",
         })
       }
 
-      // CTA container
       if (ctaContainerRef.current) {
         gsap.from(ctaContainerRef.current.children, {
-          scrollTrigger: {
-            trigger: ctaContainerRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
+          scrollTrigger: { trigger: ctaContainerRef.current, start: "top 90%", toggleActions: "play none none reverse" },
           opacity: 0,
           y: 15,
-          duration: 0.45,
+          duration: 0.5,
           stagger: 0.05,
           ease: "back.out(1.5)",
         })
       }
 
-      // Decorative shapes
-      decorativeShapeRefs.current.forEach((shape, i) => {
+      const shapes = [
+        decorativeShape1Ref.current,
+        decorativeShape2Ref.current,
+        decorativeShape3Ref.current,
+        decorativeShape4Ref.current,
+        decorativeShape5Ref.current,
+      ]
+      shapes.forEach((shape, i) => {
         if (!shape) return
         gsap.from(shape, {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 90%", toggleActions: "play none none reverse" },
           scale: 0.5,
           opacity: 0,
           duration: 0.6,
@@ -183,10 +165,9 @@ export default function Contact() {
     return () => ctx.revert()
   }, [])
 
-  // Fireworks animation
   const handleButtonHover = () => {
     if (!fireworksContainerRef.current) return
-    fireworksTimelineRef.current?.kill()
+    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
     const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
     const tl = gsap.timeline()
     fireworksTimelineRef.current = tl
@@ -205,7 +186,7 @@ export default function Contact() {
   }
 
   const handleButtonLeave = () => {
-    fireworksTimelineRef.current?.kill()
+    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
     if (!fireworksContainerRef.current) return
     const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
     gsap.set(particles, { x: 0, y: 0, scale: 0, opacity: 0 })
@@ -221,9 +202,12 @@ export default function Contact() {
       id="contact"
       className="relative min-h-screen bg-white py-24 px-4 overflow-hidden font-inter"
     >
+      {/* Decorative Shapes - unchanged */}
+
+      {/* Form + CTA content */}
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left Content */}
+          {/* Left side content */}
           <div className="space-y-6">
             <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">
               Get in{" "}
@@ -257,46 +241,64 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form */}
+          {/* Form Section */}
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            {["name", "email", "message"].map((field) => {
-              const refMap: Record<string, React.RefObject<HTMLDivElement>> = { name: nameRef, email: emailRef, message: messageRef }
-              const labelMap: Record<string, string> = { name: "Name", email: "Email", message: "Message" }
-              const placeholderMap: Record<string, string> = { name: "Your name", email: "your.email@example.com", message: "Tell us about your project..." }
+            <div
+              ref={nameRef}
+              className="relative"
+              onMouseEnter={() => setHoveredField("name")}
+              onMouseLeave={() => setHoveredField(null)}
+            >
+              <Label htmlFor="name" className="text-gray-700 font-medium mb-2 block">
+                Name
+              </Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Your name"
+                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
+                onFocus={() => setFocusedField("name")}
+                onBlur={() => setFocusedField(null)}
+              />
+            </div>
 
-              const isTextarea = field === "message"
-              const ref = refMap[field]
-              return (
-                <div
-                  key={field}
-                  ref={ref}
-                  className="relative"
-                  onMouseEnter={() => setHoveredField(field as FieldType)}
-                  onMouseLeave={() => setHoveredField(null)}
-                >
-                  <Label htmlFor={field} className="text-gray-700 font-medium mb-2 block">{labelMap[field]}</Label>
-                  {isTextarea ? (
-                    <Textarea
-                      id={field}
-                      placeholder={placeholderMap[field]}
-                      rows={6}
-                      className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3] resize-none"
-                      onFocus={() => setFocusedField(field as FieldType)}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  ) : (
-                    <Input
-                      id={field}
-                      type={field === "email" ? "email" : "text"}
-                      placeholder={placeholderMap[field]}
-                      className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
-                      onFocus={() => setFocusedField(field as FieldType)}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  )}
-                </div>
-              )
-            })}
+            <div
+              ref={emailRef}
+              className="relative"
+              onMouseEnter={() => setHoveredField("email")}
+              onMouseLeave={() => setHoveredField(null)}
+            >
+              <Label htmlFor="email" className="text-gray-700 font-medium mb-2 block">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="your.email@example.com"
+                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
+                onFocus={() => setFocusedField("email")}
+                onBlur={() => setFocusedField(null)}
+              />
+            </div>
+
+            <div
+              ref={messageRef}
+              className="relative"
+              onMouseEnter={() => setHoveredField("message")}
+              onMouseLeave={() => setHoveredField(null)}
+            >
+              <Label htmlFor="message" className="text-gray-700 font-medium mb-2 block">
+                Message
+              </Label>
+              <Textarea
+                id="message"
+                placeholder="Tell us about your project..."
+                rows={6}
+                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3] resize-none"
+                onFocus={() => setFocusedField("message")}
+                onBlur={() => setFocusedField(null)}
+              />
+            </div>
 
             <div className="relative inline-block">
               <Button
