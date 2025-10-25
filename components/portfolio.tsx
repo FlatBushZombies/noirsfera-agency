@@ -24,7 +24,7 @@ const projects: Project[] = [
     tags: ["Web Design", "Development"],
     duration: "6 weeks",
     industry: "SaaS",
-    image: "/tutschool-tile.png",
+    image: "/tutschool.png",
     imageAlt: "TechFlow SaaS Platform Dashboard",
   },
   {
