@@ -39,23 +39,22 @@ export function Services() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card) => {
+      cardsRef.current.forEach((card, index) => {
         if (!card) return
 
         gsap.fromTo(
           card,
-          { opacity: 0, y: 50 },
+          { opacity: 0, y: 60 },
           {
             opacity: 1,
             y: 0,
-            duration: 1,
-            ease: "power3.out",
+            duration: 0.6,
+            delay: index * 0.1, // Stagger effect for visual appeal
+            ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 80%",
-              end: "top 20%",
-              toggleActions: "play reverse play reverse",
-              scrub: window.innerWidth > 768 ? 0.2 : false,
+              start: "top 90%", // Trigger earlier (was 80%)
+              toggleActions: "play none none none", // Play once and stay visible
             },
           },
         )
@@ -64,18 +63,16 @@ export function Services() {
       if (ctaRef.current) {
         gsap.fromTo(
           ctaRef.current,
-          { opacity: 0, y: 50 },
+          { opacity: 0, y: 60 },
           {
             opacity: 1,
             y: 0,
-            duration: 1,
-            ease: "power3.out",
+            duration: 0.6,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: ctaRef.current,
-              start: "top 80%",
-              end: "top 20%",
-              toggleActions: "play reverse play reverse",
-              scrub: window.innerWidth > 768 ? 0.5 : false,
+              start: "top 90%", // Trigger earlier (was 80%)
+              toggleActions: "play none none none", // Play once and stay visible
             },
           },
         )
@@ -99,11 +96,7 @@ export function Services() {
 
       // Open new panel
       requestAnimationFrame(() => {
-        gsap.fromTo(
-          el,
-          { height: 0 },
-          { height: el.scrollHeight, duration: 0.35, ease: "power2.out" }
-        )
+        gsap.fromTo(el, { height: 0 }, { height: el.scrollHeight, duration: 0.35, ease: "power2.out" })
       })
 
       // Close previous panel, if any
@@ -177,7 +170,9 @@ export function Services() {
 
               <div className="relative space-y-6">
                 <div className="space-y-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">{service.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">
+                    {service.title}
+                  </h3>
                   <p className="text-base text-gray-600 leading-relaxed">{service.subtitle}</p>
                 </div>
 

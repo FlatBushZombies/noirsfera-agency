@@ -71,9 +71,9 @@ export function Hero() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background pt-2"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <div className="space-y-6">
-            <div ref={badgeRef} className="flex justify-center mb-6">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="space-y-5">
+            <div ref={badgeRef} className="flex justify-center">
               <div className="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -85,65 +85,60 @@ export function Hero() {
 
             <h1
               ref={headingRef}
-              className="text-[76px] sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[120px] text-balance font-inter font-bold"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance font-inter"
             >
-              Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span> software
+              Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span>{" "}
+              software
             </h1>
           </div>
 
-          <div ref={avatarsRef} className="flex flex-col items-center gap-4">
+          <div ref={avatarsRef} className="flex flex-col items-center gap-3">
             <div className="flex -space-x-3">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
                   className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0EC8F3] to-[#0EA5C8] border-2 border-background"
                 />
-                
               ))}
-              
             </div>
-            <p ref={descriptionRef} className="text-[rgba(0,0,0,0.5)] md:text-lg lg:text-xl text-muted-foreground max-w-2xl text-[16px] font-medium leading-[40.6px]">
+            <p
+              ref={descriptionRef}
+              className="text-muted-foreground md:text-lg lg:text-xl max-w-2xl text-base font-medium leading-relaxed"
+            >
               Building Digital Experiences that moves Brands Forward
             </p>
           </div>
-          <div ref={buttonsRef} className="flex justify-center items-center pt-4 font-guminert">
-  <Button
-    size="default"
-    aria-label="Connect on Telegram"
-    onMouseEnter={handleButtonHover}
-    onMouseLeave={handleButtonLeave}
-    onClick={handleTelegramClick}
-    className="relative group bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 transition-all text-lg font-semibold px-8 py-4 h-auto rounded-lg shadow-[0_0_20px_rgba(14,200,243,0.5)] hover:shadow-[0_0_30px_rgba(14,200,243,0.7)]"
-  >
-    <div className="flex items-center gap-3">
-
-      {/* Profile image - always visible */}
-      <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3] font-inter">
-        <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
-      </div>
-
-      {/* DEFAULT TEXT (visible when NOT hovered) */}
-      <span
-        className={`transition-all duration-300 
-          ${isHovered ? "opacity-0 scale-95 max-w-0" : "opacity-100 scale-100 max-w-[200px]"}
-        `}
-      >
-        Connect to Telegram
-      </span>
-
-      
-      <div
-        className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
-          ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
-        `}
-      >
-        <span className="text-muted-foreground">+ You</span>
-        <span>Let's chat</span>
-      </div>
-    </div>
-  </Button>
-</div>
-
+          <div ref={buttonsRef} className="flex justify-center items-center font-guminert">
+            <Button
+              size="default"
+              aria-label="Connect on Telegram"
+              onMouseEnter={handleButtonHover}
+              onMouseLeave={handleButtonLeave}
+              onClick={handleTelegramClick}
+              className="relative group bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 transition-all text-lg font-semibold px-8 py-4 h-auto rounded-lg shadow-[0_0_20px_rgba(14,200,243,0.5)] hover:shadow-[0_0_30px_rgba(14,200,243,0.7)]"
+            >
+              <div className="flex items-center gap-3">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-[#0EC8F3] font-inter">
+                  <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
+                </div>
+                <span
+                  className={`transition-all duration-300 
+                    ${isHovered ? "opacity-0 scale-95 max-w-0" : "opacity-100 scale-100 max-w-[200px]"}
+                  `}
+                >
+                  Connect to Telegram
+                </span>
+                <div
+                  className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
+                    ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
+                  `}
+                >
+                  <span className="text-muted-foreground">+ You</span>
+                  <span>Let's chat</span>
+                </div>
+              </div>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

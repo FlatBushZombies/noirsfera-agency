@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import React from "react";
-import Contact from "@/components/contact";
-import FAQ from "@/components/faq";
-import Footer from "@/components/footer";
-import { Hero } from "@/components/hero";
-import { NavBar } from "@/components/navbar";
-import Portfolio from "@/components/portfolio";
-import Pricing from "@/components/pricing";
-import { Services } from "@/components/services";
-import { Testimonials } from "@/components/testimonials";
-import Banner from "@/components/banner";
+import type React from "react"
+import Contact from "@/components/contact"
+import FAQ from "@/components/faq"
+import Footer from "@/components/footer"
+import { Hero } from "@/components/hero"
+import { NavBar } from "@/components/navbar"
+import Portfolio from "@/components/portfolio"
+import Pricing from "@/components/pricing"
+import { Services } from "@/components/services"
+import { Testimonials } from "@/components/testimonials"
+import Banner from "@/components/banner"
 
 const Home: React.FC = () => {
   return (
@@ -22,45 +22,46 @@ const Home: React.FC = () => {
       {/* Page Content Wrapper */}
       <div className="flex-1 flex flex-col w-full px-4 sm:px-6 lg:px-16">
         {/* Hero Section */}
-        <section className="w-full flex flex-col items-center justify-center">
+        <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-16">
           <Hero />
         </section>
 
         {/* Services Section */}
-        <section className="w-full flex flex-col items-center justify-center pt-6 md:pt-12 pb-16">
+        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
           <Services />
         </section>
 
         {/* Portfolio Section */}
-        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
+        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
           <Portfolio />
         </section>
 
-        
-        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
+        {/* Pricing Section */}
+        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
           <Pricing />
         </section>
 
-        
-        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
+        {/* Testimonials Section */}
+        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
           <Testimonials />
         </section>
 
-        
-        <section className="w-full flex flex-col items-center justify-center pt-12 pb-16">
+        {/* FAQ Section */}
+        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
           <FAQ />
         </section>
 
-        
-        <section className="w-full flex flex-col items-center justify-center pt-12 pb-20">
+        {/* Contact Section - Extra bottom padding before footer */}
+        <section className="w-full flex flex-col items-center justify-center pt-16 md:pt-24 lg:pt-32 pb-20 md:pb-28 lg:pb-32">
           <Contact />
         </section>
+        {/* </CHANGE> */}
       </div>
 
-      
+      {/* Footer */}
       <Footer />
     </main>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
