@@ -1,51 +1,47 @@
-"use client";
+"use client"
 
-import type React from "react";
-import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Sparkles, Zap, Star, Loader2 } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useState, useRef, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Label } from "@/components/ui/label"
+import { Sparkles, Zap, Star } from "lucide-react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { toast } from "sonner"
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
-type FieldType = "name" | "email" | "message" | null;
+type FieldType = "name" | "email" | "message" | null
 
 export default function Contact() {
-  const [hoveredField, setHoveredField] = useState<FieldType>(null);
-  const [focusedField, setFocusedField] = useState<FieldType>(null);
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+  
+  const [hoveredField, setHoveredField] = useState<FieldType>(null)
+  const [focusedField, setFocusedField] = useState<FieldType>(null)
+  const [loading, setLoading] = useState(false)
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const nameRef = useRef<HTMLDivElement>(null);
-  const emailRef = useRef<HTMLDivElement>(null);
-  const messageRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const fireworksContainerRef = useRef<HTMLDivElement>(null);
-  const fireworksTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const sectionRef = useRef<HTMLElement>(null)
+  const nameRef = useRef<HTMLDivElement>(null)
+  const emailRef = useRef<HTMLDivElement>(null)
+  const messageRef = useRef<HTMLDivElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const fireworksContainerRef = useRef<HTMLDivElement>(null)
+  const fireworksTimelineRef = useRef<gsap.core.Timeline | null>(null)
+  const headingRef = useRef<HTMLHeadingElement>(null)
+  const descriptionRef = useRef<HTMLParagraphElement>(null)
+  const ctaContainerRef = useRef<HTMLDivElement>(null)
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const ctaContainerRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
-
-  // Scroll animations
   useEffect(() => {
-    if (!sectionRef.current) return;
     const ctx = gsap.context(() => {
       if (headingRef.current)
         gsap.from(headingRef.current, {
-          scrollTrigger: { trigger: headingRef.current, start: "top 90%" },
+          scrollTrigger: { trigger: headingRef.current, start: "top 90%", end: "top 50%" },
           opacity: 0,
           y: 30,
           duration: 0.8,
           ease: "power3.out",
-        });
-
+        })
       if (descriptionRef.current)
         gsap.from(descriptionRef.current, {
           scrollTrigger: { trigger: descriptionRef.current, start: "top 90%" },
@@ -54,103 +50,71 @@ export default function Contact() {
           duration: 0.6,
           delay: 0.1,
           ease: "power2.out",
-        });
-
-      if (formRef.current)
-        gsap.from(formRef.current, {
-          scrollTrigger: { trigger: formRef.current, start: "top 80%" },
-          opacity: 0,
-          y: 50,
-          duration: 0.8,
-          ease: "power2.out",
-        });
-
-      if (ctaContainerRef.current) {
-        gsap.from(ctaContainerRef.current.children, {
-          scrollTrigger: { trigger: ctaContainerRef.current, start: "top 90%" },
-          opacity: 0,
-          y: 15,
-          duration: 0.5,
-          stagger: 0.05,
-          ease: "back.out(1.5)",
-        });
-      }
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+        })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [])
 
   const handleButtonHover = () => {
-    if (!fireworksContainerRef.current) return;
-    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill();
-    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle");
-    const tl = gsap.timeline();
-    fireworksTimelineRef.current = tl;
+    if (!fireworksContainerRef.current) return
+    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
+    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
+    const tl = gsap.timeline()
+    fireworksTimelineRef.current = tl
     particles.forEach((particle, i) => {
-      const angle = (i / particles.length) * Math.PI * 2;
-      const distance = 70 + Math.random() * 50;
-      const x = Math.cos(angle) * distance;
-      const y = Math.sin(angle) * distance;
+      const angle = (i / particles.length) * Math.PI * 2
+      const distance = 70 + Math.random() * 50
+      const x = Math.cos(angle) * distance
+      const y = Math.sin(angle) * distance
       tl.fromTo(
         particle,
         { x: 0, y: 0, scale: 0, opacity: 1 },
         { x, y, scale: 1, opacity: 0, duration: 0.5, ease: "power2.out" },
-        i * 0.02
-      );
-    });
-  };
+        i * 0.02,
+      )
+    })
+  }
 
   const handleButtonLeave = () => {
-    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill();
-    if (!fireworksContainerRef.current) return;
-    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle");
-    gsap.set(particles, { x: 0, y: 0, scale: 0, opacity: 0 });
-  };
+    if (fireworksTimelineRef.current) fireworksTimelineRef.current.kill()
+    if (!fireworksContainerRef.current) return
+    const particles = fireworksContainerRef.current.querySelectorAll(".firework-particle")
+    gsap.set(particles, { x: 0, y: 0, scale: 0, opacity: 0 })
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
+    setLoading(true)
 
-    const name = (formRef.current?.querySelector("#name") as HTMLInputElement)?.value.trim();
-    const email = (formRef.current?.querySelector("#email") as HTMLInputElement)?.value.trim();
-    const message = (formRef.current?.querySelector("#message") as HTMLTextAreaElement)?.value.trim();
-
-    if (!name || !email || !message) {
-      setStatus("⚠️ Please fill in all fields.");
-      return;
-    }
-
-    setLoading(true);
-    setStatus(null);
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    const name = formData.get("name") as string
+    const email = formData.get("email") as string
+    const message = formData.get("message") as string
 
     try {
       const res = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
-      });
+      })
 
       if (res.ok) {
-        setStatus("✅ Message sent successfully!");
-        formRef.current?.reset();
+        toast.success("Message sent successfully!")
+        ;(e.target as HTMLFormElement).reset()
       } else {
-        setStatus("❌ Failed to send message.");
+        toast.error("Failed to send message. Please try again")
       }
-    } catch (err) {
-      console.error(err);
-      setStatus("❌ Something went wrong.");
+    } catch (error) {
+      toast.error("An error occured")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="relative min-h-screen bg-white py-24 px-4 overflow-hidden font-inter"
-    >
+    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-24 px-4 overflow-hidden font-inter">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
-          {/* Left section */}
           <div className="space-y-6">
             <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">
               Get in{" "}
@@ -189,42 +153,27 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form Section */}
+          {/* Form */}
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div ref={nameRef} className="relative">
+            <div ref={nameRef}>
               <Label htmlFor="name" className="text-gray-700 font-medium mb-2 block">
                 Name
               </Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Your name"
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
-              />
+              <Input id="name" name="name" type="text" placeholder="Your name" required />
             </div>
 
-            <div ref={emailRef} className="relative">
+            <div ref={emailRef}>
               <Label htmlFor="email" className="text-gray-700 font-medium mb-2 block">
                 Email
               </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your.email@example.com"
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3]"
-              />
+              <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
             </div>
 
-            <div ref={messageRef} className="relative">
+            <div ref={messageRef}>
               <Label htmlFor="message" className="text-gray-700 font-medium mb-2 block">
                 Message
               </Label>
-              <Textarea
-                id="message"
-                placeholder="Tell us about your project..."
-                rows={6}
-                className="w-full border-[#D3D3D3] focus:border-[#00D3F3] focus:ring-[#00D3F3] resize-none"
-              />
+              <Textarea id="message" name="message" placeholder="Tell us about your project..." rows={6} required />
             </div>
 
             <div className="relative inline-block">
@@ -232,18 +181,11 @@ export default function Contact() {
                 ref={buttonRef}
                 type="submit"
                 disabled={loading}
-                className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors relative z-10 flex items-center justify-center gap-2"
+                className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors relative z-10"
                 onMouseEnter={handleButtonHover}
                 onMouseLeave={handleButtonLeave}
               >
-                {loading ? (
-                  <>
-                    <Loader2 className="animate-spin w-5 h-5" />
-                    Sending...
-                  </>
-                ) : (
-                  "Send Message"
-                )}
+                {loading ? "Sending..." : "Send Message"}
               </Button>
 
               <div
@@ -265,23 +207,9 @@ export default function Contact() {
                 ))}
               </div>
             </div>
-
-            {status && (
-              <p
-                className={`text-sm pt-2 ${
-                  status.startsWith("✅")
-                    ? "text-green-600"
-                    : status.startsWith("⚠️")
-                    ? "text-yellow-600"
-                    : "text-red-600"
-                }`}
-              >
-                {status}
-              </p>
-            )}
           </form>
         </div>
       </div>
     </section>
-  );
+  )
 }
