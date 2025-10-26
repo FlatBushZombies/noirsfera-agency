@@ -10,14 +10,13 @@ import Portfolio from "@/components/portfolio"
 import Pricing from "@/components/pricing"
 import { Services } from "@/components/services"
 import { Testimonials } from "@/components/testimonials"
-import Banner from "@/components/banner"
+
 
 const Home: React.FC = () => {
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
       {/* Navbar & Banner */}
       <NavBar />
-      <Banner />
 
       {/* Page Content Wrapper */}
       <div className="flex-1 flex flex-col w-full px-4 sm:px-6 lg:px-16">
@@ -37,12 +36,12 @@ const Home: React.FC = () => {
         </section>
 
         {/* Pricing Section */}
-        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
+        <section className="w-full flex flex-col items-center justify-center py-8 md:py-16 lg:py-32">
           <Pricing />
         </section>
 
         {/* Testimonials Section */}
-        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
+        <section className="w-full flex flex-col items-center justify-center py-8 md:py-16 lg:py-32">
           <Testimonials />
         </section>
 

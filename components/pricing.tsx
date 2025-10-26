@@ -88,6 +88,7 @@ export default function Pricing() {
       className="relative min-h-screen bg-white pt-2 md:pt-12 pb-16 px-4 font-inter"
     >
       <div className="relative max-w-7xl mx-auto">
+        {/* Heading */}
         <div className="text-center mb-20">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
             Choose Your Plan
@@ -97,6 +98,7 @@ export default function Pricing() {
           </p>
         </div>
 
+        {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {pricingData.map((card, index) => (
             <PricingCard key={index} data={card} />
@@ -119,9 +121,11 @@ function PricingCard({ data }: { data: PricingCardData }) {
             {data.title}
           </h3>
 
+          {/* Plan Toggle */}
           <div className="flex items-center gap-1 mb-10 bg-gray-100 rounded-full p-1 w-fit mx-auto">
             <button
               onClick={() => setPlan("oneTime")}
+              aria-pressed={plan === "oneTime"}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 plan === "oneTime"
                   ? "bg-[#054F56] text-white shadow-lg"
@@ -132,6 +136,7 @@ function PricingCard({ data }: { data: PricingCardData }) {
             </button>
             <button
               onClick={() => setPlan("subscription")}
+              aria-pressed={plan === "subscription"}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                 plan === "subscription"
                   ? "bg-[#054F56] text-white shadow-lg"
@@ -142,6 +147,7 @@ function PricingCard({ data }: { data: PricingCardData }) {
             </button>
           </div>
 
+          {/* Pricing */}
           <div className="text-center mb-12">
             <div className="text-6xl font-bold text-gray-900 mb-3 transition-all duration-500 tracking-tight">
               {currentPlan.price}
@@ -151,6 +157,7 @@ function PricingCard({ data }: { data: PricingCardData }) {
             </div>
           </div>
 
+          {/* Features */}
           <div className="space-y-5 mb-10 flex-1">
             {currentPlan.features.map((feature, index) => (
               <div
@@ -171,20 +178,26 @@ function PricingCard({ data }: { data: PricingCardData }) {
           </div>
         </div>
       </Card>
-      <div className="flex flex-col sm:flex-row gap-3 mt-6">
-        <Button className="flex-1 h-14 bg-[#054F56] text-white hover:bg-[#054F56]/90 font-medium text-sm transition-all duration-300 rounded-lg border-2 border-[#054F56]">
+
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full">
+        {/* Schedule a Meeting Button */}
+        <Button
+          className="w-full sm:w-1/2 h-14 bg-[#054F56] text-white hover:bg-[#054F56]/90 font-medium text-sm transition-all duration-300 rounded-lg border-2 border-[#054F56] flex items-center justify-center"
+        >
           Schedule a Meeting
         </Button>
 
+        {/* Connect on Telegram Button */}
         <a
           href="https://t.me/itslucki"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1"
+          className="w-full sm:w-1/2"
         >
           <Button
             variant="outline"
-            className="flex-1 h-14 bg-transparent border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56]/5 hover:border-[#054F56]/80 font-medium text-sm transition-all duration-300 rounded-lg"
+            className="w-full h-14 bg-transparent border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56]/5 hover:border-[#054F56]/80 font-medium text-sm transition-all duration-300 rounded-lg flex items-center justify-center"
           >
             Connect on Telegram
           </Button>

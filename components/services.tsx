@@ -110,7 +110,7 @@ export function Services() {
   }
 
   return (
-    <section ref={sectionRef} id="services" className="pt-2 md:pt-12 pb-14 md:pb-32 px-6 md:px-12 bg-white">
+    <section ref={sectionRef} id="services" className="pt-0 md:pt-4 pb-14 md:pb-24 px-6 md:px-12 bg-white">
       <div className="max-w-[1400px] mx-auto space-y-16">
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight text-balance font-inter">

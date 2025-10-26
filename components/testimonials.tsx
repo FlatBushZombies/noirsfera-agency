@@ -45,38 +45,39 @@ const testimonials: Testimonial[] = [
 export function Testimonials() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const sectionRef = useRef(null)
-
   const [isMobile, setIsMobile] = useReactState(false)
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsMobile(window.innerWidth < 768)
     }
   }, [])
 
-  const isInView = useInView(sectionRef, {
-    once: true,
-    amount: 0.1,
-  })
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
   return (
-    <section id="services" ref={sectionRef} className="md:pt-6 pb-16 bg-background font-inter">
+    <section
+      id="testimonials"
+      ref={sectionRef}
+      className="pt-4 md:pt-6 pb-6 md:pb-16 bg-background font-inter"
+    >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-14"
         >
-          <p className="text-[#0EC8F3] text-sm font-semibold uppercase tracking-wider mb-4">
+          <p className="text-[#0EC8F3] text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
             Client Testimonials
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-balance mb-4 max-w-2xl mx-auto">
-            People we've worked with have said some nice things….
+          <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
+            People we've worked with have said some nice things…
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
@@ -88,7 +89,7 @@ export function Testimonials() {
                 opacity: 0,
                 x: index === 0 ? 200 : index === 2 ? -200 : 0,
                 y: index === 1 ? 100 : 0,
-                scale: 0.8,
+                scale: 0.9,
               }}
               animate={
                 isInView || isMobile
@@ -97,68 +98,55 @@ export function Testimonials() {
                       x: 0,
                       y: 0,
                       scale: 1,
-                      rotate: index === 1 ? [0, -2, 2, -2, 2, 0] : 0,
                     }
                   : {}
               }
               transition={{
-                duration: 0.8,
-                delay: index * 0.2,
+                duration: 0.6,
+                delay: index * 0.15,
                 ease: [0.25, 0.46, 0.45, 0.94],
-                rotate: {
-                  duration: 0.6,
-                  delay: 0.4,
-                  ease: "easeInOut",
-                },
               }}
             >
               <div
-                className="relative transition-all duration-700 ease-out h-full"
+                className="relative transition-all duration-500 ease-out h-full"
                 style={{
                   transform:
                     hoveredCard === testimonial.id
-                      ? "rotateX(2deg) rotateY(-2deg) translateY(-10px)"
-                      : "rotateX(0deg) rotateY(0deg) translateY(0px)",
-                  transformStyle: "preserve-3d",
+                      ? "translateY(-6px)"
+                      : "translateY(0)",
                 }}
               >
-                <Card className="h-full flex flex-col border-2 border-border hover:border-[#0EC8F3] transition-all duration-300 group">
-                  <CardContent className="p-6 md:p-8 space-y-6 flex flex-col h-full">
+                <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
+                  <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
                     <div className="flex gap-1">
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-5 h-5 fill-[#0EC8F3] text-[#0EC8F3]" />
+                        <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                       ))}
                     </div>
 
-                    <p className="text-[16px] font-normal leading-[22.4px] text-[#0000007D]">
+                    <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">
                       "{testimonial.text}"
                     </p>
 
-                    <div className="flex items-center gap-4 pt-4 border-t border-border mt-auto">
+                    <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                       <Image
                         src={testimonial.image || "/placeholder.svg"}
                         alt={testimonial.name}
-                        width={48}
-                        height={48}
-                        className="w-12 h-12 rounded-full object-cover"
+                        width={44}
+                        height={44}
+                        className="w-10 h-10 rounded-full object-cover"
                       />
                       <div>
                         <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                           {testimonial.name}
                         </p>
-                        <p className="text-sm font-medium text-muted-foreground">{testimonial.company}</p>
+                        <p className="text-xs md:text-sm text-muted-foreground">
+                          {testimonial.company}
+                        </p>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-
-                <div
-                  className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-br from-[#0EC8F3]/10 to-transparent blur-2xl transition-opacity duration-700"
-                  style={{
-                    opacity: hoveredCard === testimonial.id ? 0.6 : 0.3,
-                    transform: "translateZ(-50px) scale(0.95)",
-                  }}
-                />
               </div>
             </motion.div>
           ))}
