@@ -1,9 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Check } from "lucide-react"
+
+gsap.registerPlugin(ScrollTrigger)
 
 type PricingPlan = "oneTime" | "subscription"
 
@@ -82,8 +86,75 @@ const pricingData: PricingCardData[] = [
 ]
 
 export default function Pricing() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
+  const buttonsRef = useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const ctx = gsap.context(() => {
+      // Animate pricing cards with upward shake/bounce effect
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return
+
+        gsap.fromTo(
+          card,
+          {
+            opacity: 0,
+            y: 80,
+            scale: 0.95,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            delay: index * 0.15,
+            ease: "back.out(1.2)",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          },
+        )
+      })
+
+      // Animate buttons with upward bounce effect
+      buttonsRef.current.forEach((buttonContainer, index) => {
+        if (!buttonContainer) return
+
+        gsap.fromTo(
+          buttonContainer,
+          {
+            opacity: 0,
+            y: 40,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            delay: index * 0.15 + 0.3,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: buttonContainer,
+              start: "top 90%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+          },
+        )
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       id="pricing"
       className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white pt-2 md:pt-12 pb-16 px-4 font-inter"
     >
@@ -101,7 +172,12 @@ export default function Pricing() {
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {pricingData.map((card, index) => (
-            <PricingCard key={index} data={card} />
+            <PricingCard
+              key={index}
+              data={card}
+              cardRef={(el) => (cardsRef.current[index] = el)}
+              buttonRef={(el) => (buttonsRef.current[index] = el)}
+            />
           ))}
         </div>
       </div>
@@ -109,80 +185,88 @@ export default function Pricing() {
   )
 }
 
-function PricingCard({ data }: { data: PricingCardData }) {
+function PricingCard({
+  data,
+  cardRef,
+  buttonRef,
+}: {
+  data: PricingCardData
+  cardRef: (el: HTMLDivElement | null) => void
+  buttonRef: (el: HTMLDivElement | null) => void
+}) {
   const [plan, setPlan] = useState<PricingPlan>("oneTime")
   const currentPlan = data[plan]
 
   return (
     <div className="flex flex-col">
-      <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
-        <div className="relative p-8 md:p-10 flex flex-col h-full">
-          <h3 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
+      <div ref={cardRef}>
+        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 min-h-[700px] flex flex-col">
+          <div className="relative p-8 md:p-10 flex flex-col h-full">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
 
-          
-
-          {/* Pricing */}
-          <div className="text-center mb-12">
-            <div
-              key={currentPlan.price}
-              className="text-5xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
-            >
-              {currentPlan.price}
-            </div>
-            <div className="text-gray-500 text-base font-medium tracking-wide">
-              {plan === "subscription" ? "per month" : "one time"}
-            </div>
-          </div>
-
-          {/* Features */}
-          <div className="space-y-4 mb-10 flex-1">
-            {currentPlan.features.map((feature, index) => (
+            {/* Pricing */}
+            <div className="text-center mb-12">
               <div
-                key={`${plan}-${index}`}
-                className="flex items-start gap-3 text-gray-700 animate-in fade-in slide-in-from-left-2"
-                style={{
-                  animationDelay: `${index * 50}ms`,
-                  animationDuration: "500ms",
-                  animationFillMode: "both",
-                }}
+                key={currentPlan.price}
+                className="text-5xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
               >
-                <div className="w-5 h-5 rounded-full bg-[#054F56] flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 text-white" strokeWidth={3} />
-                </div>
-                <span className="text-sm leading-relaxed font-normal">{feature}</span>
+                {currentPlan.price}
               </div>
-            ))}
-          </div>
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <span
-              className={`text-sm font-medium transition-colors ${plan === "oneTime" ? "text-gray-900" : "text-gray-400"}`}
-            >
-              One-Time
-            </span>
-            <button
-              onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
-              className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
-                plan === "subscription" ? "bg-[#054F56]" : "bg-gray-300"
-              }`}
-              aria-label="Toggle pricing plan"
-            >
-              <div
-                className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
-                  plan === "subscription" ? "translate-x-9" : "translate-x-1"
+              <div className="text-gray-500 text-base font-medium tracking-wide">
+                {plan === "subscription" ? "per month" : "one time"}
+              </div>
+            </div>
+
+            {/* Features */}
+            <div className="space-y-4 mb-10 flex-1 min-h-[280px]">
+              {currentPlan.features.map((feature, index) => (
+                <div
+                  key={`${plan}-${index}`}
+                  className="flex items-start gap-3 text-gray-700 animate-in fade-in slide-in-from-left-2"
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                    animationDuration: "500ms",
+                    animationFillMode: "both",
+                  }}
+                >
+                  <div className="w-5 h-5 rounded-full bg-[#054F56] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                  </div>
+                  <span className="text-sm leading-relaxed font-normal">{feature}</span>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <span
+                className={`text-sm font-medium transition-colors ${plan === "oneTime" ? "text-gray-900" : "text-gray-400"}`}
+              >
+                One-Time
+              </span>
+              <button
+                onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
+                className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
+                  plan === "subscription" ? "bg-[#054F56]" : "bg-gray-300"
                 }`}
-              />
-            </button>
-            <span
-              className={`text-sm font-medium transition-colors ${plan === "subscription" ? "text-gray-900" : "text-gray-400"}`}
-            >
-              Subscription
-            </span>
+                aria-label="Toggle pricing plan"
+              >
+                <div
+                  className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
+                    plan === "subscription" ? "translate-x-9" : "translate-x-1"
+                  }`}
+                />
+              </button>
+              <span
+                className={`text-sm font-medium transition-colors ${plan === "subscription" ? "text-gray-900" : "text-gray-400"}`}
+              >
+                Subscription
+              </span>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
+      <div ref={buttonRef} className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
         {/* Schedule a Meeting Button */}
         <Button className="w-full sm:w-1/2 h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
           Schedule a Meeting
@@ -198,7 +282,6 @@ function PricingCard({ data }: { data: PricingCardData }) {
           </Button>
         </a>
       </div>
-      
     </div>
   )
 }
