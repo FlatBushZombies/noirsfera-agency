@@ -94,12 +94,15 @@ export function Hero() {
 
           <div ref={avatarsRef} className="flex flex-col items-center gap-3">
             <div className="flex -space-x-3">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 rounded-full bg-gradient-to-br from-[#0EC8F3] to-[#0EA5C8] border-2 border-background"
-                />
-              ))}
+              <div className="w-12 h-12 rounded-full border-2 border-background overflow-hidden relative">
+                <Image src="/avatar-1.png" alt="Client avatar 1" fill className="object-cover" />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-background overflow-hidden relative">
+                <Image src="/avatar-2.jpg" alt="Client avatar 2" fill className="object-cover" />
+              </div>
+              <div className="w-12 h-12 rounded-full border-2 border-background overflow-hidden relative">
+                <Image src="/avatar-3.jpg" alt="Client avatar 3" fill className="object-cover" />
+              </div>
             </div>
             <p
               ref={descriptionRef}

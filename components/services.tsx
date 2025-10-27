@@ -39,6 +39,7 @@ export function Services() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
+      // Animate service cards
       cardsRef.current.forEach((card, index) => {
         if (!card) return
 
@@ -49,30 +50,34 @@ export function Services() {
             opacity: 1,
             y: 0,
             duration: 0.6,
-            delay: index * 0.1, // Stagger effect for visual appeal
+            delay: index * 0.1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 90%", // Trigger earlier (was 80%)
-              toggleActions: "play none none none", // Play once and stay visible
+              start: "top 90%",
+              toggleActions: "play none none none",
+              once: true,
             },
           },
         )
       })
 
+      // Animate CTA div with fade + scale effect
       if (ctaRef.current) {
         gsap.fromTo(
           ctaRef.current,
-          { opacity: 0, y: 60 },
+          { opacity: 0, y: 40, scale: 0.95 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: ctaRef.current,
-              start: "top 90%", // Trigger earlier (was 80%)
-              toggleActions: "play none none none", // Play once and stay visible
+              start: "top 90%",
+              toggleActions: "play none none none",
+              once: true,
             },
           },
         )
@@ -84,25 +89,20 @@ export function Services() {
 
   const toggleAccordion = (index: number) => {
     setOpenIndex((prev) => {
-      const el = document.querySelector(`#details-${index}`) as HTMLElement
-
+      const el = document.getElementById(`details-${index}`)
       if (!el) return prev
 
-      // Close if already open
       if (prev === index) {
-        gsap.to(el, { height: 0, duration: 0.3, ease: "power2.out" })
+        gsap.to(el, { height: 0, duration: 0.3, ease: "power2.inOut" })
         return null
       }
 
-      // Open new panel
-      requestAnimationFrame(() => {
-        gsap.fromTo(el, { height: 0 }, { height: el.scrollHeight, duration: 0.35, ease: "power2.out" })
-      })
+      const scrollHeight = el.scrollHeight
+      gsap.to(el, { height: scrollHeight, duration: 0.35, ease: "power2.out" })
 
-      // Close previous panel, if any
       if (prev !== null) {
-        const prevEl = document.querySelector(`#details-${prev}`) as HTMLElement
-        prevEl && gsap.to(prevEl, { height: 0, duration: 0.25, ease: "power2.inOut" })
+        const prevEl = document.getElementById(`details-${prev}`)
+        if (prevEl) gsap.to(prevEl, { height: 0, duration: 0.25, ease: "power2.inOut" })
       }
 
       return index
@@ -113,7 +113,7 @@ export function Services() {
     <section ref={sectionRef} id="services" className="pt-0 md:pt-4 pb-14 md:pb-24 px-6 md:px-12 bg-white">
       <div className="max-w-[1400px] mx-auto space-y-16">
         <div className="text-center space-y-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight text-balance font-inter">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight font-inter">
             How Simple It Can Be To Get Your Projects Done
           </h2>
         </div>
@@ -122,19 +122,15 @@ export function Services() {
           {services.map((service, index) => (
             <div
               key={index}
-              ref={(el) => {
+              ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
               className="group relative rounded-3xl p-8 bg-gradient-to-br from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-              style={{
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-              }}
+              style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}
             >
               <div
                 className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  boxShadow: "0 0 30px rgba(0, 211, 243, 0.6), inset 0 0 30px rgba(0, 211, 243, 0.1)",
-                }}
+                style={{ boxShadow: "0 0 30px rgba(0, 211, 243, 0.6), inset 0 0 30px rgba(0, 211, 243, 0.1)" }}
               />
 
               <div className="relative mb-6 h-32 rounded-2xl bg-gradient-to-br from-[#00D3F3]/10 to-[#00D3F3]/5 flex items-center justify-center overflow-hidden">
@@ -170,16 +166,15 @@ export function Services() {
 
               <div className="relative space-y-6">
                 <div className="space-y-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">
-                    {service.title}
-                  </h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">{service.title}</h3>
                   <p className="text-base text-gray-600 leading-relaxed">{service.subtitle}</p>
                 </div>
 
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="flex items-center gap-2 text-sm font-semibold text-black hover:text-[#00D3F3] transition-colors duration-200"
+                  className="flex items-center gap-2 text-sm font-semibold text-black hover:text-[#00D3F3] transition-colors duration-200 focus:outline-none"
                   aria-expanded={openIndex === index}
+                  aria-controls={`details-${index}`}
                 >
                   {openIndex === index ? <Minus className="w-5 h-5 text-[#00D3F3]" /> : <Plus className="w-5 h-5" />}
                   <span>{openIndex === index ? "Show Less" : "Show More"}</span>
@@ -187,8 +182,8 @@ export function Services() {
 
                 <div
                   id={`details-${index}`}
-                  className="overflow-hidden"
-                  style={{ height: openIndex === index ? "auto" : 0 }}
+                  className="overflow-hidden transition-all duration-300"
+                  style={{ height: 0 }}
                 >
                   <ul className="space-y-3 pt-2">
                     {service.details.map((detail, detailIndex) => (
@@ -204,13 +199,16 @@ export function Services() {
           ))}
         </div>
 
-        <div ref={ctaRef} className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20">
+        <div
+          ref={ctaRef}
+          className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20"
+        >
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance font-inter">
             Ready to transform your digital presence?
           </h3>
           <Button
             size="lg"
-            className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter"
+            className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
           >
             Let's Get Started
           </Button>

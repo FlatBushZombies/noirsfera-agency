@@ -17,6 +17,7 @@ export function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
+  const [isButtonHovered, setIsButtonHovered] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +41,14 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto"
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [isMobileMenuOpen])
+
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false)
     const element = document.querySelector(href)
@@ -61,7 +70,7 @@ export function NavBar() {
           transition={{ duration: 0.5 }}
           className={`transition-all duration-300 ${
             isScrolled
-              ? "rounded-full bg-black backdrop-blur-lg shadow-2xl border border-white/10 max-w-7xl mx-auto"
+              ? "rounded-full bg-black backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.15)] border border-white/10 max-w-7xl mx-auto"
               : "rounded-none bg-black backdrop-blur-md border-b border-white/5"
           }`}
         >
@@ -76,17 +85,21 @@ export function NavBar() {
               }`}
             >
               {/* Logo */}
-              <TiLocationArrow color="white" size={24} />
-              <motion.a
-                href="#"
-                className="text-lg md:text-xl font-bold font-inter tracking-tight flex-shrink-0 text-white"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <motion.div
+                whileHover={{ rotate: -10, scale: 1.1 }}
+                transition={{ type: "spring", stiffness: 300 }}
+                className="flex items-center gap-2"
               >
-                
-                noirsfera
-              </motion.a>
+                <TiLocationArrow color="white" size={24} />
+                <a
+                  href="#"
+                  className="text-lg md:text-xl font-bold font-inter tracking-tight flex-shrink-0 text-white"
+                >
+                  noirsfera
+                </a>
+              </motion.div>
 
+              {/* Desktop Nav */}
               <div className="hidden md:flex items-center font-inter text-[18px] font-normal leading-[27.18px] text-[rgba(0,0,0,0.525)] justify-center flex-1 space-x-6 lg:space-x-8">
                 {navLinks.map((link) => (
                   <motion.a
@@ -97,7 +110,9 @@ export function NavBar() {
                       handleNavClick(link.href)
                     }}
                     className={`text-sm font-medium transition-colors hover:text-[#0EC8F3] relative text-white ${
-                      activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-foreground"
+                      activeSection === link.href.substring(1)
+                        ? "text-[#0EC8F3]"
+                        : "text-foreground"
                     }`}
                     whileHover={{ y: -2 }}
                     whileTap={{ y: 0 }}
@@ -114,13 +129,51 @@ export function NavBar() {
                 ))}
               </div>
 
+              {/* Desktop Button */}
               <div className="hidden md:flex items-center flex-shrink-0">
-                <Button
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6"
-                  size="sm"
+                <motion.div
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                  animate={{
+                    y: isButtonHovered ? -4 : 0,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                    damping: 17,
+                  }}
                 >
-                  Book a Call
-                </Button>
+                  <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto">
+                    <motion.span
+                      initial={false}
+                      animate={{
+                        y: isButtonHovered ? -30 : 0,
+                        opacity: isButtonHovered ? 0 : 1,
+                      }}
+                      transition={{
+                        duration: 0.2,
+                        ease: "easeInOut",
+                      }}
+                      className="inline-block"
+                    >
+                      Book a Call
+                    </motion.span>
+                    <motion.span
+                      initial={false}
+                      animate={{
+                        y: isButtonHovered ? 0 : 30,
+                        opacity: isButtonHovered ? 1 : 0,
+                      }}
+                      transition={{
+                        duration: 0.2,
+                        ease: "easeInOut",
+                      }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      Let's Get Started
+                    </motion.span>
+                  </Button>
+                </motion.div>
               </div>
 
               {/* Mobile Menu Button */}
@@ -129,14 +182,22 @@ export function NavBar() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
+                {isMobileMenuOpen ? (
+                  <X size={24} color="white" />
+                ) : (
+                  <Menu size={24} color="white" />
+                )}
               </button>
             </div>
           </div>
         </motion.nav>
       </div>
 
-      <div className={`transition-all duration-300 ${isScrolled ? "h-20 md:h-24" : "h-16 md:h-20"}`} />
+      <div
+        className={`transition-all duration-300 ${
+          isScrolled ? "h-20 md:h-24" : "h-16 md:h-20"
+        }`}
+      />
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -146,7 +207,7 @@ export function NavBar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black md:hidden"
+            className="fixed inset-0 z-40 backdrop-blur-xl bg-black/70 md:hidden"
           >
             <div className="flex flex-col items-center justify-center h-full space-y-8">
               {navLinks.map((link, index) => (
@@ -161,7 +222,9 @@ export function NavBar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className={`text-2xl font-medium font-inter transition-colors hover:text-[#0EC8F3] ${
-                    activeSection === link.href.substring(1) ? "text-[#0EC8F3]" : "text-white"
+                    activeSection === link.href.substring(1)
+                      ? "text-[#0EC8F3]"
+                      : "text-white"
                   }`}
                 >
                   {link.name}
@@ -172,10 +235,7 @@ export function NavBar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: navLinks.length * 0.1 }}
               >
-                <Button
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-8"
-                  size="lg"
-                >
+                <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter font-bold rounded-full px-5 py-2 text-sm" size="sm">
                   Book a Call
                 </Button>
               </motion.div>
