@@ -85,21 +85,21 @@ export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative min-h-screen bg-white pt-2 md:pt-12 pb-16 px-4 font-inter"
+      className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white pt-2 md:pt-12 pb-16 px-4 font-inter"
     >
       <div className="relative max-w-7xl mx-auto">
         {/* Heading */}
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
             Choose Your Plan
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-normal">
             Flexible pricing options designed for your needs
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {pricingData.map((card, index) => (
             <PricingCard key={index} data={card} />
           ))}
@@ -115,94 +115,90 @@ function PricingCard({ data }: { data: PricingCardData }) {
 
   return (
     <div className="flex flex-col">
-      <Card className="relative bg-white border-2 border-[#054F56] overflow-hidden group hover:border-[#054F56]/80 hover:shadow-xl transition-all duration-500 h-full flex flex-col">
-        <div className="relative p-10 flex flex-col h-full">
-          <h3 className="text-xl font-semibold text-gray-900 mb-8 tracking-tight leading-tight">
-            {data.title}
-          </h3>
+      <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
+        <div className="relative p-8 md:p-10 flex flex-col h-full">
+          <h3 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
 
-          {/* Plan Toggle */}
-          <div className="flex items-center gap-1 mb-10 bg-gray-100 rounded-full p-1 w-fit mx-auto">
-            <button
-              onClick={() => setPlan("oneTime")}
-              aria-pressed={plan === "oneTime"}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                plan === "oneTime"
-                  ? "bg-[#054F56] text-white shadow-lg"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              One-Time
-            </button>
-            <button
-              onClick={() => setPlan("subscription")}
-              aria-pressed={plan === "subscription"}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                plan === "subscription"
-                  ? "bg-[#054F56] text-white shadow-lg"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              Subscription
-            </button>
-          </div>
+          
 
           {/* Pricing */}
           <div className="text-center mb-12">
-            <div className="text-6xl font-bold text-gray-900 mb-3 transition-all duration-500 tracking-tight">
+            <div
+              key={currentPlan.price}
+              className="text-5xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
+            >
               {currentPlan.price}
             </div>
-            <div className="text-gray-500 text-sm font-medium tracking-wide">
-              {currentPlan.period}
+            <div className="text-gray-500 text-base font-medium tracking-wide">
+              {plan === "subscription" ? "per month" : "one time"}
             </div>
           </div>
 
           {/* Features */}
-          <div className="space-y-5 mb-10 flex-1">
+          <div className="space-y-4 mb-10 flex-1">
             {currentPlan.features.map((feature, index) => (
               <div
-                key={index}
-                className="flex items-start gap-3 text-gray-700 transition-all duration-300"
+                key={`${plan}-${index}`}
+                className="flex items-start gap-3 text-gray-700 animate-in fade-in slide-in-from-left-2"
                 style={{
-                  animation: `fadeIn 0.4s ease-out ${index * 0.06}s both`,
+                  animationDelay: `${index * 50}ms`,
+                  animationDuration: "500ms",
+                  animationFillMode: "both",
                 }}
               >
                 <div className="w-5 h-5 rounded-full bg-[#054F56] flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Check className="w-3 h-3 text-white" strokeWidth={3} />
                 </div>
-                <span className="text-sm leading-relaxed font-normal">
-                  {feature}
-                </span>
+                <span className="text-sm leading-relaxed font-normal">{feature}</span>
               </div>
             ))}
+          </div>
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <span
+              className={`text-sm font-medium transition-colors ${plan === "oneTime" ? "text-gray-900" : "text-gray-400"}`}
+            >
+              One-Time
+            </span>
+            <button
+              onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
+              className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
+                plan === "subscription" ? "bg-[#054F56]" : "bg-gray-300"
+              }`}
+              aria-label="Toggle pricing plan"
+            >
+              <div
+                className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
+                  plan === "subscription" ? "translate-x-9" : "translate-x-1"
+                }`}
+              />
+            </button>
+            <span
+              className={`text-sm font-medium transition-colors ${plan === "subscription" ? "text-gray-900" : "text-gray-400"}`}
+            >
+              Subscription
+            </span>
           </div>
         </div>
       </Card>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full">
+      <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
         {/* Schedule a Meeting Button */}
-        <Button
-          className="w-full sm:w-1/2 h-14 bg-[#054F56] text-white hover:bg-[#054F56]/90 font-medium text-sm transition-all duration-300 rounded-lg border-2 border-[#054F56] flex items-center justify-center"
-        >
+        <Button className="w-full sm:w-1/2 h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
           Schedule a Meeting
         </Button>
 
         {/* Connect on Telegram Button */}
-        <a
-          href="https://t.me/itslucki"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full sm:w-1/2"
-        >
+        <a href="https://t.me/itslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
           <Button
             variant="outline"
-            className="w-full h-14 bg-transparent border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56]/5 hover:border-[#054F56]/80 font-medium text-sm transition-all duration-300 rounded-lg flex items-center justify-center"
+            className="w-full h-14 bg-white border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56] hover:text-white font-semibold text-sm transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
           >
             Connect on Telegram
           </Button>
         </a>
       </div>
+      
     </div>
   )
 }

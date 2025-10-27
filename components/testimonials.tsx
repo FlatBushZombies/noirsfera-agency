@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useRef, useEffect, useState as useReactState } from "react"
-import { motion, useInView } from "framer-motion"
+import { useState, useRef } from "react"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star } from "lucide-react"
@@ -22,29 +22,29 @@ const testimonials: Testimonial[] = [
     company: "tutschool.ru",
     image: "/Yulia.jpg",
     rating: 5,
-    text: "I contacted the company noirsfera with a request to create a website for a language studio. First, we discussed the technical requirements. The team asked many questions to take all my wishes into account. In the end, I really liked the result — a stylish and modern website with all the necessary information and the ability to post promotions on built-in banners. I’m very happy with the collaboration and grateful for the excellent result!",
+    text: "I contacted the company noirsfera with a request to create a website for a language studio. First, we discussed the technical requirements. The team asked many questions to take all my wishes into account. In the end, I really liked the result — a stylish and modern website with all the necessary information and the ability to post promotions on built-in banners. I'm very happy with the collaboration and grateful for the excellent result!",
   },
   {
     id: 2,
     name: "Andrey",
     company: "from profi.ru",
-    image: "/",
+    image: "/profi.jpg",
     rating: 5,
-    text: "The freelancer did an excellent job with our project. Communication was transparent, deadlines were met, and the final product exceeded expectations, great performance and seamless integration with Firebase.High professionalism, reliability, and strong skills, we’ll be happy to work together again.",
+    text: "The freelancer did an excellent job with our project. Communication was transparent, deadlines were met, and the final product exceeded expectations, great performance and seamless integration with Firebase.High professionalism, reliability, and strong skills, we'll be happy to work together again.",
   },
   {
     id: 3,
     name: "Anih",
     company: "from profi.ru",
-    image: "/",
+    image: "/profi.jpg",
     rating: 5,
     text: "Excellent specialist! Quickly and efficiently developed new functionality, optimized the code, and suggested useful improvements. Everything was done on time, highly recommend!",
   },
-   {
+  {
     id: 4,
     name: "Nathan",
     company: "from profi.ru",
-    image: "/",
+    image: "/profi.jpg",
     rating: 5,
     text: "Excellent specialist! Quickly and efficiently developed new functionality, optimized the code, and suggested useful improvements. Everything was done on time, highly recommend!",
   },
@@ -53,21 +53,12 @@ const testimonials: Testimonial[] = [
 export function Testimonials() {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null)
   const sectionRef = useRef(null)
-  const [isMobile, setIsMobile] = useReactState(false)
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMobile(window.innerWidth < 768)
-    }
-  }, [])
-
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
   return (
     <section
       id="testimonials"
       ref={sectionRef}
-      className="pt-4 md:pt-6 pb-6 md:pb-16 bg-background font-inter"
+      className="pt-4 md:pt-6 pb-6 md:pb-16 bg-background font-inter overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -85,79 +76,67 @@ export function Testimonials() {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={testimonial.id}
-              className="group relative h-full"
-              onMouseEnter={() => setHoveredCard(testimonial.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-              style={{ perspective: "1000px" }}
-              initial={{
-                opacity: 0,
-                x: index === 0 ? 200 : index === 2 ? -200 : 0,
-                y: index === 1 ? 100 : 0,
-                scale: 0.9,
-              }}
-              animate={
-                isInView || isMobile
-                  ? {
-                      opacity: 1,
-                      x: 0,
-                      y: 0,
-                      scale: 1,
-                    }
-                  : {}
-              }
-              transition={{
-                duration: 0.6,
-                delay: index * 0.15,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-            >
-              <div
-                className="relative transition-all duration-500 ease-out h-full"
-                style={{
-                  transform:
-                    hoveredCard === testimonial.id
-                      ? "translateY(-6px)"
-                      : "translateY(0)",
-                }}
+        <div className="relative">
+          <motion.div
+            className="flex gap-4 md:gap-6"
+            animate={{
+              x: [0, -1200],
+            }}
+            transition={{
+              x: {
+                repeat: Number.POSITIVE_INFINITY,
+                repeatType: "loop",
+                duration: 20,
+                ease: "linear",
+              },
+            }}
+          >
+            {/* Render testimonials twice for seamless loop */}
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <motion.div
+                key={`${testimonial.id}-${index}`}
+                className="group relative flex-shrink-0 w-[350px]"
+                onMouseEnter={() => setHoveredCard(testimonial.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                style={{ perspective: "1000px" }}
               >
-                <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
-                  <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
-                    <div className="flex gap-1">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
-                      ))}
-                    </div>
-
-                    <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">
-                      "{testimonial.text}"
-                    </p>
-
-                    <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
-                      <Image
-                        src={testimonial.image || "/placeholder.svg"}
-                        alt={testimonial.name}
-                        width={44}
-                        height={44}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                      <div>
-                        <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-xs md:text-sm text-muted-foreground">
-                          {testimonial.company}
-                        </p>
+                <div
+                  className="relative transition-all duration-500 ease-out h-full"
+                  style={{
+                    transform: hoveredCard === testimonial.id ? "translateY(-6px)" : "translateY(0)",
+                  }}
+                >
+                  <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
+                    <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
+                      <div className="flex gap-1">
+                        {Array.from({ length: testimonial.rating }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
+                        ))}
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </motion.div>
-          ))}
+
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{testimonial.text}"</p>
+
+                      <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
+                        <Image
+                          src={testimonial.image || "/profi.jpg"}
+                          alt={testimonial.name}
+                          width={44}
+                          height={44}
+                          className="w-10 h-10 rounded-full object-cover"
+                        />
+                        <div>
+                          <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
+                            {testimonial.name}
+                          </p>
+                          <p className="text-xs md:text-sm text-muted-foreground">{testimonial.company}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
