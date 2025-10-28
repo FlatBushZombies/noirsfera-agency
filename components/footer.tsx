@@ -21,7 +21,7 @@ export default function Footer() {
   return (
     <footer className="relative bg-black text-white overflow-hidden">
       {/* Main Content Section */}
-      <div className="relative z-10 px-6 py-20 md:py-32">
+      <div className="relative z-10 px-6 py-8 md:py-32">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section with CTA */}
           <div className="text-center mb-20 relative" onMouseMove={handleMouseMove}>

@@ -200,7 +200,7 @@ function PricingCard({
   return (
     <div className="flex flex-col">
       <div ref={cardRef}>
-        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 min-h-[750px] flex flex-col justify-between w-full">
+        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 min-h-[450px] flex flex-col justify-between w-full">
           <div className="relative p-8 md:p-10 flex flex-col h-full">
             <h3 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
 
@@ -238,7 +238,7 @@ function PricingCard({
             </div>
 
             {/* Toggle Switch (only subscription label visible) */}
-            <div className="flex items-center justify-center gap-3 mb-8">
+            <div className="flex items-center justify-center gap-1 mb-8">
               <button
                 onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
                 className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
