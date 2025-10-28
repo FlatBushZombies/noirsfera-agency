@@ -1,86 +1,260 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Check } from "lucide-react"
+import { Check, Zap } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
 type PricingPlan = "oneTime" | "subscription"
+type PackageTier = "starter" | "growth" | "professional"
 
-interface PricingCardData {
-  title: string
+interface PackageData {
+  name: string
+  icon?: React.ReactNode
+  popular?: boolean
   oneTime: {
     price: string
+    priceRange?: string
     period: string
     features: string[]
+    description?: string
   }
   subscription: {
     price: string
+    priceRange?: string
     period: string
     features: string[]
+    description?: string
+  }
+}
+
+interface PricingCardData {
+  title: string
+  packages: {
+    starter: PackageData
+    growth: PackageData
+    professional: PackageData
   }
 }
 
 const pricingData: PricingCardData[] = [
   {
-    title: "Web dev",
-    oneTime: {
-      price: "$5,000",
-      period: "One-Time Payment",
-      features: [
-        "2 design concepts",
-        "Updates every 48 hours",
-        "Desktop, Tablet, Mobile Responsive Design",
-        "1 month free support",
-        "Source code ownership",
-        "Wireframes + custom layout",
-        "Framer development +",
-        "+$200 for each extra page",
-      ],
-    },
-    subscription: {
-      price: "$500",
-      period: "per month",
-      features: [
-        "All one time features+",
-        "Weekly progress meetings",
-        "Monthly updates",
-        "Constant lightning fast support",
-        "Source code ownership after 12 months",
-        "No extra payments for adding pages",
-      ],
+    title: "Web Development",
+    packages: {
+      starter: {
+        name: "Starter",
+        oneTime: {
+          price: "$1,200",
+          priceRange: "$1,200 - $2,000",
+          period: "One-Time Payment",
+          description: "Simple portfolio / landing page (1-3 pages)",
+          features: [
+            "2 design concepts",
+            "Responsive design (desktop, tablet, mobile)",
+            "Wireframes + custom layout",
+            "Framer development",
+            "Source code ownership",
+            "1 month free support",
+            "+$200 per extra page",
+          ],
+        },
+        subscription: {
+          price: "$150",
+          priceRange: "$150 - $200/mo",
+          period: "per month",
+          description: "Great entry point for freelancers",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "Monthly updates",
+            "Unlimited page additions",
+            "Constant, fast support",
+            "Source code ownership after 12 months",
+          ],
+        },
+      },
+      growth: {
+        name: "Growth",
+        popular: true,
+        icon: <Zap className="w-4 h-4" />,
+        oneTime: {
+          price: "$2,200",
+          priceRange: "$2,200 - $3,000",
+          period: "One-Time Payment",
+          description: "Small business site (4-7 pages)",
+          features: [
+            "2 design concepts",
+            "Responsive design (desktop, tablet, mobile)",
+            "Wireframes + custom layout",
+            "Framer development",
+            "Source code ownership",
+            "1 month free support",
+            "+$200 per extra page",
+          ],
+        },
+        subscription: {
+          price: "$250",
+          priceRange: "$250 - $350/mo",
+          period: "per month",
+          description: "Most popular range for SMEs",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "Monthly updates",
+            "Unlimited page additions",
+            "Constant, fast support",
+            "Source code ownership after 12 months",
+          ],
+        },
+      },
+      professional: {
+        name: "Professional",
+        oneTime: {
+          price: "$3,200",
+          priceRange: "$3,200 - $6,000+",
+          period: "One-Time Payment",
+          description: "Corporate / advanced design (8+ pages)",
+          features: [
+            "2 design concepts",
+            "Responsive design (desktop, tablet, mobile)",
+            "Wireframes + custom layout",
+            "Framer development",
+            "Source code ownership",
+            "1 month free support",
+            "+$200 per extra page",
+            "Advanced animations & interactions",
+          ],
+        },
+        subscription: {
+          price: "$400",
+          priceRange: "$400 - $600/mo",
+          period: "per month",
+          description: "Ongoing dev & maintenance",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "Monthly updates",
+            "Unlimited page additions",
+            "Constant, fast support",
+            "Heavy support & design iteration",
+            "Source code ownership after 12 months",
+          ],
+        },
+      },
     },
   },
   {
     title: "Product Design",
-    oneTime: {
-      price: "$3,500",
-      period: "One-Time Payment",
-      features: [
-        "2 design concepts",
-        "Weekly updates",
-        "Mobile app plus admin dashboard",
-        "1-3 Months delivery",
-        "Launching your app on App Store and Play Store",
-        "1 month free support",
-        "Communication through Slack, Loom and Meetings",
-      ],
-    },
-    subscription: {
-      price: "$350",
-      period: "per month",
-      features: [
-        "All one time features+",
-        "Weekly progress meetings + 2 weekly updates",
-        "Unlimited changes",
-        "Monthly updates",
-        "Constant lightning fast support",
-        "Source code ownership after 18 months",
-      ],
+    packages: {
+      starter: {
+        name: "Startup MVP",
+        oneTime: {
+          price: "$2,000",
+          priceRange: "$2,000 - $4,000",
+          period: "One-Time Payment",
+          description: "Basic mobile app + admin panel",
+          features: [
+            "2 design concepts",
+            "Weekly updates",
+            "Mobile app plus admin dashboard",
+            "1-3 Months delivery",
+            "App Store + Play Store launch",
+            "1 month support",
+            "Slack, Loom, and meeting communication",
+          ],
+        },
+        subscription: {
+          price: "$100",
+          priceRange: "$100 - $200/mo",
+          period: "per month",
+          description: "Design + minor dev support",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "2 weekly updates",
+            "Unlimited changes",
+            "Constant support",
+            "Source code ownership after 18 months",
+          ],
+        },
+      },
+      growth: {
+        name: "Growth",
+        popular: true,
+        icon: <Zap className="w-4 h-4" />,
+        oneTime: {
+          price: "$5,000",
+          priceRange: "$5,000 - $10,000",
+          period: "One-Time Payment",
+          description: "Complex UI + interactions for funded startups",
+          features: [
+            "2 design concepts",
+            "Weekly updates",
+            "Mobile app plus admin dashboard",
+            "1-3 Months delivery",
+            "App Store + Play Store launch",
+            "1 month support",
+            "Slack, Loom, and meeting communication",
+            "Advanced UI/UX design",
+          ],
+        },
+        subscription: {
+          price: "$250",
+          priceRange: "$250 - $550/mo",
+          period: "per month",
+          description: "Unlimited changes + fast delivery",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "2 weekly updates",
+            "Unlimited changes",
+            "Constant support",
+            "Fast delivery",
+            "Source code ownership after 18 months",
+          ],
+        },
+      },
+      professional: {
+        name: "Scale",
+        oneTime: {
+          price: "$12,000",
+          priceRange: "$12,000 - $20,000+",
+          period: "One-Time Payment",
+          description: "Custom design systems / dashboards",
+          features: [
+            "2 design concepts",
+            "Weekly updates",
+            "Mobile app plus admin dashboard",
+            "1-3 Months delivery",
+            "App Store + Play Store launch",
+            "1 month support",
+            "Slack, Loom, and meeting communication",
+            "Custom design systems",
+            "Enterprise-level support",
+          ],
+        },
+        subscription: {
+          price: "$750",
+          priceRange: "$750 - $1,000/mo",
+          period: "per month",
+          description: "Full product design partnership",
+          features: [
+            "All one-time features+",
+            "Weekly progress meetings",
+            "2 weekly updates",
+            "Unlimited changes",
+            "Constant support",
+            "Multiple products support",
+            "Source code ownership after 18 months",
+          ],
+        },
+      },
     },
   },
 ]
@@ -195,33 +369,60 @@ function PricingCard({
   buttonRef: (el: HTMLDivElement | null) => void
 }) {
   const [plan, setPlan] = useState<PricingPlan>("oneTime")
-  const currentPlan = data[plan]
+  const [selectedPackage, setSelectedPackage] = useState<PackageTier>("growth")
+
+  const currentPackage = data.packages[selectedPackage]
+  const currentPlan = currentPackage[plan]
 
   return (
     <div className="flex flex-col">
       <div ref={cardRef}>
-        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 min-h-[450px] flex flex-col justify-between w-full">
+        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-[750px] flex flex-col justify-between w-full">
           <div className="relative p-8 md:p-10 flex flex-col h-full">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 tracking-tight leading-tight">{data.title}</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">{data.title}</h3>
 
-            {/* Pricing */}
-            <div className="text-center mb-12">
+            <div className="flex gap-2 mb-8 flex-wrap h-[60px] items-start">
+              {(Object.keys(data.packages) as PackageTier[]).map((tier) => {
+                const pkg = data.packages[tier]
+                const isSelected = selectedPackage === tier
+                return (
+                  <button
+                    key={tier}
+                    onClick={() => setSelectedPackage(tier)}
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isSelected ? "bg-[#054F56] text-white shadow-md" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    {pkg.icon && <span className={isSelected ? "text-white" : "text-[#054F56]"}>{pkg.icon}</span>}
+                    <span>{pkg.name}</span>
+                    {pkg.popular && (
+                      <span className="absolute -top-2 -right-2 bg-teal-600 text-white text-xs px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm">
+                        Most Popular
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="text-center mb-8 h-[140px] flex flex-col justify-center">
               <div
-                key={currentPlan.price}
-                className="text-5xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
+                key={`${selectedPackage}-${currentPlan.price}`}
+                className="text-5xl md:text-6xl font-bold text-gray-900 mb-2 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
               >
                 {currentPlan.price}
               </div>
-              <div className="text-gray-500 text-base font-medium tracking-wide">
-                {plan === "subscription" ? "per month" : ""}
+              {currentPlan.priceRange && <div className="text-sm text-gray-500 mb-2">{currentPlan.priceRange}</div>}
+              <div className="text-gray-500 text-base font-medium tracking-wide mb-3">
+                {plan === "subscription" ? "per month" : currentPlan.period}
               </div>
+              {currentPlan.description && <p className="text-sm text-gray-600 italic">{currentPlan.description}</p>}
             </div>
 
-            {/* Features */}
-            <div className="space-y-4 mb-10 flex-1 min-h-[280px]">
+            <div className="space-y-4 mb-10 flex-1 h-[280px] pr-2">
               {currentPlan.features.map((feature, index) => (
                 <div
-                  key={`${plan}-${index}`}
+                  key={`${plan}-${selectedPackage}-${index}`}
                   className="flex items-start gap-3 text-gray-700 animate-in fade-in slide-in-from-left-2"
                   style={{
                     animationDelay: `${index * 50}ms`,
@@ -237,7 +438,6 @@ function PricingCard({
               ))}
             </div>
 
-            {/* Toggle Switch (only subscription label visible) */}
             <div className="flex items-center justify-center gap-1 mb-8">
               <button
                 onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
@@ -264,7 +464,6 @@ function PricingCard({
         </Card>
       </div>
 
-      {/* Action Buttons */}
       <div ref={buttonRef} className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
         <Button className="w-full sm:w-1/2 h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
           Schedule a Meeting
