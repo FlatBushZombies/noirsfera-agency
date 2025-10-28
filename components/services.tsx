@@ -39,22 +39,24 @@ export function Services() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      // Animate service cards
+      // Fade-in + slight upward slide animation for each service card
       cardsRef.current.forEach((card, index) => {
         if (!card) return
 
         gsap.fromTo(
           card,
-          { opacity: 0, y: 60 },
+          { opacity: 0, y: 80, scale: 0.98 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.6,
-            delay: index * 0.1,
-            ease: "power2.out",
+            scale: 1,
+            duration: 0.9,
+            delay: index * 0.15,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 90%",
+              start: "top 95%", // makes it appear slightly earlier
+              end: "bottom 70%",
               toggleActions: "play none none none",
               once: true,
             },
@@ -62,16 +64,16 @@ export function Services() {
         )
       })
 
-      // Animate CTA div with fade + scale effect
+      // Animate CTA section
       if (ctaRef.current) {
         gsap.fromTo(
           ctaRef.current,
-          { opacity: 0, y: 40, scale: 0.95 },
+          { opacity: 0, y: 60, scale: 0.95 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.8,
+            duration: 1,
             ease: "power3.out",
             scrollTrigger: {
               trigger: ctaRef.current,
@@ -93,12 +95,12 @@ export function Services() {
       if (!el) return prev
 
       if (prev === index) {
-        gsap.to(el, { height: 0, duration: 0.3, ease: "power2.inOut" })
+        gsap.to(el, { height: 0, duration: 0.35, ease: "power2.inOut" })
         return null
       }
 
       const scrollHeight = el.scrollHeight
-      gsap.to(el, { height: scrollHeight, duration: 0.35, ease: "power2.out" })
+      gsap.to(el, { height: scrollHeight, duration: 0.4, ease: "power2.out" })
 
       if (prev !== null) {
         const prevEl = document.getElementById(`details-${prev}`)
@@ -110,7 +112,11 @@ export function Services() {
   }
 
   return (
-    <section ref={sectionRef} id="services" className="pt-0 md:pt-4 pb-14 md:pb-24 px-6 md:px-12 bg-white">
+    <section
+      ref={sectionRef}
+      id="services"
+      className="pt-4 pb-16 md:pb-24 px-6 md:px-12 bg-white overflow-hidden"
+    >
       <div className="max-w-[1400px] mx-auto space-y-16">
         <div className="text-center space-y-4">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight font-inter">
@@ -126,13 +132,15 @@ export function Services() {
                 cardsRef.current[index] = el
               }}
               className="group relative rounded-3xl p-8 bg-gradient-to-br from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-              style={{ boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)" }}
+              style={{ boxShadow: "0 6px 24px rgba(0, 0, 0, 0.08)" }}
             >
+              {/* Glow effect on hover */}
               <div
-                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ boxShadow: "0 0 30px rgba(0, 211, 243, 0.6), inset 0 0 30px rgba(0, 211, 243, 0.1)" }}
+                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                style={{ boxShadow: "0 0 40px rgba(0, 211, 243, 0.6), inset 0 0 30px rgba(0, 211, 243, 0.1)" }}
               />
 
+              {/* Top Illustrations */}
               <div className="relative mb-6 h-32 rounded-2xl bg-gradient-to-br from-[#00D3F3]/10 to-[#00D3F3]/5 flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent" />
                 {index === 0 && (
@@ -164,22 +172,31 @@ export function Services() {
                 )}
               </div>
 
+              {/* Text Content */}
               <div className="relative space-y-6">
                 <div className="space-y-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">{service.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">
+                    {service.title}
+                  </h3>
                   <p className="text-base text-gray-600 leading-relaxed">{service.subtitle}</p>
                 </div>
 
+                {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
                   className="flex items-center gap-2 text-sm font-semibold text-black hover:text-[#00D3F3] transition-colors duration-200 focus:outline-none"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
-                  {openIndex === index ? <Minus className="w-5 h-5 text-[#00D3F3]" /> : <Plus className="w-5 h-5" />}
+                  {openIndex === index ? (
+                    <Minus className="w-5 h-5 text-[#00D3F3]" />
+                  ) : (
+                    <Plus className="w-5 h-5" />
+                  )}
                   <span>{openIndex === index ? "Show Less" : "Show More"}</span>
                 </button>
 
+                {/* Accordion Content */}
                 <div
                   id={`details-${index}`}
                   className="overflow-hidden transition-all duration-300"
@@ -199,10 +216,8 @@ export function Services() {
           ))}
         </div>
 
-        <div
-          ref={ctaRef}
-          className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20"
-        >
+        {/* Call to Action */}
+        <div ref={ctaRef} className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20">
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance font-inter">
             Ready to transform your digital presence?
           </h3>

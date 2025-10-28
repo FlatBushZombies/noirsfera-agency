@@ -51,7 +51,7 @@ const Home: React.FC = () => {
         </section>
 
         {/* Contact Section - Extra bottom padding before footer */}
-        <section className="w-full flex flex-col items-center justify-center pt-16 md:pt-24 lg:pt-32 pb-20 md:pb-28 lg:pb-32">
+        <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-16 lg:pt-24 pb-20 md:pb-28 lg:pb-32">
           <Contact />
         </section>
         {/* </CHANGE> */}

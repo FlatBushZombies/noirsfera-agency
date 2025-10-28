@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
     company: "tutschool.ru",
     image: "/Yulia.jpg",
     rating: 5,
-    text: "I contacted the company noirsfera with a request to create a website for a language studio. First, we discussed the technical requirements. The team asked many questions to take all my wishes into account. In the end, I really liked the result — a stylish and modern website with all the necessary information and the ability to post promotions on built-in banners. I'm very happy with the collaboration and grateful for the excellent result!",
+    text: "I contacted the company noirsfera with a request to create a website for a language studio. The team asked many questions to take all my wishes into account. The result was a stylish and modern website — I’m very happy with the collaboration and grateful for the excellent result!",
   },
   {
     id: 2,
@@ -30,7 +30,7 @@ const testimonials: Testimonial[] = [
     company: "from profi.ru",
     image: "/profi.jpg",
     rating: 5,
-    text: "The freelancer did an excellent job with our project. Communication was transparent, deadlines were met, and the final product exceeded expectations, great performance and seamless integration with Firebase.High professionalism, reliability, and strong skills, we'll be happy to work together again.",
+    text: "The freelancer did an excellent job with our project. Communication was transparent, deadlines were met, and the final product exceeded expectations. Great performance and seamless integration with Firebase — highly recommend!",
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const testimonials: Testimonial[] = [
     company: "from profi.ru",
     image: "/profi.jpg",
     rating: 5,
-    text: "Excellent specialist! Quickly and efficiently developed new functionality, optimized the code, and suggested useful improvements. Everything was done on time, highly recommend!",
+    text: "A pleasure to work with — professional, fast, and communicative. Delivered everything as promised and exceeded expectations!",
   },
 ]
 
@@ -58,9 +58,10 @@ export function Testimonials() {
     <section
       id="testimonials"
       ref={sectionRef}
-      className="pt-4 md:pt-6 pb-6 md:pb-16 bg-background font-inter overflow-hidden"
+      className="pt-6 md:pt-10 pb-10 md:pb-20 bg-background font-inter overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,53 +73,63 @@ export function Testimonials() {
             Client Testimonials
           </p>
           <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
-            People we've worked with have said some nice things…
+            People we’ve worked with have said some nice things…
           </h2>
         </motion.div>
 
-        <div className="relative">
+        {/* Infinite Scroll Section */}
+        <div className="relative w-full overflow-hidden">
           <motion.div
             className="flex gap-4 md:gap-6"
             animate={{
-              x: [0, -1200],
+              x: ["0%", "-50%"],
             }}
             transition={{
               x: {
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: Infinity,
                 repeatType: "loop",
-                duration: 20,
+                duration: 45, // ⬅️ slower scroll speed
                 ease: "linear",
               },
             }}
           >
-            {/* Render testimonials twice for seamless loop */}
+            {/* Double testimonials for seamless loop */}
             {[...testimonials, ...testimonials].map((testimonial, index) => (
               <motion.div
                 key={`${testimonial.id}-${index}`}
-                className="group relative flex-shrink-0 w-[350px]"
+                className="group relative flex-shrink-0 w-[300px] sm:w-[340px] md:w-[360px]"
                 onMouseEnter={() => setHoveredCard(testimonial.id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 style={{ perspective: "1000px" }}
               >
-                <div
-                  className="relative transition-all duration-500 ease-out h-full"
-                  style={{
-                    transform: hoveredCard === testimonial.id ? "translateY(-6px)" : "translateY(0)",
+                <motion.div
+                  animate={{
+                    y: hoveredCard === testimonial.id ? -6 : 0,
                   }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full"
                 >
                   <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
                     <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
+                      {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]"
+                          />
                         ))}
                       </div>
 
-                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{testimonial.text}"</p>
+                      {/* Text */}
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">
+                        “{testimonial.text}”
+                      </p>
 
+                      {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
-                          src={testimonial.image || "/profi.jpg"}
+                          src={testimonial.image}
                           alt={testimonial.name}
                           width={44}
                           height={44}
@@ -128,12 +139,14 @@ export function Testimonials() {
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                             {testimonial.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">{testimonial.company}</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            {testimonial.company}
+                          </p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>

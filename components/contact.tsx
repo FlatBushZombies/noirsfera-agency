@@ -112,7 +112,7 @@ export default function Contact() {
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-24 px-4 overflow-hidden font-inter">
+    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-12 md:py-16 px-4 overflow-hidden font-inter">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">
