@@ -11,7 +11,6 @@ import Pricing from "@/components/pricing"
 import { Services } from "@/components/services"
 import { Testimonials } from "@/components/testimonials"
 
-
 const Home: React.FC = () => {
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
@@ -30,8 +29,8 @@ const Home: React.FC = () => {
           <Services />
         </section>
 
-        {/* Portfolio Section */}
-        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
+        {/* Portfolio Section - Full Width */}
+        <section className="w-screen flex flex-col items-center justify-center py-16 md:py-24 lg:py-32 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
           <Portfolio />
         </section>
 
@@ -40,8 +39,8 @@ const Home: React.FC = () => {
           <Pricing />
         </section>
 
-        {/* Testimonials Section */}
-        <section className="w-full flex flex-col items-center justify-center py-8 md:py-16 lg:py-32">
+        {/* Testimonials Section - Full Width */}
+        <section className="w-screen flex flex-col items-center justify-center py-8 md:py-16 lg:py-32 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
           <Testimonials />
         </section>
 
@@ -50,11 +49,10 @@ const Home: React.FC = () => {
           <FAQ />
         </section>
 
-        {/* Contact Section - Extra bottom padding before footer */}
+        {/* Contact Section */}
         <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-16 lg:pt-24 pb-20 md:pb-18 lg:pb-24">
           <Contact />
         </section>
-        {/* </CHANGE> */}
       </div>
 
       {/* Footer */}

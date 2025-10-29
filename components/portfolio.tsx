@@ -103,6 +103,10 @@ export default function Portfolio() {
         </div>
 
         <div className="relative overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none backdrop-blur-sm" />
+
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none backdrop-blur-sm" />
+
           <motion.div
             className="flex gap-6"
             style={{

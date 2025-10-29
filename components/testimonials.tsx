@@ -60,7 +60,7 @@ export function Testimonials() {
       ref={sectionRef}
       className="pt-6 md:pt-10 pb-10 md:pb-20 bg-background font-inter overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,6 +79,10 @@ export function Testimonials() {
 
         {/* Infinite Scroll Section */}
         <div className="relative w-full overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
+
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
+
           <motion.div
             className="flex gap-4 md:gap-6"
             animate={{
@@ -86,7 +90,7 @@ export function Testimonials() {
             }}
             transition={{
               x: {
-                repeat: Infinity,
+                repeat: Number.POSITIVE_INFINITY,
                 repeatType: "loop",
                 duration: 45, // ⬅️ slower scroll speed
                 ease: "linear",
@@ -114,22 +118,17 @@ export function Testimonials() {
                       {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]"
-                          />
+                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                         ))}
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">
-                        “{testimonial.text}”
-                      </p>
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">“{testimonial.text}”</p>
 
                       {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
-                          src={testimonial.image}
+                          src={testimonial.image || "/placeholder.svg"}
                           alt={testimonial.name}
                           width={44}
                           height={44}
@@ -139,9 +138,7 @@ export function Testimonials() {
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                             {testimonial.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">
-                            {testimonial.company}
-                          </p>
+                          <p className="text-xs md:text-sm text-muted-foreground">{testimonial.company}</p>
                         </div>
                       </div>
                     </CardContent>
