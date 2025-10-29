@@ -41,8 +41,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "DMB Pay+",
-    description:
-      "Secure digital payment platform with intuitive user interface and real-time transaction tracking.",
+    description: "Secure digital payment platform with intuitive user interface and real-time transaction tracking.",
     tags: ["Mobile App", "web3"],
     duration: "10 weeks",
     industry: "FinTech",
@@ -172,7 +171,7 @@ export default function Portfolio() {
                       transformStyle: "preserve-3d",
                     }}
                   >
-                    <div className="relative rounded-[2.5rem] overflow-hidden bg-neutral-900 shadow-2xl border border-white/10">
+                    <div className="relative rounded-[2.5rem] overflow-hidden bg-neutral-900 shadow-2xl border-2 border-white/30 shadow-white/20 ring-2 ring-white/10 ring-offset-4 ring-offset-black">
                       {/* Project Image - Full card */}
                       <div className="relative aspect-[4/3] w-full">
                         <Image
@@ -180,9 +179,15 @@ export default function Portfolio() {
                           alt={projects[currentIndex].imageAlt}
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          quality={100}
+                          priority
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
                         />
                         {/* Overlay gradient */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                        {/* Inner glow effect */}
+                        <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(255,255,255,0.1)] pointer-events-none" />
 
                         {/* Project info overlay */}
                         <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
@@ -269,7 +274,7 @@ export default function Portfolio() {
             aria-label="Previous project"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
           <button
@@ -278,7 +283,7 @@ export default function Portfolio() {
             aria-label="Next project"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
         </div>

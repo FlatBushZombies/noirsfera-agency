@@ -268,17 +268,12 @@ export default function Pricing() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      // Animate pricing cards
       cardsRef.current.forEach((card, index) => {
         if (!card) return
 
         gsap.fromTo(
           card,
-          {
-            opacity: 0,
-            y: 80,
-            scale: 0.95,
-          },
+          { opacity: 0, y: 80, scale: 0.95 },
           {
             opacity: 1,
             y: 0,
@@ -289,32 +284,6 @@ export default function Pricing() {
             scrollTrigger: {
               trigger: card,
               start: "top 85%",
-              toggleActions: "play none none none",
-              once: true,
-            },
-          },
-        )
-      })
-
-      // Animate buttons
-      buttonsRef.current.forEach((buttonContainer, index) => {
-        if (!buttonContainer) return
-
-        gsap.fromTo(
-          buttonContainer,
-          {
-            opacity: 0,
-            y: 40,
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            delay: index * 0.15 + 0.3,
-            ease: "back.out(1.5)",
-            scrollTrigger: {
-              trigger: buttonContainer,
-              start: "top 90%",
               toggleActions: "play none none none",
               once: true,
             },
@@ -333,7 +302,6 @@ export default function Pricing() {
       className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white pt-8 md:pt-12 pb-16 px-4 font-inter"
     >
       <div className="relative max-w-7xl mx-auto">
-        {/* Heading */}
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight leading-tight">
             Choose Your Plan
@@ -343,7 +311,6 @@ export default function Pricing() {
           </p>
         </div>
 
-        {/* Pricing Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
           {pricingData.map((card, index) => (
             <PricingCard
@@ -376,13 +343,6 @@ function PricingCard({
 
   const ToggleSwitch = ({ className = "" }: { className?: string }) => (
     <div className={`flex items-center justify-center gap-2 md:gap-3 ${className}`}>
-      <span
-        className={`text-xs md:text-sm font-medium transition-colors ${
-          plan === "oneTime" ? "text-gray-900" : "text-gray-400"
-        }`}
-      >
-        
-      </span>
       <button
         onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
         className={`relative w-14 h-7 md:w-16 md:h-8 rounded-full transition-colors duration-300 ${
@@ -409,8 +369,11 @@ function PricingCard({
   return (
     <div className="flex flex-col">
       <div ref={cardRef}>
-        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-auto md:h-[750px] flex flex-col justify-between w-full">
+        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-[750px] flex flex-col justify-between w-full">
           <div className="relative p-6 md:p-8 lg:p-10 flex flex-col h-full">
+
+            <ToggleSwitch className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2" />
+
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight leading-tight">
               {data.title}
             </h3>
@@ -427,11 +390,7 @@ function PricingCard({
                       isSelected ? "bg-[#054F56] text-white shadow-md" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
-                    {pkg.icon && (
-                      <span className={`w-3 h-3 md:w-4 md:h-4 ${isSelected ? "text-white" : "text-[#054F56]"}`}>
-                        {pkg.icon}
-                      </span>
-                    )}
+                    {pkg.icon && <span className={`w-3 h-3 md:w-4 md:h-4 ${isSelected ? "text-white" : "text-[#054F56]"}`}>{pkg.icon}</span>}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
                       <span className="absolute -top-1.5 md:-top-2 -right-1.5 md:-right-2 bg-teal-600 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm">
@@ -443,36 +402,24 @@ function PricingCard({
               })}
             </div>
 
-            <div className="text-center mb-6 md:mb-8 min-h-[120px] md:min-h-[140px] flex flex-col justify-center">
-              <div
-                key={`${selectedPackage}-${currentPlan.price}`}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-2 tracking-tight animate-in fade-in slide-in-from-top-4 duration-700"
-              >
+            <div className="text-center mb-6 md:mb-8">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-2 tracking-tight">
                 {currentPlan.price}
               </div>
               {currentPlan.priceRange && (
-                <div className="text-xs md:text-sm text-gray-500 mb-2">{currentPlan.priceRange}</div>
+                <div className="text-xs md:text-sm text-gray-500 mb-2">
+                  {currentPlan.priceRange}
+                </div>
               )}
-              <div className="text-gray-500 text-sm md:text-base font-medium tracking-wide mb-2 md:mb-3">
+              <div className="text-gray-500 text-sm md:text-base font-medium tracking-wide mb-3">
                 {plan === "subscription" ? "per month" : currentPlan.period}
               </div>
-              {currentPlan.description && (
-                <p className="text-xs md:text-sm text-gray-600 italic px-2">{currentPlan.description}</p>
-              )}
             </div>
 
-            <div className="space-y-3 md:space-y-4 mb-8 md:mb-10 flex-1 min-h-[200px] md:h-[280px] pr-2">
+            <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto">
               {currentPlan.features.map((feature, index) => (
-                <div
-                  key={`${plan}-${selectedPackage}-${index}`}
-                  className="flex items-start gap-2 md:gap-3 text-gray-700 animate-in fade-in slide-in-from-left-2"
-                  style={{
-                    animationDelay: `${index * 50}ms`,
-                    animationDuration: "500ms",
-                    animationFillMode: "both",
-                  }}
-                >
-                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#054F56] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-2 md:gap-3 text-gray-700">
+                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#054F56] flex items-center justify-center mt-0.5">
                     <Check className="w-2.5 h-2.5 md:w-3 md:h-3 text-white" strokeWidth={3} />
                   </div>
                   <span className="text-xs md:text-sm leading-relaxed font-normal">{feature}</span>
@@ -480,23 +427,18 @@ function PricingCard({
               ))}
             </div>
 
-            <ToggleSwitch className="mb-6 md:mb-8 mt-auto md:hidden" />
+            <ToggleSwitch className="mt-6 md:hidden" />
+
           </div>
         </Card>
       </div>
-
-      <ToggleSwitch className="hidden md:flex mt-6 mb-4" />
 
       <div ref={buttonRef} className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-2 w-full">
         <Button className="w-full sm:w-1/2 h-12 md:h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
           Schedule a Meeting
         </Button>
-
         <a href="https://t.me/itslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
-          <Button
-            variant="outline"
-            className="w-full h-12 md:h-14 bg-white border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56] hover:text-white font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
-          >
+          <Button variant="outline" className="w-full h-12 md:h-14 bg-white border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56] hover:text-white font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
             Connect on Telegram
           </Button>
         </a>
