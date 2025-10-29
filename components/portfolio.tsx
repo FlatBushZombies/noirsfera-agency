@@ -79,7 +79,7 @@ export default function Portfolio() {
   const duplicatedProjects = [...projects, ...projects, ...projects]
 
   return (
-    <section id="portfolio" ref={sectionRef} className="w-full bg-white py-24 px-6">
+    <section id="portfolio" ref={sectionRef} className="w-full bg-white py-12 px-3">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">

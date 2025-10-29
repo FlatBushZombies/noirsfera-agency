@@ -4,6 +4,7 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { Button } from "@/components/ui/button"
+import { FlipWords } from "./ui/shadcn-io/flip-words"
 import Image from "next/image"
 
 export function Hero() {
@@ -64,6 +65,8 @@ export function Hero() {
     window.open("https://t.me/@itslucki", "_blank")
   }
 
+  const words = ["businesses", "startups", "brands"];
+
   return (
     <section
       id="about"
@@ -87,7 +90,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance font-inter"
             >
-              Modernising businesses through <span className="text-[#0EC8F3] font-space-boards">futuristic</span>{" "}
+              Modernising <FlipWords words={words} duration={500} letterDelay={0.05} wordDelay={0.3} /> through <span className="text-[#0EC8F3] font-space-boards">futuristic</span>{" "}
               software
             </h1>
           </div>
