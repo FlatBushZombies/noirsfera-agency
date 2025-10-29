@@ -1,9 +1,8 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
-import { useRef } from "react"
 import Link from "next/link"
 
 interface Project {
@@ -29,7 +28,7 @@ const projects: Project[] = [
     industry: "SaaS",
     image: "/tutschool.png",
     imageAlt: "TutSchool Website",
-    link: "#",
+    link: "https://tutschool.ru/",
   },
   {
     id: 2,
@@ -40,7 +39,7 @@ const projects: Project[] = [
     industry: "Resort",
     image: "/camp-guide.png",
     imageAlt: "Camp Guide Landing Page",
-    link: "#",
+    link: "https://resonant-sunflower-1bb1e7.netlify.app/",
   },
   {
     id: 3,
@@ -51,7 +50,7 @@ const projects: Project[] = [
     industry: "FinTech",
     image: "/crypto_pay.png",
     imageAlt: "Web3 Platform",
-    link: "#",
+    link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
   },
 ]
 
@@ -103,9 +102,11 @@ export default function Portfolio() {
         </div>
 
         <div className="relative overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none backdrop-blur-sm" />
+          {/* Left Gradient */}
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
 
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none backdrop-blur-sm" />
+          {/* Right Gradient */}
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
 
           <motion.div
             className="flex gap-6"
@@ -133,7 +134,7 @@ export default function Portfolio() {
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-all duration-300">
                       <Link
                         href={project.link}
-                        className="px-8 py-4 bg-gray-200 hover:bg-gray-300 text-black font-medium rounded-full transition-colors duration-200"
+                        className="px-8 py-4 bg-gray-200 hover:bg-gray-300 text-black font-medium font-inter rounded-full transition-colors duration-200"
                       >
                         View Project
                       </Link>
