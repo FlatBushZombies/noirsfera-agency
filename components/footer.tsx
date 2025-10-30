@@ -71,7 +71,7 @@ export default function Footer() {
                   </svg>
                 </div>
                  <a
-                 href="https://t.me/@itslucki"
+                 href="https://t.me/@itsslucki"
                  target="_blank"
                  rel="noopener noreferrer"
                  className="flex-1"
@@ -108,7 +108,7 @@ export default function Footer() {
     <Instagram size={20} />
   </a>
 
-  <a href="https://t.me/noirsfera" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
+  <a href="https://t.me/itsslucki" className="hover:text-cyan-400 transition-colors duration-200" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
     <Send size={20} />
   </a>
 </div>

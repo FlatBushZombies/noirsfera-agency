@@ -231,14 +231,25 @@ export function NavBar() {
                 </motion.a>
               ))}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.1 }}
-              >
-                <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter font-bold rounded-full px-5 py-2 text-sm" size="sm">
-                  Book a Call
-                </Button>
-              </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: (navLinks?.length || 0) * 0.1 }}
+>
+  <a
+    href="https://t.me/itsslucki"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Book a call via Telegram"
+  >
+    <Button
+      className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter font-bold rounded-full px-5 py-2 text-sm"
+      size="sm"
+    >
+      Book a Call
+    </Button>
+  </a>
+</motion.div>
+
             </div>
           </motion.div>
         )}
