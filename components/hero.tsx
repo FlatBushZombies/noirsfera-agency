@@ -90,7 +90,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance font-inter"
             >
-              Modernising <FlipWords words={words} duration={500} letterDelay={0.05} wordDelay={0.3} /> through <span className="text-[#0EC8F3] font-space-boards">futuristic</span>{" "}
+              Modernising <FlipWords words={words} duration={500} letterDelay={0.05} wordDelay={0.3} />through <span className="text-[#0EC8F3] font-space-boards">futuristic</span>{" "}
               software
             </h1>
           </div>
