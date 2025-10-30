@@ -121,7 +121,7 @@ export default function Portfolio() {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-2xl">
+                <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-[0_4px_15px_rgb(0,0,0,0.04)]">
                   <Image
                     src={project.image || "/placeholder.svg?height=1024&width=1024"}
                     alt={project.imageAlt}

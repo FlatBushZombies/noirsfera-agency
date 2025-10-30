@@ -22,7 +22,7 @@ const testimonials: Testimonial[] = [
     company: "tutschool.ru",
     image: "/Yulia.jpg",
     rating: 5,
-    text: "I contacted the company noirsfera with a request to create a website for a language studio. The team asked many questions to take all my wishes into account. The result was a stylish and modern website — I’m very happy with the collaboration and grateful for the excellent result!",
+    text: "I contacted the company noirsfera with a request to create a website for a language studio. The team asked many questions to take all my wishes into account. The result was a stylish and modern website — I'm very happy with the collaboration and grateful for the excellent result!",
   },
   {
     id: 2,
@@ -55,11 +55,7 @@ export function Testimonials() {
   const sectionRef = useRef(null)
 
   return (
-    <section
-      id="testimonials"
-      ref={sectionRef}
-      className="pt-6 md:pt-10 pb-10 md:pb-20 bg-background font-inter overflow-hidden"
-    >
+    <section id="testimonials" ref={sectionRef} className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-inter">
       <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -73,12 +69,12 @@ export function Testimonials() {
             Client Testimonials
           </p>
           <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
-            People we’ve worked with have said some nice things…
+            People we've worked with have said some nice things…
           </h2>
         </motion.div>
 
         {/* Infinite Scroll Section */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden pt-2">
           <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[0.5px]" />
 
           <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
@@ -92,7 +88,7 @@ export function Testimonials() {
               x: {
                 repeat: Number.POSITIVE_INFINITY,
                 repeatType: "loop",
-                duration: 45, // ⬅️ slower scroll speed
+                duration: 45,
                 ease: "linear",
               },
             }}
@@ -123,7 +119,7 @@ export function Testimonials() {
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">“{testimonial.text}”</p>
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{testimonial.text}"</p>
 
                       {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
