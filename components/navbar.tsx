@@ -143,36 +143,46 @@ export function NavBar() {
                     damping: 17,
                   }}
                 >
-                  <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto">
-                    <motion.span
-                      initial={false}
-                      animate={{
-                        y: isButtonHovered ? -30 : 0,
-                        opacity: isButtonHovered ? 0 : 1,
-                      }}
-                      transition={{
-                        duration: 0.2,
-                        ease: "easeInOut",
-                      }}
-                      className="inline-block"
-                    >
-                      Book a Call
-                    </motion.span>
-                    <motion.span
-                      initial={false}
-                      animate={{
-                        y: isButtonHovered ? 0 : 30,
-                        opacity: isButtonHovered ? 1 : 0,
-                      }}
-                      transition={{
-                        duration: 0.2,
-                        ease: "easeInOut",
-                      }}
-                      className="absolute inset-0 flex items-center justify-center"
-                    >
-                      Let's Get Started
-                    </motion.span>
-                  </Button>
+                  <a
+  href="https://t.me/itsslucki"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Book a call via Telegram"
+  className="inline-block"
+>
+  <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto">
+    <motion.span
+      initial={false}
+      animate={{
+        y: isButtonHovered ? -30 : 0,
+        opacity: isButtonHovered ? 0 : 1,
+      }}
+      transition={{
+        duration: 0.2,
+        ease: "easeInOut",
+      }}
+      className="inline-block"
+    >
+      Book a Call
+    </motion.span>
+
+    <motion.span
+      initial={false}
+      animate={{
+        y: isButtonHovered ? 0 : 30,
+        opacity: isButtonHovered ? 1 : 0,
+      }}
+      transition={{
+        duration: 0.2,
+        ease: "easeInOut",
+      }}
+      className="absolute inset-0 flex items-center justify-center"
+    >
+      Let's Get Started
+    </motion.span>
+  </Button>
+</a>
+
                 </motion.div>
               </div>
 
@@ -235,19 +245,20 @@ export function NavBar() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: (navLinks?.length || 0) * 0.1 }}
 >
-  <a
-    href="https://t.me/itsslucki"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Book a call via Telegram"
+  <Button
+    asChild
+    size="sm"
+    className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-inter font-bold rounded-full px-5 py-2 text-sm"
   >
-    <Button
-      className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter font-bold rounded-full px-5 py-2 text-sm"
-      size="sm"
+    <a
+      href="https://t.me/itsslucki"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Book a call via Telegram"
     >
       Book a Call
-    </Button>
-  </a>
+    </a>
+  </Button>
 </motion.div>
 
             </div>

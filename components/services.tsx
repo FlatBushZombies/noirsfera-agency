@@ -221,12 +221,21 @@ export function Services() {
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance font-inter">
             Ready to transform your digital presence?
           </h3>
-          <Button
-            size="lg"
-            className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
-          >
-            Let's Get Started
-          </Button>
+         <Button
+  asChild
+  size="lg"
+  className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
+>
+  <a
+    href="https://t.me/itsslucki"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Start via Telegram"
+  >
+    Let's Get Started
+  </a>
+</Button>
+
         </div>
       </div>
     </section>

@@ -434,9 +434,21 @@ function PricingCard({
       </div>
 
       <div ref={buttonRef} className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-2 w-full">
-        <Button className="w-full sm:w-1/2 h-12 md:h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]">
-          Schedule a Meeting
-        </Button>
+        
+        <Button
+  asChild
+  className="w-full sm:w-1/2 h-12 md:h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+>
+  <a
+    href="https://wa.me/79778148423"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Schedule a Meeting via WhatsApp"
+  >
+    Schedule a Meeting
+  </a>
+</Button>
+
         <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
           <Button variant="outline" className="w-full h-12 md:h-14 bg-white border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56] hover:text-white font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
             Connect on Telegram
