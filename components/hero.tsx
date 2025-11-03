@@ -62,7 +62,7 @@ export function Hero() {
   }
 
   const handleTelegramClick = () => {
-    window.open("https://t.me/@itsslucki", "_blank")
+    window.open("https://t.me/itsslucki", "_blank")
   }
 
   const words = ["businesses", "startups", "brands"];
