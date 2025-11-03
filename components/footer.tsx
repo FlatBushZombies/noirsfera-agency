@@ -71,7 +71,7 @@ export default function Footer() {
                   </svg>
                 </div>
                  <a
-                 href="https://t.me/@itsslucki"
+                 href="https://t.me/itsslucki"
                  target="_blank"
                  rel="noopener noreferrer"
                  className="flex-1"
