@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X } from 'lucide-react'
 import { TiLocationArrow } from "react-icons/ti"
 import { Button } from "@/components/ui/button"
 
@@ -144,45 +144,57 @@ export function NavBar() {
                   }}
                 >
                   <a
-  href="https://t.me/itsslucki"
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Book a call via Telegram"
-  className="inline-block"
->
-  <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto">
-    <motion.span
-      initial={false}
-      animate={{
-        y: isButtonHovered ? -30 : 0,
-        opacity: isButtonHovered ? 0 : 1,
-      }}
-      transition={{
-        duration: 0.2,
-        ease: "easeInOut",
-      }}
-      className="inline-block"
-    >
-      Book a Call
-    </motion.span>
+                    href="https://t.me/itsslucki"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Book a call via Telegram"
+                    className="inline-block"
+                  >
+                    <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto group">
+                      {/* Inner rotating glow border */}
+                      <span 
+                        className="absolute inset-[2px] rounded-full opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300"
+                        style={{
+                          background: 'conic-gradient(from var(--angle), transparent 0%, #FF6B35 10%, #FF6B35 30%, transparent 40%)',
+                          animation: 'spin 3s linear infinite',
+                          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                          WebkitMaskComposite: 'xor',
+                          maskComposite: 'exclude',
+                          padding: '2px',
+                        } as React.CSSProperties}
+                      />
+                      
+                      <motion.span
+                        initial={false}
+                        animate={{
+                          y: isButtonHovered ? -30 : 0,
+                          opacity: isButtonHovered ? 0 : 1,
+                        }}
+                        transition={{
+                          duration: 0.2,
+                          ease: "easeInOut",
+                        }}
+                        className="inline-block relative z-10"
+                      >
+                        Book a Call
+                      </motion.span>
 
-    <motion.span
-      initial={false}
-      animate={{
-        y: isButtonHovered ? 0 : 30,
-        opacity: isButtonHovered ? 1 : 0,
-      }}
-      transition={{
-        duration: 0.2,
-        ease: "easeInOut",
-      }}
-      className="absolute inset-0 flex items-center justify-center"
-    >
-      Let's Get Started
-    </motion.span>
-  </Button>
-</a>
-
+                      <motion.span
+                        initial={false}
+                        animate={{
+                          y: isButtonHovered ? 0 : 30,
+                          opacity: isButtonHovered ? 1 : 0,
+                        }}
+                        transition={{
+                          duration: 0.2,
+                          ease: "easeInOut",
+                        }}
+                        className="absolute inset-0 flex items-center justify-center z-10"
+                      >
+                        Let's Get Started
+                      </motion.span>
+                    </Button>
+                  </a>
                 </motion.div>
               </div>
 
@@ -241,26 +253,25 @@ export function NavBar() {
                 </motion.a>
               ))}
               <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: (navLinks?.length || 0) * 0.1 }}
->
-  <Button
-    asChild
-    size="sm"
-    className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-inter font-bold rounded-full px-5 py-2 text-sm"
-  >
-    <a
-      href="https://t.me/itsslucki"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Book a call via Telegram"
-    >
-      Book a Call
-    </a>
-  </Button>
-</motion.div>
-
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: (navLinks?.length || 0) * 0.1 }}
+              >
+                <Button
+                  asChild
+                  size="sm"
+                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-inter font-bold rounded-full px-5 py-2 text-sm"
+                >
+                  <a
+                    href="https://t.me/itsslucki"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Book a call via Telegram"
+                  >
+                    Book a Call
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}

@@ -134,9 +134,18 @@ export default function Portfolio() {
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-all duration-300">
                       <Link
                         href={project.link}
-                        className="px-8 py-4 bg-gray-200 hover:bg-gray-300 text-black font-medium font-inter rounded-full transition-colors duration-200"
+                        className="relative px-8 py-4 bg-white text-black font-semibold font-inter rounded-full transition-all duration-300 hover:scale-105 group overflow-hidden"
                       >
-                        View Project
+                        {/* Animated glowing border */}
+                        <span className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <span className="absolute inset-[2px] rounded-full bg-white" />
+                        </span>
+                        
+                        {/* Rotating glow effect */}
+                        <span className="absolute inset-[-2px] rounded-full bg-[conic-gradient(from_var(--angle),transparent_0%,#3b82f6_10%,#8b5cf6_20%,#ec4899_30%,transparent_40%)] opacity-0 group-hover:opacity-75 blur-md animate-[spin_3s_linear_infinite]" style={{ "--angle": "0deg" } as React.CSSProperties} />
+                        
+                        {/* Button text */}
+                        <span className="relative z-10">View Project</span>
                       </Link>
                     </div>
                   )}
