@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import { TiLocationArrow } from "react-icons/ti"
 import { Button } from "@/components/ui/button"
 
@@ -150,20 +150,7 @@ export function NavBar() {
                     aria-label="Book a call via Telegram"
                     className="inline-block"
                   >
-                    <Button className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto group">
-                      {/* Inner rotating glow border */}
-                      <span 
-                        className="absolute inset-[2px] rounded-full opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300"
-                        style={{
-                          background: 'conic-gradient(from var(--angle), transparent 0%, #FF6B35 10%, #FF6B35 30%, transparent 40%)',
-                          animation: 'spin 3s linear infinite',
-                          WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                          WebkitMaskComposite: 'xor',
-                          maskComposite: 'exclude',
-                          padding: '2px',
-                        } as React.CSSProperties}
-                      />
-                      
+                    <Button className="bg-[#0EC8F3] text-black hover:bg-white hover:text-black font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto group transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-[#0EC8F3]/20">
                       <motion.span
                         initial={false}
                         animate={{
@@ -171,12 +158,13 @@ export function NavBar() {
                           opacity: isButtonHovered ? 0 : 1,
                         }}
                         transition={{
-                          duration: 0.2,
+                          duration: 0.25,
                           ease: "easeInOut",
                         }}
-                        className="inline-block relative z-10"
+                        className="inline-flex items-center gap-2 relative z-10"
                       >
                         Book a Call
+                        <ArrowRight className="h-4 w-4" />
                       </motion.span>
 
                       <motion.span
@@ -186,12 +174,13 @@ export function NavBar() {
                           opacity: isButtonHovered ? 1 : 0,
                         }}
                         transition={{
-                          duration: 0.2,
+                          duration: 0.25,
                           ease: "easeInOut",
                         }}
-                        className="absolute inset-0 flex items-center justify-center z-10"
+                        className="absolute inset-0 flex items-center justify-center gap-2 z-10"
                       >
                         Let's Get Started
+                        <ArrowRight className="h-4 w-4" />
                       </motion.span>
                     </Button>
                   </a>
@@ -200,7 +189,7 @@ export function NavBar() {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden p-2 text-foreground hover:text-[#0EC8F3] transition-colors"
+                className="md:hidden p-2 text-foreground hover:text-[#0EC8F3] transition-colors hover:bg-white/5 rounded-lg"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
@@ -255,20 +244,22 @@ export function NavBar() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: (navLinks?.length || 0) * 0.1 }}
+                transition={{ delay: (navLinks?.length ?? 0) * 0.1 }}
               >
                 <Button
                   asChild
                   size="sm"
-                  className="bg-[#0EC8F3] text-black hover:bg-[#0EC8F3]/90 font-inter font-bold rounded-full px-5 py-2 text-sm"
+                  className="group bg-[#0EC8F3] text-black hover:bg-white hover:text-black font-inter font-bold rounded-full px-6 py-3 text-base transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-[#0EC8F3]/20"
                 >
                   <a
                     href="https://t.me/itsslucki"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Book a call via Telegram"
+                    className="flex items-center gap-2"
                   >
                     Book a Call
+                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </Button>
               </motion.div>
