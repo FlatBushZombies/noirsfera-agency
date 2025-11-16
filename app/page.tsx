@@ -20,37 +20,37 @@ const Home: React.FC = () => {
       {/* Page Content Wrapper */}
       <div className="flex-1 flex flex-col w-full px-4 sm:px-6 lg:px-16">
         {/* Hero Section */}
-        <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-16">
+        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
           <Hero />
         </section>
 
         {/* Services Section */}
-        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
+        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
           <Services />
         </section>
 
         {/* Portfolio Section - Full Width */}
-        <section className="w-screen flex flex-col items-center justify-center py-16 md:py-24 lg:py-32 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
+        <section className="w-screen flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
           <Portfolio />
         </section>
 
         {/* Pricing Section */}
-        <section className="w-full flex flex-col items-center justify-center py-8 md:py-16 lg:py-32">
+        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
           <Pricing />
         </section>
 
         {/* Testimonials Section - Full Width */}
-        <section className="w-screen flex flex-col items-center justify-center py-8 md:py-16 lg:py-32 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
+        <section className="w-screen flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
           <Testimonials />
         </section>
 
         {/* FAQ Section */}
-        <section className="w-full flex flex-col items-center justify-center py-16 md:py-24 lg:py-32">
+        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
           <FAQ />
         </section>
 
         {/* Contact Section */}
-        <section className="w-full flex flex-col items-center justify-center pt-8 md:pt-16 lg:pt-24 pb-20 md:pb-18 lg:pb-24">
+        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 pb-16 md:pb-20 lg:pb-24">
           <Contact />
         </section>
       </div>
