@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://noirsfera.com
+
+# Sitemaps
+Sitemap: https://noirsfera.com/sitemap.xml
