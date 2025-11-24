@@ -110,7 +110,7 @@ export function NavBar() {
                     className={`px-4 py-2 font-medium transition-colors rounded-lg ${
                       activeSection === link.href.substring(1)
                         ? "text-primary bg-primary/10"
-                        : "text-white hover:text-foreground"
+                        : "text-white hover:text-white"
                     }`}
                     whileHover={{ y: -2 }}
                     whileTap={{ y: 0 }}
