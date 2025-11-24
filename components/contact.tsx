@@ -1,6 +1,7 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
+import type React from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -15,7 +16,6 @@ gsap.registerPlugin(ScrollTrigger)
 type FieldType = "name" | "email" | "message" | null
 
 export default function Contact() {
-  
   const [hoveredField, setHoveredField] = useState<FieldType>(null)
   const [focusedField, setFocusedField] = useState<FieldType>(null)
   const [loading, setLoading] = useState(false)
@@ -105,30 +105,43 @@ export default function Contact() {
         toast.error("Failed to send message. Please try again")
       }
     } catch (error) {
-      toast.error("An error occured")
+      toast.error("An error occurred")
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-white py-12 md:py-16 px-4 overflow-hidden font-inter">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div className="space-y-6">
-            <h2 ref={headingRef} className="text-5xl md:text-6xl font-bold text-gray-900 text-balance">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="relative w-full py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 overflow-hidden bg-gradient-to-b from-background via-background to-surface"
+    >
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -ml-48 -mt-48" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48 -mb-48" />
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+          {/* Left Content */}
+          <div className="space-y-8">
+            <h2
+              ref={headingRef}
+              className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground text-balance leading-tight tracking-tight font-display"
+            >
               Get in{" "}
               <span className="relative inline-block">
-                <span className="relative z-10">Touch</span>
-                <span className="absolute bottom-2 left-0 w-full h-3 bg-[#00BFA6] opacity-30 -rotate-1" />
+                <span className="relative z-10 text-primary">Touch</span>
+                <span className="absolute bottom-2 left-0 w-full h-4 bg-primary/20 -rotate-1 blur-sm" />
               </span>
             </h2>
-            <p ref={descriptionRef} className="text-lg text-gray-600 font-normal">
-              Ready to start a project with us? Let’s create something amazing together.
+            <p ref={descriptionRef} className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
+              Ready to start a project with us? Let's create something amazing together.
             </p>
 
-            <div ref={ctaContainerRef} className="space-y-4 pt-4">
-              <button className="group text-[#00BFA6] hover:text-[#00A88E] font-medium inline-flex items-center gap-2 transition-all hover:gap-3">
+            <div ref={ctaContainerRef} className="space-y-6 pt-4">
+              <button className="group text-primary hover:text-primary/80 font-bold inline-flex items-center gap-2 transition-all hover:gap-3 text-base">
                 <Sparkles className="w-5 h-5" />
                 View our recent work
                 <svg
@@ -140,54 +153,80 @@ export default function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-              <div className="flex flex-wrap gap-4">
-                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
-                  <Zap className="w-5 h-5 transition-transform group-hover:rotate-12" />
-                  Quick response time
+              <div className="flex flex-wrap gap-8">
+                <button className="group text-foreground hover:text-primary font-semibold inline-flex items-center gap-3 transition-all text-base">
+                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Zap className="w-5 h-5 text-primary transition-transform group-hover:rotate-12" />
+                  </div>
+                  <span>Quick response time</span>
                 </button>
-                <button className="group text-gray-700 hover:text-[#00BFA6] font-medium inline-flex items-center gap-2 transition-all">
-                  <Star className="w-5 h-5 transition-transform group-hover:scale-110" />
-                  5-star rated service
+                <button className="group text-foreground hover:text-primary font-semibold inline-flex items-center gap-3 transition-all text-base">
+                  <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                    <Star className="w-5 h-5 text-primary transition-transform group-hover:scale-110" />
+                  </div>
+                  <span>5-star rated service</span>
                 </button>
               </div>
             </div>
           </div>
 
-          {/* Form */}
+          {/* Form Section */}
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div ref={nameRef}>
-              <Label htmlFor="name" className="text-gray-700 font-medium mb-2 block">
-                Name
+              <Label htmlFor="name" className="text-foreground font-bold mb-3 block text-base">
+                Full Name
               </Label>
-              <Input id="name" name="name" type="text" placeholder="Your name" required />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="John Doe"
+                required
+                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
+              />
             </div>
 
             <div ref={emailRef}>
-              <Label htmlFor="email" className="text-gray-700 font-medium mb-2 block">
-                Email
+              <Label htmlFor="email" className="text-foreground font-bold mb-3 block text-base">
+                Email Address
               </Label>
-              <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="hello@example.com"
+                required
+                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
+              />
             </div>
 
             <div ref={messageRef}>
-              <Label htmlFor="message" className="text-gray-700 font-medium mb-2 block">
+              <Label htmlFor="message" className="text-foreground font-bold mb-3 block text-base">
                 Message
               </Label>
-              <Textarea id="message" name="message" placeholder="Tell us about your project..." rows={6} required />
+              <Textarea
+                id="message"
+                name="message"
+                placeholder="Tell us about your project and goals..."
+                rows={6}
+                required
+                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none"
+              />
             </div>
 
-            <div className="relative inline-block">
+            <div className="relative inline-block pt-4 w-full">
               <Button
                 ref={buttonRef}
                 type="submit"
                 disabled={loading}
-                className="w-full md:w-auto bg-[#00D3F3] hover:bg-[#00B8D4] text-white font-semibold px-8 py-6 text-lg transition-colors relative z-10"
+                className="w-full bg-primary hover:bg-[#00C7E6] text-white font-bold px-10 py-4 text-base rounded-lg transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 relative z-10 h-auto border-0"
                 onMouseEnter={handleButtonHover}
                 onMouseLeave={handleButtonLeave}
               >
                 {loading ? "Sending..." : "Send Message"}
               </Button>
 
+              {/* Fireworks particle container */}
               <div
                 ref={fireworksContainerRef}
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
@@ -196,10 +235,10 @@ export default function Contact() {
                 {Array.from({ length: 12 }).map((_, i) => (
                   <div
                     key={i}
-                    className="firework-particle absolute top-0 left-0 w-2 h-2 rounded-full"
+                    className="firework-particle absolute top-0 left-0 w-2.5 h-2.5 rounded-full"
                     style={{
-                      backgroundColor: "#00BFA6",
-                      boxShadow: "0 0 8px #00BFA6, 0 0 12px #00BFA6",
+                      backgroundColor: "#00D9FF",
+                      boxShadow: "0 0 12px #00D9FF, 0 0 24px #00D9FF",
                       opacity: 0,
                       transform: "scale(0)",
                     }}

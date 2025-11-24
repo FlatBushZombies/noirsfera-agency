@@ -299,19 +299,22 @@ export default function Pricing() {
     <section
       ref={sectionRef}
       id="pricing"
-      className="relative min-h-screen bg-gradient-to-b from-gray-50 to-white pt-8 md:pt-12 pb-16 px-4 font-inter"
+      className="relative min-h-screen bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8"
     >
       <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight leading-tight">
+        <div className="text-center mb-20 max-w-3xl mx-auto">
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
+            Transparent Pricing
+          </p>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight font-display text-balance">
             Choose Your Plan
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
             Flexible pricing options designed for your needs
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {pricingData.map((card, index) => (
             <PricingCard
               key={index}
@@ -342,23 +345,23 @@ function PricingCard({
   const currentPlan = currentPackage[plan]
 
   const ToggleSwitch = ({ className = "" }: { className?: string }) => (
-    <div className={`flex items-center justify-center gap-2 md:gap-3 ${className}`}>
+    <div className={`flex items-center justify-center gap-3 ${className}`}>
       <button
         onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
-        className={`relative w-14 h-7 md:w-16 md:h-8 rounded-full transition-colors duration-300 ${
+        className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
           plan === "subscription" ? "bg-[#054F56]" : "bg-gray-300"
         }`}
         aria-label="Toggle pricing plan"
       >
         <div
-          className={`absolute top-0.5 md:top-1 w-6 h-6 md:w-6 md:h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
-            plan === "subscription" ? "translate-x-7 md:translate-x-9" : "translate-x-0.5 md:translate-x-1"
+          className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-md transition-transform duration-300 ${
+            plan === "subscription" ? "translate-x-8" : "translate-x-1"
           }`}
         />
       </button>
       <span
-        className={`text-xs md:text-sm font-medium transition-colors ${
-          plan === "subscription" ? "text-gray-900" : "text-gray-400"
+        className={`text-sm font-semibold transition-colors ${
+          plan === "subscription" ? "text-foreground" : "text-muted"
         }`}
       >
         Subscription
@@ -367,18 +370,17 @@ function PricingCard({
   )
 
   return (
-    <div className="flex flex-col">
-      <div ref={cardRef}>
-        <Card className="relative bg-white border border-gray-200 overflow-hidden group hover:border-[#054F56]/30 hover:shadow-2xl transition-all duration-500 h-[750px] flex flex-col justify-between w-full">
-          <div className="relative p-6 md:p-8 lg:p-10 flex flex-col h-full">
+    <div className="flex flex-col h-full">
+      <div ref={cardRef} className="h-full flex flex-col">
+        <Card className="relative bg-white border-2 border-border hover:border-[#054F56]/30 overflow-hidden group hover:shadow-2xl transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
+          <div className="flex flex-col h-full">
+            <ToggleSwitch className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2" />
 
-            <ToggleSwitch className="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2" />
-
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 tracking-tight leading-tight">
+            <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight leading-tight font-display">
               {data.title}
             </h3>
 
-            <div className="flex gap-1.5 md:gap-2 mb-6 md:mb-8 flex-wrap min-h-[50px] md:min-h-[60px] items-start">
+            <div className="flex gap-2 mb-10 flex-wrap min-h-[60px] items-start">
               {(Object.keys(data.packages) as PackageTier[]).map((tier) => {
                 const pkg = data.packages[tier]
                 const isSelected = selectedPackage === tier
@@ -386,14 +388,16 @@ function PricingCard({
                   <button
                     key={tier}
                     onClick={() => setSelectedPackage(tier)}
-                    className={`relative flex items-center gap-1.5 md:gap-2 px-2.5 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-300 ${
-                      isSelected ? "bg-[#054F56] text-white shadow-md" : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                      isSelected ? "bg-[#054F56] text-white shadow-lg" : "bg-surface text-foreground hover:bg-border"
                     }`}
                   >
-                    {pkg.icon && <span className={`w-3 h-3 md:w-4 md:h-4 ${isSelected ? "text-white" : "text-[#054F56]"}`}>{pkg.icon}</span>}
+                    {pkg.icon && (
+                      <span className={`w-4 h-4 ${isSelected ? "text-white" : "text-[#054F56]"}`}>{pkg.icon}</span>
+                    )}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
-                      <span className="absolute -top-1.5 md:-top-2 -right-1.5 md:-right-2 bg-teal-600 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm">
+                      <span className="absolute -top-3 -right-3 bg-teal-600 text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold">
                         Most Popular
                       </span>
                     )}
@@ -402,55 +406,52 @@ function PricingCard({
               })}
             </div>
 
-            <div className="text-center mb-6 md:mb-8">
-              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-2 tracking-tight">
+            <div className="text-center mb-10 min-h-[140px] flex flex-col justify-center">
+              <div className="text-5xl md:text-6xl font-black text-foreground mb-3 font-display tracking-tight">
                 {currentPlan.price}
               </div>
-              {currentPlan.priceRange && (
-                <div className="text-xs md:text-sm text-gray-500 mb-2">
-                  {currentPlan.priceRange}
-                </div>
-              )}
-              <div className="text-gray-500 text-sm md:text-base font-medium tracking-wide mb-3">
+              {currentPlan.priceRange && <div className="text-sm text-muted mb-2">{currentPlan.priceRange}</div>}
+              <div className="text-text-secondary text-base font-semibold mb-4 tracking-wide">
                 {plan === "subscription" ? "per month" : currentPlan.period}
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto">
+            <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto mb-10 min-h-[300px] max-h-[400px]">
               {currentPlan.features.map((feature, index) => (
-                <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-2 md:gap-3 text-gray-700">
-                  <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-[#054F56] flex items-center justify-center mt-0.5">
-                    <Check className="w-2.5 h-2.5 md:w-3 md:h-3 text-white" strokeWidth={3} />
+                <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
+                  <div className="w-5 h-5 rounded-full bg-[#054F56] flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <Check className="w-3 h-3 text-white font-bold" strokeWidth={3} />
                   </div>
-                  <span className="text-xs md:text-sm leading-relaxed font-normal">{feature}</span>
+                  <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
                 </div>
               ))}
             </div>
 
-            <ToggleSwitch className="mt-6 md:hidden" />
-
+            <ToggleSwitch className="mt-10 md:hidden" />
           </div>
         </Card>
       </div>
 
-      <div ref={buttonRef} className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-4 md:mt-2 w-full">
-        
+      <div ref={buttonRef} className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
         <Button
-  asChild
-  className="w-full sm:w-1/2 h-12 md:h-14 bg-[#054F56] text-white hover:bg-[#043940] font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
->
-  <a
-    href="https://wa.me/79778148423"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Schedule a Meeting via WhatsApp"
-  >
-    Schedule a Meeting
-  </a>
-</Button>
+          asChild
+          className="w-full sm:w-1/2 h-14 md:h-16 bg-[#054F56] hover:bg-[#043940] text-white font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] border-0"
+        >
+          <a
+            href="https://wa.me/79778148423"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Schedule a Meeting via WhatsApp"
+          >
+            Schedule a Meeting
+          </a>
+        </Button>
 
         <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
-          <Button variant="outline" className="w-full h-12 md:h-14 bg-white border-2 border-[#054F56] text-[#054F56] hover:bg-[#054F56] hover:text-white font-semibold text-xs md:text-sm transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]">
+          <Button
+            variant="outline"
+            className="w-full h-14 md:h-16 bg-white border-2 border-[#054F56] hover:border-[#054F56] text-[#054F56] hover:text-white hover:bg-[#054F56] font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+          >
             Connect on Telegram
           </Button>
         </a>

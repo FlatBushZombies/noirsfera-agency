@@ -24,21 +24,20 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
   }
 
   return (
-    <div className="relative z-2 mb-16">
-      {/* Header */}
+    <div className="relative z-2 mb-6 group">
       <div
-        className="group relative flex cursor-pointer items-center justify-between gap-10 px-7"
+        className="relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl border-2 border-[#e5e5e5] hover:border-[#00D9FF]/40 transition-all duration-300 bg-white hover:bg-white/80"
         onClick={toggleActive}
       >
         {/* Left Content */}
         <div className="flex-1">
-          <div className="text-[12px] font-semibold leading-[18px] tracking-[0.03em] mb-1.5 text-[#00BFA6] max-lg:hidden">
+          <div className="text-xs font-bold leading-5 tracking-widest mb-2 text-[#00D9FF] uppercase opacity-70 max-lg:hidden">
             {index < 10 ? `0${index}` : index}
           </div>
           <div
             className={clsx(
-              "text-[24px] font-medium leading-[36px] text-[#EAEDFF] transition-colors duration-500 max-md:flex max-md:min-h-20 max-md:items-center",
-              isActive && "max-lg:text-[#2EF2FF]",
+              "text-lg md:text-xl font-bold leading-relaxed text-foreground transition-all duration-500",
+              isActive && "text-[#00D9FF]",
             )}
           >
             {item.question}
@@ -47,20 +46,20 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
 
         <div
           className={clsx(
-            "relative flex size-12 items-center justify-center rounded-full border-2 border-[#0C1838] shadow-400 transition-all duration-500 group-hover:border-[#1959AD]",
-            isActive && "border-[#2EF2FF]",
+            "relative flex size-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-sm",
+            isActive
+              ? "border-[#00D9FF] bg-[#00D9FF]/10 shadow-lg shadow-[#00D9FF]/20"
+              : "border-[#00D9FF]/20 hover:border-[#00D9FF] hover:shadow-md hover:shadow-[#00D9FF]/15 bg-white group-hover:bg-[#00D9FF]/5",
           )}
         >
-          <div className="g4 size-11/12 rounded-full shadow-300" />
           {isActive ? (
-            <Minus className="absolute size-5 text-[#2EF2FF] transition-all duration-300" />
+            <Minus className="size-5 text-[#00D9FF] transition-all duration-300 font-bold" />
           ) : (
-            <Plus className="absolute size-5 text-p3 transition-all duration-300" />
+            <Plus className="size-5 text-[#00D9FF]/60 group-hover:text-[#00D9FF] transition-all duration-300" />
           )}
         </div>
       </div>
 
-      {/* Animated Answer */}
       <AnimatePresence initial={false}>
         {isActive && (
           <motion.div
@@ -68,24 +67,15 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="text-[16px] font-medium leading-[24px] tracking-[0.03em] text-white px-7 py-3.5">{item.answer}</div>
+            <div className="text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-[#00D9FF]/40 ml-0 mt-2 bg-[#00D9FF]/5 rounded-r-lg">
+              {item.answer}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Background Highlight */}
-      <div
-        className={clsx(
-          "g5 absolute -bottom-7 -top-7 left-0 right-0 -z-1 rounded-3xl opacity-0 transition-opacity duration-500",
-          isActive && "opacity-100",
-        )}
-      >
-        <div className="g4 absolute inset-0.5 -z-1 rounded-3xl" />
-        <div className="absolute left-8 top-0 h-0.5 w-40 bg-[#2EF2FF]" />
-      </div>
     </div>
   )
 }

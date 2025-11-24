@@ -1,59 +1,56 @@
 "use client"
 
 import type React from "react"
-import Contact from "@/components/contact"
-import FAQ from "@/components/faq"
-import Footer from "@/components/footer"
-import { Hero } from "@/components/hero"
 import { NavBar } from "@/components/navbar"
+import { Hero } from "@/components/hero"
+import { Services } from "@/components/services"
 import Portfolio from "@/components/portfolio"
 import Pricing from "@/components/pricing"
-import { Services } from "@/components/services"
 import { Testimonials } from "@/components/testimonials"
+import FAQ from "@/components/faq"
+import Contact from "@/components/contact"
+import Footer from "@/components/footer"
 
-const Home: React.FC = () => {
+const Page: React.FC = () => {
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
-      {/* Navbar & Banner */}
+      {/* Navigation */}
       <NavBar />
 
-      {/* Page Content Wrapper */}
-      <div className="flex-1 flex flex-col w-full px-4 sm:px-6 lg:px-16">
-        {/* Hero Section */}
-        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
-          <Hero />
-        </section>
+      {/* Hero Section */}
+      <section className="w-full">
+        <Hero />
+      </section>
 
-        {/* Services Section */}
-        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
-          <Services />
-        </section>
+      {/* Services Section */}
+      <section className="w-full">
+        <Services />
+      </section>
 
-        {/* Portfolio Section - Full Width */}
-        <section className="w-screen flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
-          <Portfolio />
-        </section>
+      {/* Portfolio Section */}
+      <section className="w-full">
+        <Portfolio />
+      </section>
 
-        {/* Pricing Section */}
-        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
-          <Pricing />
-        </section>
+      {/* Pricing Section */}
+      <section className="w-full">
+        <Pricing />
+      </section>
 
-        {/* Testimonials Section - Full Width */}
-        <section className="w-screen flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 -ml-4 sm:-ml-6 lg:-ml-16 -mr-4 sm:-mr-6 lg:-mr-16">
-          <Testimonials />
-        </section>
+      {/* Testimonials Section */}
+      <section className="w-full">
+        <Testimonials />
+      </section>
 
-        {/* FAQ Section */}
-        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20">
-          <FAQ />
-        </section>
+      {/* FAQ Section */}
+      <section className="w-full">
+        <FAQ />
+      </section>
 
-        {/* Contact Section */}
-        <section className="w-full flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 pb-16 md:pb-20 lg:pb-24">
-          <Contact />
-        </section>
-      </div>
+      {/* Contact Section */}
+      <section className="w-full">
+        <Contact />
+      </section>
 
       {/* Footer */}
       <Footer />
@@ -61,4 +58,4 @@ const Home: React.FC = () => {
   )
 }
 
-export default Home
+export default Page

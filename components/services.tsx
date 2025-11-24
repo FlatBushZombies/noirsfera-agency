@@ -39,24 +39,22 @@ export function Services() {
     if (!sectionRef.current) return
 
     const ctx = gsap.context(() => {
-      // Fade-in + slight upward slide animation for each service card
       cardsRef.current.forEach((card, index) => {
         if (!card) return
 
         gsap.fromTo(
           card,
-          { opacity: 0, y: 80, scale: 0.98 },
+          { opacity: 0, y: 80, scale: 0.95 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
             duration: 0.9,
-            delay: index * 0.15,
+            delay: index * 0.2,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 95%", // makes it appear slightly earlier
-              end: "bottom 70%",
+              start: "top 95%",
               toggleActions: "play none none none",
               once: true,
             },
@@ -64,7 +62,6 @@ export function Services() {
         )
       })
 
-      // Animate CTA section
       if (ctaRef.current) {
         gsap.fromTo(
           ctaRef.current,
@@ -115,58 +112,61 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="pt-4 pb-16 md:pb-24 px-6 md:px-12 bg-white overflow-hidden"
+      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto space-y-16">
-        <div className="text-center space-y-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight tracking-tight font-inter">
-            How Simple It Can Be To Get Your Projects Done
+      <div className="max-w-7xl mx-auto space-y-20">
+        <div className="text-center space-y-4 max-w-3xl mx-auto">
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">Premium Services</p>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight text-balance font-display">
+            Transforming Vision Into Digital Reality
           </h2>
+          <p className="text-lg text-text-secondary font-medium leading-relaxed">
+            Comprehensive solutions tailored to elevate your brand
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
           {services.map((service, index) => (
             <div
               key={index}
               ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
-              className="group relative rounded-3xl p-8 bg-gradient-to-br from-gray-50 to-white shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-              style={{ boxShadow: "0 6px 24px rgba(0, 0, 0, 0.08)" }}
+              className="group relative rounded-2xl p-8 md:p-10 bg-white border-2 border-border hover:border-primary/30 shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden"
+              style={{ boxShadow: "inset 0 0 30px rgba(0, 217, 255, 0.05)" }}
             >
-              {/* Glow effect on hover */}
+              {/* Premium background glow */}
               <div
-                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                style={{ boxShadow: "0 0 40px rgba(0, 211, 243, 0.6), inset 0 0 30px rgba(0, 211, 243, 0.1)" }}
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                style={{ boxShadow: "inset 0 0 30px rgba(0, 217, 255, 0.05)" }}
               />
 
-              {/* Top Illustrations */}
-              <div className="relative mb-6 h-32 rounded-2xl bg-gradient-to-br from-[#00D3F3]/10 to-[#00D3F3]/5 flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent" />
+              {/* Top Visual Section */}
+              <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10">
+                <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
                 {index === 0 && (
-                  <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-md">
-                    <span className="text-sm font-semibold text-gray-700">Turn on</span>
-                    <span className="text-sm font-bold text-black">Growth</span>
-                    <div className="w-12 h-6 bg-gradient-to-r from-[#00D3F3] to-[#00A8C5] rounded-full flex items-center justify-end px-1 shadow-inner">
-                      <div className="w-5 h-5 bg-white rounded-full shadow-md" />
+                  <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
+                    <span className="text-sm font-bold text-foreground">Scalable Growth</span>
+                    <div className="w-12 h-6 bg-gradient-to-r from-primary to-[#0db8d7] rounded-full flex items-center justify-end px-1 shadow-md">
+                      <div className="w-4 h-4 bg-white rounded-full" />
                     </div>
                   </div>
                 )}
                 {index === 1 && (
                   <div className="relative text-center">
-                    <div className="text-7xl font-black text-[#00D3F3] leading-none mb-2">200%</div>
-                    <div className="bg-[#00D3F3] text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
-                      Conversions
+                    <div className="text-6xl font-black text-primary leading-none mb-1">200%</div>
+                    <div className="bg-primary text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                      AI-Powered
                     </div>
                   </div>
                 )}
                 {index === 2 && (
-                  <div className="relative space-y-3 w-full px-6">
-                    <div className="bg-white rounded-full px-6 py-3 shadow-md border-4 border-[#00D3F3]/30">
-                      <span className="text-sm font-semibold text-gray-700">User Retention +80%</span>
+                  <div className="relative space-y-2 w-full px-6">
+                    <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
+                      <span className="text-xs font-bold text-foreground">User Retention +80%</span>
                     </div>
-                    <div className="bg-white rounded-full px-6 py-3 shadow-md border-4 border-[#00D3F3]/30">
-                      <span className="text-sm font-semibold text-gray-700">Leads +150%</span>
+                    <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
+                      <span className="text-xs font-bold text-foreground">Conversions +150%</span>
                     </div>
                   </div>
                 )}
@@ -175,23 +175,23 @@ export function Services() {
               {/* Text Content */}
               <div className="relative space-y-6">
                 <div className="space-y-3">
-                  <h3 className="text-2xl md:text-3xl font-bold text-black leading-tight font-inter">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight font-display">
                     {service.title}
                   </h3>
-                  <p className="text-base text-gray-600 leading-relaxed">{service.subtitle}</p>
+                  <p className="text-base text-text-secondary leading-relaxed font-medium">{service.subtitle}</p>
                 </div>
 
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="flex items-center gap-2 text-sm font-semibold text-black hover:text-[#00D3F3] transition-colors duration-200 focus:outline-none"
+                  className="flex items-center gap-2 text-sm font-bold text-foreground hover:text-primary transition-colors duration-200 focus:outline-none group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
                   {openIndex === index ? (
-                    <Minus className="w-5 h-5 text-[#00D3F3]" />
+                    <Minus className="w-5 h-5 text-primary transition-transform" />
                   ) : (
-                    <Plus className="w-5 h-5" />
+                    <Plus className="w-5 h-5 group-hover/toggle:text-primary transition-colors" />
                   )}
                   <span>{openIndex === index ? "Show Less" : "Show More"}</span>
                 </button>
@@ -205,8 +205,8 @@ export function Services() {
                   <ul className="space-y-3 pt-2">
                     {service.details.map((detail, detailIndex) => (
                       <li key={detailIndex} className="flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00D3F3] mt-2 flex-shrink-0" />
-                        <span className="text-sm text-gray-700 leading-relaxed">{detail}</span>
+                        <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                        <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
                       </li>
                     ))}
                   </ul>
@@ -217,25 +217,27 @@ export function Services() {
         </div>
 
         {/* Call to Action */}
-        <div ref={ctaRef} className="bg-black rounded-2xl p-12 md:p-16 text-center space-y-6 mt-20">
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight text-balance font-inter">
-            Ready to transform your digital presence?
-          </h3>
-         <Button
-  asChild
-  size="lg"
-  className="bg-white text-black hover:bg-gray-100 rounded-full px-10 py-6 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
->
-  <a
-    href="https://t.me/itsslucki"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Start via Telegram"
-  >
-    Let's Get Started
-  </a>
-</Button>
-
+        <div
+          ref={ctaRef}
+          className="bg-gradient-to-br from-foreground to-foreground/95 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-foreground/10"
+        >
+          <div className="space-y-4 max-w-2xl mx-auto">
+            <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">Next Steps</p>
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight text-balance font-display">
+              Ready to transform your digital presence?
+            </h3>
+            <p className="text-lg text-white/80 font-medium leading-relaxed">
+              Let's create something extraordinary together
+            </p>
+          </div>
+          <Button
+            asChild
+            className="inline-block bg-primary hover:bg-[#00C7E6] text-white font-bold font-sans rounded-full px-6 py-6 text-md text-center transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl border-0"
+          >
+            <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" aria-label="Start via Telegram">
+              Let's Get Started
+            </a>
+          </Button>
         </div>
       </div>
     </section>

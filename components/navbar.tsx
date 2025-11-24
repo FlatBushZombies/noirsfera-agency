@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ArrowRight } from 'lucide-react'
-import { TiLocationArrow } from "react-icons/ti"
+import { Menu, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { TiLocationArrow } from "react-icons/ti"
 
 const navLinks = [
   { name: "Services", href: "#services" },
@@ -23,7 +23,6 @@ export function NavBar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
 
-      // Determine active section
       const sections = navLinks.map((link) => link.href.substring(1))
       const current = sections.find((section) => {
         const element = document.getElementById(section)
@@ -41,7 +40,6 @@ export function NavBar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Prevent scrolling when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto"
     return () => {
@@ -70,8 +68,8 @@ export function NavBar() {
           transition={{ duration: 0.5 }}
           className={`transition-all duration-300 ${
             isScrolled
-              ? "rounded-full bg-black backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.15)] border border-white/10 max-w-7xl mx-auto"
-              : "rounded-none bg-black backdrop-blur-md border-b border-white/5"
+              ? "rounded-2xl bg-black backdrop-blur-xl shadow-lg border border-white/20 max-w-7xl mx-auto"
+              : "rounded-none bg-black backdrop-blur-md border-b border-white/10"
           }`}
         >
           <div
@@ -81,26 +79,26 @@ export function NavBar() {
           >
             <div
               className={`flex items-center justify-between transition-all duration-300 ${
-                isScrolled ? "h-14 md:h-16" : "h-16 md:h-20"
+                isScrolled ? "h-16 md:h-18" : "h-20 md:h-24"
               }`}
             >
               {/* Logo */}
               <motion.div
                 whileHover={{ rotate: -10, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <TiLocationArrow color="white" size={24} />
+                 <TiLocationArrow color="white" size={24} />
                 <a
                   href="#"
-                  className="text-lg md:text-xl font-bold font-inter tracking-tight flex-shrink-0 text-white"
+                  className="text-lg md:text-xl font-bold font-display tracking-tight flex-shrink-0 text-white"
                 >
                   noirsfera
                 </a>
               </motion.div>
 
               {/* Desktop Nav */}
-              <div className="hidden md:flex items-center font-inter text-[18px] font-normal leading-[27.18px] text-[rgba(0,0,0,0.525)] justify-center flex-1 space-x-6 lg:space-x-8">
+              <div className="hidden md:flex items-center font-sans text-sm justify-center flex-1 space-x-1 lg:space-x-2">
                 {navLinks.map((link) => (
                   <motion.a
                     key={link.name}
@@ -109,22 +107,15 @@ export function NavBar() {
                       e.preventDefault()
                       handleNavClick(link.href)
                     }}
-                    className={`text-sm font-medium transition-colors hover:text-[#0EC8F3] relative text-white ${
+                    className={`px-4 py-2 font-medium transition-colors rounded-lg ${
                       activeSection === link.href.substring(1)
-                        ? "text-[#0EC8F3]"
-                        : "text-foreground"
+                        ? "text-primary bg-primary/10"
+                        : "text-white hover:text-foreground"
                     }`}
                     whileHover={{ y: -2 }}
                     whileTap={{ y: 0 }}
                   >
                     {link.name}
-                    {activeSection === link.href.substring(1) && (
-                      <motion.span
-                        layoutId="activeSection"
-                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#0EC8F3] rounded-full"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                      />
-                    )}
                   </motion.a>
                 ))}
               </div>
@@ -150,7 +141,7 @@ export function NavBar() {
                     aria-label="Book a call via Telegram"
                     className="inline-block"
                   >
-                    <Button className="bg-[#0EC8F3] text-black hover:bg-white hover:text-black font-medium font-inter rounded-full px-6 py-3 text-sm relative overflow-hidden h-auto group transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-[#0EC8F3]/20">
+                    <Button className="bg-primary hover:bg-[#00C7E6] text-white font-semibold font-sans rounded-full px-6 py-2.5 text-sm relative overflow-hidden h-auto group transition-all duration-300 shadow-lg hover:shadow-xl border-0">
                       <motion.span
                         initial={false}
                         animate={{
@@ -179,7 +170,7 @@ export function NavBar() {
                         }}
                         className="absolute inset-0 flex items-center justify-center gap-2 z-10"
                       >
-                        Let's Get Started
+                        Let's Go
                         <ArrowRight className="h-4 w-4" />
                       </motion.span>
                     </Button>
@@ -189,26 +180,18 @@ export function NavBar() {
 
               {/* Mobile Menu Button */}
               <button
-                className="md:hidden p-2 text-foreground hover:text-[#0EC8F3] transition-colors hover:bg-white/5 rounded-lg"
+                className="md:hidden p-2 text-foreground hover:text-primary transition-colors hover:bg-primary/10 rounded-lg"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? (
-                  <X size={24} color="white" />
-                ) : (
-                  <Menu size={24} color="white" />
-                )}
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
         </motion.nav>
       </div>
 
-      <div
-        className={`transition-all duration-300 ${
-          isScrolled ? "h-20 md:h-24" : "h-16 md:h-20"
-        }`}
-      />
+      <div className={`transition-all duration-300 ${isScrolled ? "h-24 md:h-28" : "h-20 md:h-24"}`} />
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -218,7 +201,7 @@ export function NavBar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed inset-0 z-40 backdrop-blur-xl bg-black/70 md:hidden"
+            className="fixed inset-0 z-40 backdrop-blur-xl bg-black/30 md:hidden"
           >
             <div className="flex flex-col items-center justify-center h-full space-y-8">
               {navLinks.map((link, index) => (
@@ -232,10 +215,8 @@ export function NavBar() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`text-2xl font-medium font-inter transition-colors hover:text-[#0EC8F3] ${
-                    activeSection === link.href.substring(1)
-                      ? "text-[#0EC8F3]"
-                      : "text-white"
+                  className={`text-2xl font-semibold font-display transition-colors ${
+                    activeSection === link.href.substring(1) ? "text-primary" : "text-foreground hover:text-primary"
                   }`}
                 >
                   {link.name}
@@ -248,8 +229,7 @@ export function NavBar() {
               >
                 <Button
                   asChild
-                  size="sm"
-                  className="group bg-[#0EC8F3] text-black hover:bg-white hover:text-black font-inter font-bold rounded-full px-6 py-3 text-base transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-[#0EC8F3]/20"
+                  className="bg-primary hover:bg-[#00C7E6] text-white font-semibold font-sans rounded-full px-8 py-3 text-base transition-all duration-300 shadow-lg hover:shadow-xl border-0"
                 >
                   <a
                     href="https://t.me/itsslucki"
@@ -259,7 +239,7 @@ export function NavBar() {
                     className="flex items-center gap-2"
                   >
                     Book a Call
-                    <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="h-5 w-5" />
                   </a>
                 </Button>
               </motion.div>

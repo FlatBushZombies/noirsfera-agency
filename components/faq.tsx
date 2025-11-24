@@ -6,8 +6,8 @@ import FaqItem from "./FaqItem"
 import { motion, AnimatePresence } from "framer-motion"
 
 const founders = [
-  { src: "/profiles/lackson.jpg", alt: "Founder 1" },
-  { src: "/profiles/lackson.jpg", alt: "Founder 2" },
+  { src: "/favicon-png.png", alt: "Founder 1" },
+  { src: "/favicon-png.png", alt: "Founder 2" },
 ]
 
 const FAQ = () => {
@@ -23,29 +23,37 @@ const FAQ = () => {
   }, [])
 
   return (
-    <section className="relative rounded-3xl overflow-hidden font-inter">
-      <div className="mx-auto max-w-[1252px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-4 relative z-2 py-28">
-        <div className="max-w-[calc(50%-40px)] max-lg:max-w-full">
-          {/* Changed from font-black (900) to font-bold (700) for better Inter rendering */}
-          <h3 className="text-[64px] font-bold leading-[64px] max-md:h5 mb-7 text-p4">
-            Frequently asked questions
-          </h3>
-          <p className="text-[22px] leading-[36px] font-normal">
-            You've got questions, we've got answers
-          </p>
-        </div>
-        <div className="faq-line_after w-0.5 h-full absolute left-[calc(50%-1px)] top-0 -z-1 bg-[#0C1838] max-lg:hidden" />
+    <section
+      id="faq"
+      className="relative w-full bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36"
+    >
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48" />
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl -ml-48" />
       </div>
 
-      <div
-        className="
-        faq-glow_before relative z-2 border-2 border-[#0C1838] bg-[#080D27]
-        rounded-3xl max-lg:rounded-2xl
-      "
-      >
-        <div className="mx-auto max-w-[1252px] px-16 max-xl:px-10 max-lg:px-6 max-sm:px-4 flex gap-10 max-lg:block">
-          <div className="absolute -top-10 left-[calc(50%-40px)] z-4 max-lg:hidden">
-            <div className="relative size-20 overflow-hidden rounded-full border-2 border-[#0C1838] bg-[#080D27]">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
+        <div className="max-w-3xl">
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">Support</p>
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground tracking-tight font-display text-balance">
+            Frequently Asked{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 text-primary">Questions</span>
+              <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
+            </span>
+          </h2>
+          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
+            Find answers to common questions about our services and process
+          </p>
+        </div>
+
+        <div className="hidden lg:block absolute left-1/2 top-32 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent -translate-x-1/2" />
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="relative">
+          <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
+            <div className="relative size-20 overflow-hidden rounded-full border-2 border-primary/40 bg-[#080D27] shadow-lg shadow-primary/15">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
@@ -61,32 +69,28 @@ const FAQ = () => {
             </div>
           </div>
 
-          <div className="relative flex-1 pt-24">
-            {faq.slice(0, halfLength).map((item, index) => (
-              <FaqItem
-                key={item.id}
-                item={item}
-                index={index}
-                activeId={activeId}
-                setActiveId={setActiveId}
-              />
-            ))}
-          </div>
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 pt-8 lg:pt-28">
+            {/* Left Column */}
+            <div className="relative">
+              {faq.slice(0, halfLength).map((item, index) => (
+                <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
+              ))}
+            </div>
 
-          <div className="relative flex-1 lg:pt-24">
-            {faq.slice(halfLength).map((item, index) => (
-              <FaqItem
-                key={item.id}
-                item={item}
-                index={halfLength + index}
-                activeId={activeId}
-                setActiveId={setActiveId}
-              />
-            ))}
+            {/* Right Column */}
+            <div className="relative lg:pt-12">
+              {faq.slice(halfLength).map((item, index) => (
+                <FaqItem
+                  key={item.id}
+                  item={item}
+                  index={halfLength + index}
+                  activeId={activeId}
+                  setActiveId={setActiveId}
+                />
+              ))}
+            </div>
           </div>
         </div>
-
-        <div className="faq-line_after absolute left-[calc(50%-1px)] top-0 -z-1 h-full w-0.5 bg-[#0C1838] max-lg:hidden" />
       </div>
     </section>
   )
