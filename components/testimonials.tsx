@@ -67,10 +67,9 @@ export function Testimonials() {
         >
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">Social Proof</p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground text-balance font-display leading-tight">
-            Trusted by 100+ Clients Worldwide
           </h2>
           <p className="text-lg text-text-secondary font-medium mt-6">
-            See what our satisfied clients have to say about working with us
+            People we've worked with have said some nice things…
           </p>
         </motion.div>
 
