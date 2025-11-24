@@ -184,7 +184,7 @@ export function NavBar() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {isMobileMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
               </button>
             </div>
           </div>
@@ -216,7 +216,7 @@ export function NavBar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className={`text-2xl font-semibold font-display transition-colors ${
-                    activeSection === link.href.substring(1) ? "text-primary" : "text-foreground hover:text-primary"
+                    activeSection === link.href.substring(1) ? "text-primary" : "text-white hover:text-primary"
                   }`}
                 >
                   {link.name}
