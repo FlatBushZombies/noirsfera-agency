@@ -55,7 +55,7 @@ export function Testimonials() {
   const sectionRef = useRef(null)
 
   return (
-    <section id="testimonials" ref={sectionRef} className="py-20 md:py-28 lg:py-36 bg-background font-sans">
+    <section id="testimonials" ref={sectionRef} className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans">
       <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -63,23 +63,24 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 max-w-3xl mx-auto"
+          className="text-center mb-10 md:mb-14"
         >
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">Social Proof</p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground text-balance font-display leading-tight">
-          </h2>
-          <p className="text-lg text-text-secondary font-medium mt-6">
-            People we've worked with have said some nice things…
+          <p className="text-[#0EC8F3] text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
+            Client Testimonials
           </p>
+          <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
+            People we've worked with have said some nice things…
+          </h2>
         </motion.div>
 
         {/* Infinite Scroll Section */}
-        <div className="relative w-full overflow-hidden pt-4">
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none" />
+        <div className="relative w-full overflow-hidden pt-2">
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[0.5px]" />
+
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
 
           <motion.div
-            className="flex gap-6"
+            className="flex gap-4 md:gap-6"
             animate={{
               x: ["0%", "-50%"],
             }}
@@ -96,45 +97,44 @@ export function Testimonials() {
             {[...testimonials, ...testimonials].map((testimonial, index) => (
               <motion.div
                 key={`${testimonial.id}-${index}`}
-                className="group relative flex-shrink-0 w-[300px] sm:w-[340px] md:w-[380px]"
+                className="group relative flex-shrink-0 w-[300px] sm:w-[340px] md:w-[360px]"
                 onMouseEnter={() => setHoveredCard(testimonial.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                style={{ perspective: "1000px" }}
               >
                 <motion.div
                   animate={{
-                    y: hoveredCard === testimonial.id ? -8 : 0,
+                    y: hoveredCard === testimonial.id ? -6 : 0,
                   }}
                   transition={{ duration: 0.3 }}
                   className="h-full"
                 >
-                  <Card className="h-full flex flex-col border-2 border-border hover:border-primary/40 bg-white hover:shadow-xl transition-all duration-300 rounded-2xl">
-                    <CardContent className="p-6 md:p-7 space-y-5 flex flex-col h-full">
+                  <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
+                    <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
                       {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                         ))}
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-text-secondary flex-1">
-                        "{testimonial.text}"
-                      </p>
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{testimonial.text}"</p>
 
                       {/* Author */}
-                      <div className="flex items-center gap-3 pt-4 border-t border-border mt-auto">
+                      <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
                           src={testimonial.image || "/placeholder.svg"}
                           alt={testimonial.name}
                           width={44}
                           height={44}
-                          className="w-11 h-11 rounded-full object-cover ring-2 ring-primary/20"
+                          className="w-10 h-10 rounded-full object-cover"
                         />
                         <div>
-                          <p className="font-bold text-foreground group-hover:text-primary transition-colors text-sm">
+                          <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                             {testimonial.name}
                           </p>
-                          <p className="text-xs text-text-muted">{testimonial.company}</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">{testimonial.company}</p>
                         </div>
                       </div>
                     </CardContent>

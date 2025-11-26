@@ -232,7 +232,7 @@ export function Services() {
           </div>
           <Button
             asChild
-            className="inline-block bg-primary hover:bg-[#00C7E6] text-white font-bold font-sans rounded-full px-6 py-6 text-md text-center transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl border-0"
+            className="bg-primary text-white hover:bg-[#00C7E6] rounded-full px-10 py-6 text-lg  transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
           >
             <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" aria-label="Start via Telegram">
               Let's Get Started

@@ -81,6 +81,7 @@ export default function Portfolio() {
   return (
     <section id="portfolio" ref={sectionRef} className="w-full bg-surface py-20 md:py-28 lg:py-36 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
+        
         {/* Header */}
         <div className="text-center mb-20">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
@@ -108,13 +109,13 @@ export default function Portfolio() {
 
         <div className="relative overflow-hidden">
           {/* Left Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-r from-surface via-surface/50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
 
           {/* Right Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-24 md:w-32 bg-gradient-to-l from-surface via-surface/50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
 
           <motion.div
-            className="flex gap-8"
+            className="flex gap-6"
             style={{
               x: scrollX,
             }}
@@ -122,29 +123,47 @@ export default function Portfolio() {
             {duplicatedProjects.map((project, index) => (
               <div
                 key={`${project.id}-${index}`}
-                className="relative flex-shrink-0 w-[500px] h-[400px] md:h-[500px]"
+                className="relative flex-shrink-0 w-[500px] h-[500px]"
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <div className="relative w-full h-full rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 border-2 border-white/10">
+                <div className="relative w-full h-full rounded-[3rem] overflow-hidden shadow-[0_4px_15px_rgb(0,0,0,0.04)]">
                   <Image
                     src={project.image || "/placeholder.svg?height=1024&width=1024"}
                     alt={project.imageAlt}
                     fill
-                    className="object-cover hover:scale-105 transition-transform duration-500"
+                    className="object-cover"
                     sizes="500px"
                   />
 
                   {hoveredIndex === index && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent flex items-center justify-center transition-all duration-300">
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center transition-all duration-300">
                       <Link
                         href={project.link}
-                        className="relative px-8 py-4 bg-primary hover:bg-[#00C7E6] text-white font-bold font-sans rounded-full transition-all duration-300 hover:scale-110 shadow-xl active:scale-95"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative px-8 py-4 bg-white text-black font-semibold font-inter rounded-full transition-all duration-300 hover:scale-105 group overflow-hidden"
                       >
-                        View Project
+                        {/* Glowing border */}
+                        <span className="absolute inset-0 rounded-full p-[2px] bg-[#00d9ff] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <span className="absolute inset-[2px] rounded-full bg-white" />
+                        </span>
+
+                        {/* Rotating glow */}
+                        <span
+                          className="absolute inset-[-2px] rounded-full opacity-0 group-hover:opacity-75 blur-md animate-[spin_3s_linear_infinite]"
+                          style={{
+                            background:
+                              "conic-gradient(from_var(--angle), transparent 0%, #00d9ff 20%, transparent 40%)",
+                            "--angle": "0deg",
+                          } as React.CSSProperties}
+                        />
+
+                        <span className="relative z-10">View Project</span>
                       </Link>
                     </div>
                   )}
+
                 </div>
               </div>
             ))}

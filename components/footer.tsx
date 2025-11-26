@@ -36,8 +36,10 @@ export default function Footer() {
 
             {/* Content */}
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black font-display mb-10 leading-tight text-balance text-white">
-                Ready to transform your digital future?
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-8 leading-tight text-balance">
+                If you scrolled this far,
+                <br />
+                we should queue up a time to chat
               </h2>
 
               {/* CTA Button with Hover Effect - Updated button colors */}
@@ -60,12 +62,12 @@ export default function Footer() {
                 </div>
                 <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="inline-block">
                   <button
-                    onMouseEnter={() => setIsButtonHovered(true)}
-                    onMouseLeave={() => setIsButtonHovered(false)}
-                    className="relative px-10 py-4 bg-primary hover:bg-[#00C7E6] text-white font-bold font-sans rounded-full text-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl hover:shadow-2xl border-0"
-                  >
-                    {isButtonHovered ? "Let's Go" : "Get Started"}
-                  </button>
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                  className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
+                >
+                  {isButtonHovered ? "Let's Go" : "Get Started"}
+                </button>
                 </a>
               </div>
             </div>
