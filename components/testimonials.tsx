@@ -51,7 +51,7 @@ const testimonials: Testimonial[] = [
 ]
 
 export function Testimonials() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null)
+  const [hovered, setHovered] = useState<number | null>(null)
   const sectionRef = useRef(null)
 
   return (
@@ -75,66 +75,68 @@ export function Testimonials() {
 
         {/* Infinite Scroll Section */}
         <div className="relative w-full overflow-hidden pt-2">
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[0.5px]" />
 
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/80 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
+          {/* Reduced blur for readability */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 
+              bg-gradient-to-r from-background via-background/40 to-transparent 
+              z-10 pointer-events-none" />
+
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 
+              bg-gradient-to-l from-background via-background/40 to-transparent 
+              z-10 pointer-events-none" />
 
           <motion.div
             className="flex gap-4 md:gap-6"
-            animate={{
-              x: ["0%", "-50%"],
-            }}
+            animate={{ x: ["0%", "-50%"] }}
             transition={{
               x: {
-                repeat: Number.POSITIVE_INFINITY,
+                repeat: Infinity,
                 repeatType: "loop",
                 duration: 45,
                 ease: "linear",
               },
             }}
           >
-            {/* Double testimonials for seamless loop */}
-            {[...testimonials, ...testimonials].map((testimonial, index) => (
+            {[...testimonials, ...testimonials].map((t, index) => (
               <motion.div
-                key={`${testimonial.id}-${index}`}
+                key={index}
                 className="group relative flex-shrink-0 w-[300px] sm:w-[340px] md:w-[360px]"
-                onMouseEnter={() => setHoveredCard(testimonial.id)}
-                onMouseLeave={() => setHoveredCard(null)}
+                onMouseEnter={() => setHovered(index)}
+                onMouseLeave={() => setHovered(null)}
                 style={{ perspective: "1000px" }}
               >
+                {/* Jitter fix: isolate lift so layout does not shift */}
                 <motion.div
-                  animate={{
-                    y: hoveredCard === testimonial.id ? -6 : 0,
-                  }}
-                  transition={{ duration: 0.3 }}
                   className="h-full"
+                  animate={{ y: hovered === index ? -6 : 0 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
                     <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
                       {/* Stars */}
                       <div className="flex gap-1">
-                        {Array.from({ length: testimonial.rating }).map((_, i) => (
+                        {Array.from({ length: t.rating }).map((_, i) => (
                           <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                         ))}
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{testimonial.text}"</p>
+                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{t.text}"</p>
 
                       {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
-                          src={testimonial.image || "/placeholder.svg"}
-                          alt={testimonial.name}
+                          src={t.image || "/placeholder.svg"}
+                          alt={t.name}
                           width={44}
                           height={44}
                           className="w-10 h-10 rounded-full object-cover"
                         />
                         <div>
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
-                            {testimonial.name}
+                            {t.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">{testimonial.company}</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">{t.company}</p>
                         </div>
                       </div>
                     </CardContent>

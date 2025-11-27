@@ -134,7 +134,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight text-balance font-display drop-shadow-sm"
             >
-              Modernising <FlipWords words={words} duration={500} letterDelay={0.05} wordDelay={0.3} /> through{" "}
+              Modernising <FlipWords words={words} duration={500} letterDelay={0.05} wordDelay={0.3} />through{" "}
               <span className="text-primary">futuristic</span> software
             </h1>
           </div>

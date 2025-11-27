@@ -141,6 +141,7 @@ export default function Contact() {
             </p>
 
             <div ref={ctaContainerRef} className="space-y-6 pt-4">
+              <a href="#portfolio">
               <button className="group text-primary hover:text-primary/80 font-bold inline-flex items-center gap-2 transition-all hover:gap-3 text-base">
                 <Sparkles className="w-5 h-5" />
                 View our recent work
@@ -153,6 +154,7 @@ export default function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </button>
+              </a>
               <div className="flex flex-wrap gap-8">
                 <button className="group text-foreground hover:text-primary font-semibold inline-flex items-center gap-3 transition-all text-base">
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
