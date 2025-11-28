@@ -24,9 +24,9 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
   }
 
   return (
-    <div className="relative z-2 mb-6 group">
+    <div className="relative z-2 mb-3 group">
       <div
-        className="relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl border-2 border-[#e5e5e5] hover:border-[#00D9FF]/40 transition-all duration-300 bg-white hover:bg-white/80"
+        className="relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl border-2 border-[#e5e5e5] hover:border-[#00D9FF]/40 transition-all duration-300 bg-white hover:bg-white/80 h-30"
         onClick={toggleActive}
       >
         {/* Left Content */}
@@ -36,7 +36,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
           </div>
           <div
             className={clsx(
-              "text-lg md:text-xl font-bold leading-relaxed text-foreground transition-all duration-500",
+              "text-lg md:text-xl font-bold leading-relaxed text-foreground transition-all duration-500 line-clamp-2",
               isActive && "text-[#00D9FF]",
             )}
           >

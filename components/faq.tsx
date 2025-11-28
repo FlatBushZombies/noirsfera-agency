@@ -1,5 +1,4 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import { faq } from "@/constants"
 import FaqItem from "./FaqItem"
@@ -27,11 +26,13 @@ const FAQ = () => {
       id="faq"
       className="relative w-full bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36"
     >
+      {/* Background blobs */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48" />
         <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl -ml-48" />
       </div>
 
+      {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
         <div className="max-w-3xl">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">Support</p>
@@ -46,12 +47,12 @@ const FAQ = () => {
             Find answers to common questions about our services and process
           </p>
         </div>
-
-        <div className="hidden lg:block absolute left-1/2 top-32 bottom-0 w-px bg-gradient-to-b from-primary/30 to-transparent -translate-x-1/2" />
       </div>
 
+      {/* FAQ Content */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative">
+          {/* Rotating Founder Image (Centered Above) */}
           <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
             <div className="relative size-20 overflow-hidden rounded-full border-2 border-primary/40 bg-[#080D27] shadow-lg shadow-primary/15">
               <AnimatePresence mode="wait">
@@ -69,26 +70,23 @@ const FAQ = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 pt-8 lg:pt-28">
+          {/* FAQ Grid - Even Columns with Perfect Alignment */}
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8 auto-rows-fr">
             {/* Left Column */}
-            <div className="relative">
-              {faq.slice(0, halfLength).map((item, index) => (
-                <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
-              ))}
-            </div>
+            {faq.slice(0, halfLength).map((item, index) => (
+              <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
+            ))}
 
             {/* Right Column */}
-            <div className="relative lg:pt-12">
-              {faq.slice(halfLength).map((item, index) => (
-                <FaqItem
-                  key={item.id}
-                  item={item}
-                  index={halfLength + index}
-                  activeId={activeId}
-                  setActiveId={setActiveId}
-                />
-              ))}
-            </div>
+            {faq.slice(halfLength).map((item, index) => (
+              <FaqItem
+                key={item.id}
+                item={item}
+                index={halfLength + index}
+                activeId={activeId}
+                setActiveId={setActiveId}
+              />
+            ))}
           </div>
         </div>
       </div>

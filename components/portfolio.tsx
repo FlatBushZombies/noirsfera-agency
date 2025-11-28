@@ -109,10 +109,10 @@ export default function Portfolio() {
 
         <div className="relative overflow-hidden">
           {/* Left Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white via-white/30 to-transparent z-10 pointer-events-none backdrop-blur-[1px]" />
 
           {/* Right Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white via-white/60 to-transparent z-10 pointer-events-none backdrop-blur-[2px]" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white via-white/30 to-transparent z-10 pointer-events-none backdrop-blur-[1px]" />
 
           <motion.div
             className="flex gap-6"
