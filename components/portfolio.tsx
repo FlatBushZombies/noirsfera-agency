@@ -52,6 +52,17 @@ const projects: Project[] = [
     imageAlt: "Web3 Platform",
     link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
   },
+  {
+    id: 4,
+    title: "Oakwood ESL",
+    description: "Profession Academics ESL Training school",
+    tags: ["website", "web"],
+    duration: "10 weeks",
+    industry: "Education",
+    image: "/oakwood.png",
+    imageAlt: "Educational Platform",
+    link: "https://oakwoodesl.com/",
+  },
 ]
 
 export default function Portfolio() {
