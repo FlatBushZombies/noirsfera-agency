@@ -11,9 +11,8 @@ import { getTranslations } from "@/lib/translations"
 gsap.registerPlugin(ScrollTrigger)
 
 export function Services() {
-
-  const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
 
   const services = useMemo(
     () => [
@@ -21,22 +20,16 @@ export function Services() {
         title: t.services.items.fullstack.title,
         subtitle: t.services.items.fullstack.subtitle,
         details: t.services.items.fullstack.details,
-        highlight: t.services.items.fullstack.scalableGrowth,
       },
       {
         title: t.services.items.aiEngineering.title,
         subtitle: t.services.items.aiEngineering.subtitle,
         details: t.services.items.aiEngineering.details,
-        highlight: t.services.items.aiEngineering.aiPowered,
       },
       {
         title: t.services.items.uiux.title,
         subtitle: t.services.items.uiux.subtitle,
         details: t.services.items.uiux.details,
-        highlight: {
-          retention: t.services.items.uiux.userRetention,
-          conversions: t.services.items.uiux.conversions,
-        },
       },
     ],
     [t],
@@ -158,7 +151,9 @@ export function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
                 {index === 0 && (
                   <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
-                    <span className="text-sm font-bold text-foreground">{service.highlight}</span>
+                    <span className="text-sm font-bold text-foreground">
+                      {t.services.items.fullstack.scalableGrowth}
+                    </span>
                     <div className="w-12 h-6 bg-gradient-to-r from-primary to-[#0db8d7] rounded-full flex items-center justify-end px-1 shadow-md">
                       <div className="w-4 h-4 bg-white rounded-full" />
                     </div>
@@ -168,17 +163,21 @@ export function Services() {
                   <div className="relative text-center">
                     <div className="text-6xl font-black text-primary leading-none mb-1">200%</div>
                     <div className="bg-primary text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
-                      {service.highlight}
+                      {t.services.items.aiEngineering.aiPowered}
                     </div>
                   </div>
                 )}
                 {index === 2 && (
                   <div className="relative space-y-2 w-full px-6">
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">{service.highlight.retention}</span>
+                      <span className="text-xs font-bold text-foreground">
+                        {t.services.items.uiux.userRetention}
+                      </span>
                     </div>
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">{service.highlight.conversions}</span>
+                      <span className="text-xs font-bold text-foreground">
+                        {t.services.items.uiux.conversions}
+                      </span>
                     </div>
                   </div>
                 )}
