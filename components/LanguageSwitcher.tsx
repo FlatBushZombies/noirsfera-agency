@@ -29,7 +29,7 @@ export function LanguageSwitcher() {
         onMouseEnter={() => setIsOpen(true)}
         className="p-1.5 rounded-md text-white hover:text-primary hover:bg-primary/10 transition"
       >
-        <Globe className="w-4 h-4" />
+        <Globe className="w-6 h-6" />
       </button>
 
       {/* Dropdown */}
