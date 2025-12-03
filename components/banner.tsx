@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 
 export default function Banner() {
   const [isVisible, setIsVisible] = useState(false)
@@ -8,6 +10,8 @@ export default function Banner() {
   const [progress, setProgress] = useState(0)
 
   const brandName = "noirsfera"
+  const { language } = useLanguage();
+  const t = getTranslations(language);
 
   useEffect(() => {
     const hasShownLoading = sessionStorage.getItem("hasShownLoading")
@@ -75,7 +79,7 @@ export default function Banner() {
         <div className="flex w-full max-w-md flex-col items-center gap-4">
           {/* Loading text and percentage */}
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium tracking-widest text-white/60">LOADING</span>
+            <span className="text-sm font-medium tracking-widest text-white/60">{t.banner.loading}</span>
             <span className="text-2xl font-bold text-[#00BFA6]">{Math.round(progress)}%</span>
           </div>
 

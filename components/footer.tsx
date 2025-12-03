@@ -4,10 +4,14 @@ import type React from "react"
 
 import { useState } from "react"
 import { Twitter, Instagram, Send } from "lucide-react"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 
 export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isButtonHovered, setIsButtonHovered] = useState(false)
+  const { language } = useLanguage();
+  const t = getTranslations(language);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -37,9 +41,9 @@ export default function Footer() {
             {/* Content */}
             <div className="relative z-10">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-8 leading-tight text-balance">
-                If you scrolled this far,
+                {t.footer.heading.line1},
                 <br />
-                we should queue up a time to chat
+                {t.footer.heading.line2}
               </h2>
 
               {/* CTA Button with Hover Effect - Updated button colors */}
@@ -66,7 +70,7 @@ export default function Footer() {
                   onMouseLeave={() => setIsButtonHovered(false)}
                   className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
                 >
-                  {isButtonHovered ? "Let's Go" : "Get Started"}
+                  {isButtonHovered ? t.footer.letsGo : t.footer.getStarted}
                 </button>
                 </a>
               </div>
@@ -77,14 +81,14 @@ export default function Footer() {
           <div className="border-t border-white/10 pt-12">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
               {/* Logo */}
-              <div className="text-2xl font-black font-display tracking-tight">noirsfera</div>
+              <div className="text-2xl font-black font-display tracking-tight">{t.footer.logo}</div>
 
               {/* Social Icons */}
               <div className="flex gap-6">
                 <a
                   href="https://x.com/from_noirsfera"
                   className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
-                  aria-label="Twitter"
+                  aria-label={t.footer.twitterAria}
                 >
                   <Twitter size={20} />
                 </a>
@@ -92,7 +96,7 @@ export default function Footer() {
                 <a
                   href="https://www.instagram.com/noirsfera/"
                   className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
-                  aria-label="Instagram"
+                  aria-label={t.footer.instagramAria}
                 >
                   <Instagram size={20} />
                 </a>
@@ -100,7 +104,7 @@ export default function Footer() {
                 <a
                   href="https://t.me/itsslucki"
                   className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
-                  aria-label="Telegram"
+                  aria-label={t.footer.telegramAria}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -111,13 +115,13 @@ export default function Footer() {
 
             {/* Bottom Section */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60 border-t border-white/10 pt-8">
-              <p>© 2025 noirsfera. All Rights Reserved</p>
+              <p>{t.footer.copyright}</p>
               <div className="flex gap-6">
                 <a href="#privacy" className="hover:text-white transition-colors duration-200">
-                  Privacy Policy
+                  {t.footer.privacyPolicy}
                 </a>
                 <a href="#terms" className="hover:text-white transition-colors duration-200">
-                  Terms & Conditions
+                  {t.footer.termsConditions}
                 </a>
               </div>
             </div>

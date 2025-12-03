@@ -1,17 +1,23 @@
 "use client"
-import { useEffect, useState } from "react"
-import { faq } from "@/constants"
+import { useEffect, useState, useMemo } from "react"
 import FaqItem from "./FaqItem"
 import { motion, AnimatePresence } from "framer-motion"
-
-const founders = [
-  { src: "/favicon-png.png", alt: "Founder 1" },
-  { src: "/favicon-png.png", alt: "Founder 2" },
-]
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 
 const FAQ = () => {
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+  const founders = useMemo(
+    () => [
+      { src: "/favicon-png.png", alt: t.faq.founderAlt },
+      { src: "/favicon-png.png", alt: t.faq.founderAlt },
+    ],
+    [t],
+  )
   const [activeId, setActiveId] = useState<string | number | null>(null)
-  const halfLength = Math.floor(faq.length / 2)
+  const faqItems = t.faq.items
+  const halfLength = Math.floor(faqItems.length / 2)
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
@@ -35,16 +41,16 @@ const FAQ = () => {
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
         <div className="max-w-3xl">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">Support</p>
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">{t.faq.badge}</p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground tracking-tight font-display text-balance">
-            Frequently Asked{" "}
+            {t.faq.heading}{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-primary">Questions</span>
+              <span className="relative z-10 text-primary">{t.faq.questions}</span>
               <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
             </span>
           </h2>
           <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
-            Find answers to common questions about our services and process
+            {t.faq.subheading}
           </p>
         </div>
       </div>
@@ -73,12 +79,12 @@ const FAQ = () => {
           {/* FAQ Grid - Even Columns with Perfect Alignment */}
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8 auto-rows-fr">
             {/* Left Column */}
-            {faq.slice(0, halfLength).map((item, index) => (
+            {faqItems.slice(0, halfLength).map((item, index) => (
               <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
             ))}
 
             {/* Right Column */}
-            {faq.slice(halfLength).map((item, index) => (
+            {faqItems.slice(halfLength).map((item, index) => (
               <FaqItem
                 key={item.id}
                 item={item}

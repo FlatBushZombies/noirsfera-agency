@@ -5,15 +5,15 @@ import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { Button } from "@/components/ui/button"
 import { FlipWords } from "./ui/shadcn-io/flip-words"
-import { useLanguage } from "@/lib/LanguageContext"
-import { getTranslations } from "@/lib/translations"
 import Image from "next/image"
+import { Language, getTranslations } from "@/lib/translations"
 
-export function Hero() {
+interface HeroProps {
+  language: Language;
+}
 
-   const { language } = useLanguage();
+export function Hero({ language = 'en' }: HeroProps) {
   const t = getTranslations(language);
-
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const descriptionRef = useRef<HTMLParagraphElement>(null)
@@ -84,8 +84,6 @@ export function Hero() {
     window.open("https://t.me/itsslucki", "_blank")
   }
 
-  const words = ["businesses", "startups", "brands"]
-
   return (
     <section
       id="about"
@@ -140,7 +138,7 @@ export function Hero() {
               ref={headingRef}
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight text-balance font-display drop-shadow-sm"
             >
-              {t.hero.heading.modernising}<FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />{t.hero.heading.through}{" "}
+              {t.hero.heading.modernising} <FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />{t.hero.heading.through}{" "}
               <span className="text-primary">{t.hero.heading.futuristic}</span> {t.hero.heading.software}
             </h1>
           </div>
@@ -148,13 +146,13 @@ export function Hero() {
           <div ref={avatarsRef} className="flex flex-col items-center gap-4">
             <div className="flex -space-x-4">
               <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-1.png" alt="Client avatar 1" fill className="object-cover" />
+                <Image src="/avatar-1.png" alt={`${t.hero.clientAvatarAlt} 1`} fill className="object-cover" />
               </div>
               <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-2.jpg" alt="Client avatar 2" fill className="object-cover" />
+                <Image src="/avatar-2.jpg" alt={`${t.hero.clientAvatarAlt} 2`} fill className="object-cover" />
               </div>
               <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-3.jpg" alt="Client avatar 3" fill className="object-cover" />
+                <Image src="/avatar-3.jpg" alt={`${t.hero.clientAvatarAlt} 3`} fill className="object-cover" />
               </div>
             </div>
             <p
@@ -175,7 +173,7 @@ export function Hero() {
             >
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary-light font-sans">
-                  <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
+                  <Image src="/profiles/lackson.jpg" alt={t.hero.profileAlt} fill className="object-cover" />
                 </div>
                 <span
                   className={`transition-all duration-300 
@@ -189,8 +187,8 @@ export function Hero() {
                     ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
                   `}
                 >
-                  <span className="text-primary-light">{t.hero.youLetsChat}</span>
-                  
+                  <span className="text-primary-light">+ You</span>
+                  <span>{language === 'en' ? "Let's chat" : "Давайте пообщаемся"}</span>
                 </div>
               </div>
             </Button>

@@ -10,6 +10,8 @@ import { Sparkles, Zap, Star } from "lucide-react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { toast } from "sonner"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -19,6 +21,9 @@ export default function Contact() {
   const [hoveredField, setHoveredField] = useState<FieldType>(null)
   const [focusedField, setFocusedField] = useState<FieldType>(null)
   const [loading, setLoading] = useState(false)
+
+  const { language } = useLanguage();
+  const t = getTranslations(language);
 
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
@@ -99,13 +104,13 @@ export default function Contact() {
       })
 
       if (res.ok) {
-        toast.success("Message sent successfully!")
+        toast.success(t.contact.successToast)
         ;(e.target as HTMLFormElement).reset()
       } else {
-        toast.error("Failed to send message. Please try again")
+        toast.error(t.contact.errorToast)
       }
     } catch (error) {
-      toast.error("An error occurred")
+      toast.error(t.contact.errorOccurred)
     } finally {
       setLoading(false)
     }
@@ -130,21 +135,21 @@ export default function Contact() {
               ref={headingRef}
               className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground text-balance leading-tight tracking-tight font-display"
             >
-              Get in{" "}
+              {t.contact.heading}{" "}
               <span className="relative inline-block">
-                <span className="relative z-10 text-primary">Touch</span>
+                <span className="relative z-10 text-primary">{t.contact.touch}</span>
                 <span className="absolute bottom-2 left-0 w-full h-4 bg-primary/20 -rotate-1 blur-sm" />
               </span>
             </h2>
             <p ref={descriptionRef} className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
-              Ready to start a project with us? Let's create something amazing together.
+              {t.contact.description}
             </p>
 
             <div ref={ctaContainerRef} className="space-y-6 pt-4">
               <a href="#portfolio">
               <button className="group text-primary hover:text-primary/80 font-bold inline-flex items-center gap-2 transition-all hover:gap-3 text-base">
                 <Sparkles className="w-5 h-5" />
-                View our recent work
+                {t.contact.viewRecentWork}
                 <svg
                   className="w-4 h-4 transition-transform group-hover:translate-x-1"
                   fill="none"
@@ -160,13 +165,13 @@ export default function Contact() {
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Zap className="w-5 h-5 text-primary transition-transform group-hover:rotate-12" />
                   </div>
-                  <span>Quick response time</span>
+                  <span>{t.contact.quickResponse}</span>
                 </button>
                 <button className="group text-foreground hover:text-primary font-semibold inline-flex items-center gap-3 transition-all text-base">
                   <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                     <Star className="w-5 h-5 text-primary transition-transform group-hover:scale-110" />
                   </div>
-                  <span>5-star rated service</span>
+                  <span>{t.contact.fiveStarService}</span>
                 </button>
               </div>
             </div>
@@ -176,13 +181,13 @@ export default function Contact() {
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div ref={nameRef}>
               <Label htmlFor="name" className="text-foreground font-bold mb-3 block text-base">
-                Full Name
+                {t.contact.fullNameLabel}
               </Label>
               <Input
                 id="name"
                 name="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder={t.contact.fullNamePlaceholder}
                 required
                 className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
               />
@@ -190,13 +195,13 @@ export default function Contact() {
 
             <div ref={emailRef}>
               <Label htmlFor="email" className="text-foreground font-bold mb-3 block text-base">
-                Email Address
+                {t.contact.emailLabel}
               </Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="hello@example.com"
+                placeholder={t.contact.emailPlaceholder}
                 required
                 className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
               />
@@ -204,12 +209,12 @@ export default function Contact() {
 
             <div ref={messageRef}>
               <Label htmlFor="message" className="text-foreground font-bold mb-3 block text-base">
-                Message
+                {t.contact.messageLabel}
               </Label>
               <Textarea
                 id="message"
                 name="message"
-                placeholder="Tell us about your project and goals..."
+                placeholder={t.contact.messagePlaceholder}
                 rows={6}
                 required
                 className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none"
@@ -225,7 +230,7 @@ export default function Contact() {
                 onMouseEnter={handleButtonHover}
                 onMouseLeave={handleButtonLeave}
               >
-                {loading ? "Sending..." : "Send Message"}
+                {loading ? t.contact.sending : t.contact.sendMessage}
               </Button>
 
               {/* Fireworks particle container */}

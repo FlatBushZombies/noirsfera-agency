@@ -1,8 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 import Link from "next/link"
 
 interface Project {
@@ -17,55 +19,59 @@ interface Project {
   link: string
 }
 
-const projects: Project[] = [
+export default function Portfolio() {
+
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+  const projects = useMemo<Project[]>(
+    () => [
   {
     id: 1,
-    title: "TutSchool",
-    description:
-      "Comprehensive website for TUT School, a language and arts institution featuring course information, enrollment, and student resources.",
-    tags: ["Web Design", "Development"],
-    duration: "6 weeks",
-    industry: "SaaS",
+        title: t.portfolio.projects.tutschool.title,
+        description: t.portfolio.projects.tutschool.description,
+        tags: t.portfolio.projects.tutschool.tags,
+        duration: t.portfolio.projects.tutschool.duration,
+        industry: t.portfolio.projects.tutschool.industry,
     image: "/tutschool.png",
-    imageAlt: "TutSchool Website",
+        imageAlt: t.portfolio.projects.tutschool.imageAlt,
     link: "https://tutschool.ru/",
   },
   {
     id: 2,
-    title: "Camp Guide",
-    description: "Interactive guide for camping enthusiasts with location recommendations and equipment lists.",
-    tags: ["Product Design", "UI/UX"],
-    duration: "8 weeks",
-    industry: "Resort",
+        title: t.portfolio.projects.campGuide.title,
+        description: t.portfolio.projects.campGuide.description,
+        tags: t.portfolio.projects.campGuide.tags,
+        duration: t.portfolio.projects.campGuide.duration,
+        industry: t.portfolio.projects.campGuide.industry,
     image: "/camp-guide.png",
-    imageAlt: "Camp Guide Landing Page",
+        imageAlt: t.portfolio.projects.campGuide.imageAlt,
     link: "https://resonant-sunflower-1bb1e7.netlify.app/",
   },
   {
     id: 3,
-    title: "DMB Pay+",
-    description: "Secure digital payment platform with intuitive user interface and real-time transaction tracking.",
-    tags: ["Mobile App", "web3"],
-    duration: "10 weeks",
-    industry: "FinTech",
+        title: t.portfolio.projects.dmbPay.title,
+        description: t.portfolio.projects.dmbPay.description,
+        tags: t.portfolio.projects.dmbPay.tags,
+        duration: t.portfolio.projects.dmbPay.duration,
+        industry: t.portfolio.projects.dmbPay.industry,
     image: "/crypto_pay.png",
-    imageAlt: "Web3 Platform",
+        imageAlt: t.portfolio.projects.dmbPay.imageAlt,
     link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
   },
   {
     id: 4,
-    title: "Oakwood ESL",
-    description: "Profession Academics ESL Training school",
-    tags: ["website", "web"],
-    duration: "10 weeks",
-    industry: "Education",
+        title: t.portfolio.projects.oakwood.title,
+        description: t.portfolio.projects.oakwood.description,
+        tags: t.portfolio.projects.oakwood.tags,
+        duration: t.portfolio.projects.oakwood.duration,
+        industry: t.portfolio.projects.oakwood.industry,
     image: "/oakwood.png",
-    imageAlt: "Educational Platform",
+        imageAlt: t.portfolio.projects.oakwood.imageAlt,
     link: "https://oakwoodesl.com/",
   },
-]
-
-export default function Portfolio() {
+    ],
+    [t],
+  )
   const [scrollX, setScrollX] = useState(0)
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const sectionRef = useRef(null)
@@ -96,26 +102,26 @@ export default function Portfolio() {
         {/* Header */}
         <div className="text-center mb-20">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
-            Featured Works
+            {t.portfolio.badge}
           </p>
           <div className="flex justify-center mb-8">
             <div className="flex -space-x-4">
               <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-1.png" alt="Client avatar" fill className="object-cover" />
+                <Image src="/avatar-1.png" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
               </div>
               <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-2.jpg" alt="Client avatar" fill className="object-cover" />
+                <Image src="/avatar-2.jpg" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
               </div>
               <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-3.jpg" alt="Client avatar" fill className="object-cover" />
+                <Image src="/avatar-3.jpg" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
               </div>
             </div>
           </div>
 
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-4 font-display leading-tight text-balance">
-            Case Studies
+            {t.portfolio.heading}
           </h2>
-          <p className="text-lg text-text-secondary font-medium">10+ successful projects that delivered real results</p>
+          <p className="text-lg text-text-secondary font-medium">{t.portfolio.subheading}</p>
         </div>
 
         <div className="relative overflow-hidden">
@@ -170,7 +176,7 @@ export default function Portfolio() {
                           } as React.CSSProperties}
                         />
 
-                        <span className="relative z-10">View Project</span>
+                        <span className="relative z-10">{t.portfolio.viewProject}</span>
                       </Link>
                     </div>
                   )}

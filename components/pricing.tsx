@@ -2,12 +2,14 @@
 
 import type React from "react"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Check, Zap } from "lucide-react"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations, type Translations } from "@/lib/translations"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -43,223 +45,132 @@ interface PricingCardData {
   }
 }
 
-const pricingData: PricingCardData[] = [
-  {
-    title: "Web Development",
-    packages: {
-      starter: {
-        name: "Starter",
-        oneTime: {
-          price: "$1,200",
-          priceRange: "$1,200 - $2,000",
-          period: "One-Time Payment",
-          description: "Simple portfolio / landing page (1-3 pages)",
-          features: [
-            "2 design concepts",
-            "Responsive design (desktop, tablet, mobile)",
-            "Wireframes + custom layout",
-            "Framer development",
-            "Source code ownership",
-            "1 month free support",
-            "+$200 per extra page",
-          ],
-        },
-        subscription: {
-          price: "$150",
-          priceRange: "$150 - $200/mo",
-          period: "per month",
-          description: "Great entry point for freelancers",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "Monthly updates",
-            "Unlimited page additions",
-            "Constant, fast support",
-            "Source code ownership after 12 months",
-          ],
-        },
-      },
-      growth: {
-        name: "Growth",
-        popular: true,
-        icon: <Zap className="w-4 h-4" />,
-        oneTime: {
-          price: "$2,200",
-          priceRange: "$2,200 - $3,000",
-          period: "One-Time Payment",
-          description: "Small business site (4-7 pages)",
-          features: [
-            "2 design concepts",
-            "Responsive design (desktop, tablet, mobile)",
-            "Wireframes + custom layout",
-            "Framer development",
-            "Source code ownership",
-            "1 month free support",
-            "+$200 per extra page",
-          ],
-        },
-        subscription: {
-          price: "$250",
-          priceRange: "$250 - $350/mo",
-          period: "per month",
-          description: "Most popular range for SMEs",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "Monthly updates",
-            "Unlimited page additions",
-            "Constant, fast support",
-            "Source code ownership after 12 months",
-          ],
-        },
-      },
-      professional: {
-        name: "Professional",
-        oneTime: {
-          price: "$3,200",
-          priceRange: "$3,200 - $6,000+",
-          period: "One-Time Payment",
-          description: "Corporate / advanced design (8+ pages)",
-          features: [
-            "2 design concepts",
-            "Responsive design (desktop, tablet, mobile)",
-            "Wireframes + custom layout",
-            "Framer development",
-            "Source code ownership",
-            "1 month free support",
-            "+$200 per extra page",
-            "Advanced animations & interactions",
-          ],
-        },
-        subscription: {
-          price: "$400",
-          priceRange: "$400 - $600/mo",
-          period: "per month",
-          description: "Ongoing dev & maintenance",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "Monthly updates",
-            "Unlimited page additions",
-            "Constant, fast support",
-            "Heavy support & design iteration",
-            "Source code ownership after 12 months",
-          ],
-        },
-      },
-    },
-  },
-  {
-    title: "Product Design",
-    packages: {
-      starter: {
-        name: "Startup MVP",
-        oneTime: {
-          price: "$2,000",
-          priceRange: "$2,000 - $4,000",
-          period: "One-Time Payment",
-          description: "Basic mobile app + admin panel",
-          features: [
-            "2 design concepts",
-            "Weekly updates",
-            "Mobile app plus admin dashboard",
-            "1-3 Months delivery",
-            "App Store + Play Store launch",
-            "1 month support",
-            "Slack, Loom, and meeting communication",
-          ],
-        },
-        subscription: {
-          price: "$100",
-          priceRange: "$100 - $200/mo",
-          period: "per month",
-          description: "Design + minor dev support",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "2 weekly updates",
-            "Unlimited changes",
-            "Constant support",
-            "Source code ownership after 18 months",
-          ],
-        },
-      },
-      growth: {
-        name: "Growth",
-        popular: true,
-        icon: <Zap className="w-4 h-4" />,
-        oneTime: {
-          price: "$5,000",
-          priceRange: "$5,000 - $10,000",
-          period: "One-Time Payment",
-          description: "Complex UI + interactions for funded startups",
-          features: [
-            "2 design concepts",
-            "Weekly updates",
-            "Mobile app plus admin dashboard",
-            "1-3 Months delivery",
-            "App Store + Play Store launch",
-            "1 month support",
-            "Slack, Loom, and meeting communication",
-            "Advanced UI/UX design",
-          ],
-        },
-        subscription: {
-          price: "$250",
-          priceRange: "$250 - $550/mo",
-          period: "per month",
-          description: "Unlimited changes + fast delivery",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "2 weekly updates",
-            "Unlimited changes",
-            "Constant support",
-            "Fast delivery",
-            "Source code ownership after 18 months",
-          ],
-        },
-      },
-      professional: {
-        name: "Scale",
-        oneTime: {
-          price: "$12,000",
-          priceRange: "$12,000 - $20,000+",
-          period: "One-Time Payment",
-          description: "Custom design systems / dashboards",
-          features: [
-            "2 design concepts",
-            "Weekly updates",
-            "Mobile app plus admin dashboard",
-            "1-3 Months delivery",
-            "App Store + Play Store launch",
-            "1 month support",
-            "Slack, Loom, and meeting communication",
-            "Custom design systems",
-            "Enterprise-level support",
-          ],
-        },
-        subscription: {
-          price: "$750",
-          priceRange: "$750 - $1,000/mo",
-          period: "per month",
-          description: "Full product design partnership",
-          features: [
-            "All one-time features+",
-            "Weekly progress meetings",
-            "2 weekly updates",
-            "Unlimited changes",
-            "Constant support",
-            "Multiple products support",
-            "Source code ownership after 18 months",
-          ],
-        },
-      },
-    },
-  },
-]
-
 export default function Pricing() {
+
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+  const pricingData = useMemo<PricingCardData[]>(
+    () => [
+      {
+        title: t.pricing.webDevelopment.title,
+        packages: {
+          starter: {
+            name: t.pricing.webDevelopment.starter.name,
+            oneTime: {
+              price: "$1,200",
+              priceRange: "$1,200 - $2,000",
+              period: t.pricing.webDevelopment.starter.oneTime.period,
+              description: t.pricing.webDevelopment.starter.oneTime.description,
+              features: t.pricing.webDevelopment.starter.oneTime.features,
+            },
+            subscription: {
+              price: "$150",
+              priceRange: "$150 - $200/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.webDevelopment.starter.subscription.description,
+              features: t.pricing.webDevelopment.starter.subscription.features,
+            },
+          },
+          growth: {
+            name: t.pricing.webDevelopment.growth.name,
+            popular: true,
+            icon: <Zap className="w-4 h-4" />,
+            oneTime: {
+              price: "$2,200",
+              priceRange: "$2,200 - $3,000",
+              period: t.pricing.webDevelopment.growth.oneTime.period,
+              description: t.pricing.webDevelopment.growth.oneTime.description,
+              features: t.pricing.webDevelopment.growth.oneTime.features,
+            },
+            subscription: {
+              price: "$250",
+              priceRange: "$250 - $350/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.webDevelopment.growth.subscription.description,
+              features: t.pricing.webDevelopment.growth.subscription.features,
+            },
+          },
+          professional: {
+            name: t.pricing.webDevelopment.professional.name,
+            oneTime: {
+              price: "$3,200",
+              priceRange: "$3,200 - $6,000+",
+              period: t.pricing.webDevelopment.professional.oneTime.period,
+              description: t.pricing.webDevelopment.professional.oneTime.description,
+              features: t.pricing.webDevelopment.professional.oneTime.features,
+            },
+            subscription: {
+              price: "$400",
+              priceRange: "$400 - $600/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.webDevelopment.professional.subscription.description,
+              features: t.pricing.webDevelopment.professional.subscription.features,
+            },
+          },
+        },
+      },
+      {
+        title: t.pricing.productDesign.title,
+        packages: {
+          starter: {
+            name: t.pricing.productDesign.startupMvp.name,
+            oneTime: {
+              price: "$2,000",
+              priceRange: "$2,000 - $4,000",
+              period: t.pricing.productDesign.startupMvp.oneTime.period,
+              description: t.pricing.productDesign.startupMvp.oneTime.description,
+              features: t.pricing.productDesign.startupMvp.oneTime.features,
+            },
+            subscription: {
+              price: "$100",
+              priceRange: "$100 - $200/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.productDesign.startupMvp.subscription.description,
+              features: t.pricing.productDesign.startupMvp.subscription.features,
+            },
+          },
+          growth: {
+            name: t.pricing.productDesign.growth.name,
+            popular: true,
+            icon: <Zap className="w-4 h-4" />,
+            oneTime: {
+              price: "$5,000",
+              priceRange: "$5,000 - $10,000",
+              period: t.pricing.productDesign.growth.oneTime.period,
+              description: t.pricing.productDesign.growth.oneTime.description,
+              features: t.pricing.productDesign.growth.oneTime.features,
+            },
+            subscription: {
+              price: "$250",
+              priceRange: "$250 - $550/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.productDesign.growth.subscription.description,
+              features: t.pricing.productDesign.growth.subscription.features,
+            },
+          },
+          professional: {
+            name: t.pricing.productDesign.scale.name,
+            oneTime: {
+              price: "$12,000",
+              priceRange: "$12,000 - $20,000+",
+              period: t.pricing.productDesign.scale.oneTime.period,
+              description: t.pricing.productDesign.scale.oneTime.description,
+              features: t.pricing.productDesign.scale.oneTime.features,
+            },
+            subscription: {
+              price: "$750",
+              priceRange: "$750 - $1,000/mo",
+              period: t.pricing.perMonth,
+              description: t.pricing.productDesign.scale.subscription.description,
+              features: t.pricing.productDesign.scale.subscription.features,
+            },
+          },
+        },
+      },
+    ],
+    [t],
+  )
+
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
   const buttonsRef = useRef<(HTMLDivElement | null)[]>([])
@@ -304,13 +215,13 @@ export default function Pricing() {
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
-            Transparent Pricing
+            {t.pricing.badge}
           </p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight font-display text-balance">
-            Choose Your Plan
+            {t.pricing.heading}
           </h2>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
-            Flexible pricing options designed for your needs
+            {t.pricing.subheading}
           </p>
         </div>
 
@@ -321,6 +232,7 @@ export default function Pricing() {
               data={card}
               cardRef={(el) => (cardsRef.current[index] = el)}
               buttonRef={(el) => (buttonsRef.current[index] = el)}
+              translations={t}
             />
           ))}
         </div>
@@ -333,10 +245,12 @@ function PricingCard({
   data,
   cardRef,
   buttonRef,
+  translations,
 }: {
   data: PricingCardData
   cardRef: (el: HTMLDivElement | null) => void
   buttonRef: (el: HTMLDivElement | null) => void
+  translations: Translations
 }) {
   const [plan, setPlan] = useState<PricingPlan>("oneTime")
   const [selectedPackage, setSelectedPackage] = useState<PackageTier>("growth")
@@ -364,7 +278,7 @@ function PricingCard({
           plan === "subscription" ? "text-foreground" : "text-muted"
         }`}
       >
-        Subscription
+        {translations.pricing.subscription}
       </span>
     </div>
   )
@@ -398,7 +312,7 @@ function PricingCard({
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
                       <span className="absolute -top-3 -right-3 bg-teal-600 text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold">
-                        Most Popular
+                        {translations.pricing.mostPopular}
                       </span>
                     )}
                   </button>
@@ -412,7 +326,7 @@ function PricingCard({
               </div>
               {currentPlan.priceRange && <div className="text-sm text-muted mb-2">{currentPlan.priceRange}</div>}
               <div className="text-text-secondary text-base font-semibold mb-4 tracking-wide">
-                {plan === "subscription" ? "per month" : currentPlan.period}
+                {plan === "subscription" ? translations.pricing.perMonth : currentPlan.period}
               </div>
             </div>
 
@@ -441,9 +355,9 @@ function PricingCard({
             href="https://wa.me/79778148423"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Schedule a Meeting via WhatsApp"
+            aria-label={translations.pricing.scheduleMeetingAria}
           >
-            Schedule a Meeting
+            {translations.pricing.scheduleAMeeting}
           </a>
         </Button>
 
@@ -452,7 +366,7 @@ function PricingCard({
             variant="outline"
             className="w-full h-14 md:h-16 bg-white border-2 border-[#054F56] hover:border-[#054F56] text-[#054F56] hover:text-white hover:bg-[#054F56] font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
           >
-            Connect on Telegram
+            {translations.pricing.connectTelegram}
           </Button>
         </a>
       </div>

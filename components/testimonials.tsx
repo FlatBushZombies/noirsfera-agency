@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useRef } from "react"
-import { motion } from "framer-motion"
+import { useState, useRef, useEffect } from "react"
+import { motion, useAnimation } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star } from "lucide-react"
@@ -52,10 +52,41 @@ const testimonials: Testimonial[] = [
 
 export function Testimonials() {
   const [hovered, setHovered] = useState<number | null>(null)
-  const sectionRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [scrollWidth, setScrollWidth] = useState(0)
+  const controls = useAnimation()
+  const [isPaused, setIsPaused] = useState(false)
+
+  // Calculate the scroll width dynamically
+  useEffect(() => {
+    if (containerRef.current) {
+      setScrollWidth(containerRef.current.scrollWidth / 2) // half because of duplication
+    }
+  }, [])
+
+  // Control infinite scroll
+  useEffect(() => {
+    if (!scrollWidth) return
+
+    const animateScroll = async () => {
+      while (true) {
+        if (!isPaused) {
+          await controls.start({
+            x: -scrollWidth,
+            transition: { duration: 45, ease: "linear" },
+          })
+          controls.set({ x: 0 }) // reset
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, 100))
+        }
+      }
+    }
+
+    animateScroll()
+  }, [scrollWidth, isPaused, controls])
 
   return (
-    <section id="testimonials" ref={sectionRef} className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans">
+    <section id="testimonials" className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans">
       <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -75,40 +106,34 @@ export function Testimonials() {
 
         {/* Infinite Scroll Section */}
         <div className="relative w-full overflow-hidden pt-2">
-
-          {/* Reduced blur for readability */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 
-              bg-gradient-to-r from-background via-background/40 to-transparent 
-              z-10 pointer-events-none" />
-
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 
-              bg-gradient-to-l from-background via-background/40 to-transparent 
-              z-10 pointer-events-none" />
+          {/* Left Gradient */}
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
+          {/* Right Gradient */}
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
 
           <motion.div
+            ref={containerRef}
             className="flex gap-4 md:gap-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 45,
-                ease: "linear",
-              },
-            }}
+            animate={controls}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
             {[...testimonials, ...testimonials].map((t, index) => (
               <motion.div
                 key={index}
-                className="group relative flex-shrink-0 w-[300px] sm:w-[340px] md:w-[360px]"
+                className="group relative flex-shrink-0 w-[80%] sm:w-[45%] md:w-[360px]"
                 onMouseEnter={() => setHovered(index)}
                 onMouseLeave={() => setHovered(null)}
                 style={{ perspective: "1000px" }}
               >
-                {/* Jitter fix: isolate lift so layout does not shift */}
                 <motion.div
                   className="h-full"
-                  animate={{ y: hovered === index ? -6 : 0 }}
+                  animate={{
+                    y: hovered === index ? -6 : 0,
+                    scale: hovered === index ? 1.02 : 1,
+                    rotateY: hovered === index ? 5 : 0,
+                    rotateX: hovered === index ? 2 : 0,
+                  }}
                   transition={{ duration: 0.3 }}
                 >
                   <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
@@ -116,7 +141,11 @@ export function Testimonials() {
                       {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: t.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
+                          <Star
+                            key={i}
+                            className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]"
+                            aria-label={`Star ${i + 1}`}
+                          />
                         ))}
                       </div>
 
@@ -127,7 +156,7 @@ export function Testimonials() {
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
                           src={t.image || "/placeholder.svg"}
-                          alt={t.name}
+                          alt={t.name + " avatar"}
                           width={44}
                           height={44}
                           className="w-10 h-10 rounded-full object-cover"

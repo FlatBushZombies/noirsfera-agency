@@ -5,15 +5,21 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { TiLocationArrow } from "react-icons/ti"
-
-const navLinks = [
-  { name: "Services", href: "#services" },
-  { name: "Portfolio", href: "#portfolio" },
-  { name: "Pricing", href: "#pricing" },
-  { name: "Contact", href: "#contact" },
-]
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
 
 export function NavBar() {
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+  
+  const navLinks = [
+    { name: t.navbar.services, href: "#services" },
+    { name: t.navbar.portfolio, href: "#portfolio" },
+    { name: t.navbar.pricing, href: "#pricing" },
+    { name: t.navbar.contact, href: "#contact" },
+  ];
+  
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState("")
@@ -120,8 +126,9 @@ export function NavBar() {
                 ))}
               </div>
 
-              {/* Desktop Button */}
-              <div className="hidden md:flex items-center flex-shrink-0">
+              {/* Desktop Button & Language Switcher */}
+              <div className="hidden md:flex items-center gap-3 flex-shrink-0">
+                <LanguageSwitcher />
                 <motion.div
                   onMouseEnter={() => setIsButtonHovered(true)}
                   onMouseLeave={() => setIsButtonHovered(false)}
@@ -154,7 +161,7 @@ export function NavBar() {
                         }}
                         className="inline-flex items-center gap-2 relative z-10"
                       >
-                        Book a Call
+                        {t.navbar.bookACall}
                         <ArrowRight className="h-4 w-4" />
                       </motion.span>
 
@@ -170,7 +177,7 @@ export function NavBar() {
                         }}
                         className="absolute inset-0 flex items-center justify-center gap-2 z-10"
                       >
-                        Let's Go
+                        {t.navbar.letsGo}
                         <ArrowRight className="h-4 w-4" />
                       </motion.span>
                     </Button>
@@ -178,14 +185,17 @@ export function NavBar() {
                 </motion.div>
               </div>
 
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden p-2 text-foreground hover:text-primary transition-colors hover:bg-primary/10 rounded-lg"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                aria-label="Toggle menu"
-              >
-                {isMobileMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
-              </button>
+              {/* Mobile Language Switcher & Menu Button */}
+              <div className="md:hidden flex items-center gap-2">
+                <LanguageSwitcher />
+                <button
+                  className="p-2 text-foreground hover:text-primary transition-colors hover:bg-primary/10 rounded-lg"
+                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                  aria-label="Toggle menu"
+                >
+                  {isMobileMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
+                </button>
+              </div>
             </div>
           </div>
         </motion.nav>
@@ -238,7 +248,7 @@ export function NavBar() {
                     aria-label="Book a call via Telegram"
                     className="flex items-center gap-2"
                   >
-                    Book a Call
+                    {t.navbar.bookACall}
                     <ArrowRight className="h-5 w-5" />
                   </a>
                 </Button>
