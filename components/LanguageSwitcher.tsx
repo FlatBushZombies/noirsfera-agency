@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Globe } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -10,23 +10,36 @@ export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const languages = [
     { code: "en" as Language, name: "English", flag: "🇬🇧" },
     { code: "ru" as Language, name: "Русский", flag: "🇷🇺" },
   ];
 
-  const closeWithDelay = () => {
-    setTimeout(() => setIsOpen(false), 100);
-  };
+  // Close when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
 
   return (
-    <div
-      className="relative inline-block"
-      onMouseLeave={closeWithDelay}
-    >
+    <div className="relative inline-block" ref={dropdownRef}>
       {/* Globe trigger */}
       <button
-        onMouseEnter={() => setIsOpen(true)}
+        onClick={() => setIsOpen((prev) => !prev)}
         className="p-1.5 rounded-md text-white hover:text-primary hover:bg-primary/10 transition"
       >
         <Globe className="w-6 h-6" />
@@ -40,7 +53,6 @@ export function LanguageSwitcher() {
             animate={{ opacity: 1, y: 2, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            onMouseEnter={() => setIsOpen(true)}
             className="absolute left-1/2 -translate-x-1/2 mt-1 
                        bg-white border border-border shadow-lg rounded-md 
                        w-40 z-50 py-1"
@@ -64,7 +76,6 @@ export function LanguageSwitcher() {
                   {lang.name}
                 </div>
 
-                {/* Checkmark */}
                 {language === lang.code && (
                   <svg
                     className="w-3 h-3"
