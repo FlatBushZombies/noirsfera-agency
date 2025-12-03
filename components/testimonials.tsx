@@ -5,6 +5,9 @@ import { motion, useAnimation } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star } from "lucide-react"
+import { useLanguage } from "@/lib/LanguageContext"
+import { getTranslations } from "@/lib/translations"
+
 
 interface Testimonial {
   id: number
@@ -51,6 +54,10 @@ const testimonials: Testimonial[] = [
 ]
 
 export function Testimonials() {
+
+  const { language } = useLanguage();
+  const t = getTranslations(language);
+
   const [hovered, setHovered] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [scrollWidth, setScrollWidth] = useState(0)
@@ -97,10 +104,10 @@ export function Testimonials() {
           className="text-center mb-10 md:mb-14"
         >
           <p className="text-[#0EC8F3] text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
-            Client Testimonials
+            {t.testimonials.badge}
           </p>
           <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
-            People we've worked with have said some nice things…
+            {t.testimonials.heading}
           </h2>
         </motion.div>
 
