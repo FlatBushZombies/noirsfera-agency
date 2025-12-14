@@ -1,13 +1,12 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { motion, useAnimation } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star } from "lucide-react"
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
-
 
 interface Testimonial {
   id: number
@@ -54,46 +53,38 @@ const testimonials: Testimonial[] = [
 ]
 
 export function Testimonials() {
+  const { language } = useLanguage()
+  const t = getTranslations(language)
 
-  const { language } = useLanguage();
-  const t = getTranslations(language);
-
-  const [hovered, setHovered] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [scrollWidth, setScrollWidth] = useState(0)
-  const controls = useAnimation()
+  const [width, setWidth] = useState(0)
+  const [hovered, setHovered] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
 
-  // Calculate the scroll width dynamically
+  // Measure scroll width (half of duplicated content)
   useEffect(() => {
-    if (containerRef.current) {
-      setScrollWidth(containerRef.current.scrollWidth / 2) // half because of duplication
+    const measure = () => {
+      if (!containerRef.current) return
+      const children = containerRef.current.children
+      let total = 0
+
+      for (let i = 0; i < children.length / 2; i++) {
+        total += (children[i] as HTMLElement).offsetWidth
+      }
+
+      setWidth(total)
     }
+
+    measure()
+    window.addEventListener("resize", measure)
+    return () => window.removeEventListener("resize", measure)
   }, [])
 
-  // Control infinite scroll
-  useEffect(() => {
-    if (!scrollWidth) return
-
-    const animateScroll = async () => {
-      while (true) {
-        if (!isPaused) {
-          await controls.start({
-            x: -scrollWidth,
-            transition: { duration: 45, ease: "linear" },
-          })
-          controls.set({ x: 0 }) // reset
-        } else {
-          await new Promise((resolve) => setTimeout(resolve, 100))
-        }
-      }
-    }
-
-    animateScroll()
-  }, [scrollWidth, isPaused, controls])
-
   return (
-    <section id="testimonials" className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans">
+    <section
+      id="testimonials"
+      className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans"
+    >
       <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -111,23 +102,30 @@ export function Testimonials() {
           </h2>
         </motion.div>
 
-        {/* Infinite Scroll Section */}
+        {/* Infinite Scroll */}
         <div className="relative w-full overflow-hidden pt-2">
-          {/* Left Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
-          {/* Right Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
+          {/* Edge gradients – desktop only */}
+          <div className="hidden md:block absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
+          <div className="hidden md:block absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
 
           <motion.div
             ref={containerRef}
             className="flex gap-4 md:gap-6"
-            animate={controls}
+            animate={{ x: -width }}
+            transition={{
+              duration: 45,
+              ease: "linear",
+              repeat: Infinity,
+            }}
+            style={{
+              animationPlayState: isPaused ? "paused" : "running",
+            }}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            {[...testimonials, ...testimonials].map((t, index) => (
+            {[...testimonials, ...testimonials].map((item, index) => (
               <motion.div
-                key={index}
+                key={`${item.id}-${index}`}
                 className="group relative flex-shrink-0 w-[80%] sm:w-[45%] md:w-[360px]"
                 onMouseEnter={() => setHovered(index)}
                 onMouseLeave={() => setHovered(null)}
@@ -147,32 +145,35 @@ export function Testimonials() {
                     <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
                       {/* Stars */}
                       <div className="flex gap-1">
-                        {Array.from({ length: t.rating }).map((_, i) => (
+                        {Array.from({ length: item.rating }).map((_, i) => (
                           <Star
                             key={i}
                             className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]"
-                            aria-label={`Star ${i + 1}`}
                           />
                         ))}
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-[#0000007D]">"{t.text}"</p>
+                      <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
+                        “{item.text}”
+                      </p>
 
                       {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
-                          src={t.image || "/placeholder.svg"}
-                          alt={t.name + " avatar"}
+                          src={item.image || "/placeholder.svg"}
+                          alt={`${item.name} avatar`}
                           width={44}
                           height={44}
                           className="w-10 h-10 rounded-full object-cover"
                         />
                         <div>
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
-                            {t.name}
+                            {item.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">{t.company}</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            {item.company}
+                          </p>
                         </div>
                       </div>
                     </CardContent>

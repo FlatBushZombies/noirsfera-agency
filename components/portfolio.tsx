@@ -55,7 +55,7 @@ export default function Portfolio() {
         tags: t.portfolio.projects.dmbPay.tags,
         duration: t.portfolio.projects.dmbPay.duration,
         industry: t.portfolio.projects.dmbPay.industry,
-        image: "/crypto_pay.png",
+        image: "/robot.png",
         imageAlt: t.portfolio.projects.dmbPay.imageAlt,
         link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
       },
