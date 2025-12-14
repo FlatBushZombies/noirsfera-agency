@@ -66,7 +66,7 @@ export default function Portfolio() {
         tags: t.portfolio.projects.oakwood.tags,
         duration: t.portfolio.projects.oakwood.duration,
         industry: t.portfolio.projects.oakwood.industry,
-        image: "/oakwood.png",
+        image: "/oakwood.jpg",
         imageAlt: t.portfolio.projects.oakwood.imageAlt,
         link: "https://oakwoodesl.com/",
       },
