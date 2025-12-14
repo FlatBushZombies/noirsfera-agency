@@ -33,7 +33,7 @@ export default function Portfolio() {
         tags: t.portfolio.projects.tutschool.tags,
         duration: t.portfolio.projects.tutschool.duration,
         industry: t.portfolio.projects.tutschool.industry,
-        image: "/tutschool.png",
+        image: "/tutschool-flag.jpg",
         imageAlt: t.portfolio.projects.tutschool.imageAlt,
         link: "https://tutschool.ru/",
       },
