@@ -316,7 +316,7 @@ export const translations: Record<Language, Translations> = {
         tutschool: {
           title: 'TutSchool',
           description: 'Comprehensive website for TUT School, a language and arts institution featuring course information, enrollment, and student resources.',
-          tags: ['Web Design', 'Development'],
+          tags: ['Education', 'Development', 'Platform'],
           duration: '6 weeks',
           industry: 'SaaS',
           imageAlt: 'TutSchool Website',
