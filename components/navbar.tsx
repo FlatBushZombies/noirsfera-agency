@@ -148,7 +148,7 @@ export function NavBar() {
                     aria-label="Book a call via Telegram"
                     className="inline-block"
                   >
-                    <Button className="bg-primary hover:bg-[#00C7E6] text-white font-semibold font-sans rounded-full px-6 py-2.5 text-sm relative overflow-hidden h-auto group transition-all duration-300 shadow-lg hover:shadow-xl border-0">
+                    <Button className="bg-[#0094B0] hover:bg-[#00C7E6] text-white font-semibold font-sans rounded-full px-6 py-2.5 text-sm relative overflow-hidden h-auto group transition-all duration-300 shadow-lg hover:shadow-xl border-0">
                       <motion.span
                         initial={false}
                         animate={{
