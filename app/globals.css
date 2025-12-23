@@ -209,23 +209,20 @@
   animation: softGlow 2s ease-in-out infinite;
 }
 
-/* Premium Liquid Glass */
 .liquid-glass {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.12),
-      rgba(255, 255, 255, 0.04)
-    );
+  background: linear-gradient(
+    135deg,
+    rgba(4, 124, 255, 0.85),
+    rgba(4, 124, 255, 0.65)
+  );
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 12px 30px rgba(0, 0, 0, 0.35);
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* Glass edge glow */
 .liquid-glass::before {
   content: "";
   position: absolute;
@@ -233,20 +230,20 @@
   border-radius: inherit;
   background: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.45),
     transparent 40%,
     transparent 60%,
-    rgba(255, 255, 255, 0.25)
+    rgba(255, 255, 255, 0.35)
   );
   pointer-events: none;
   mix-blend-mode: overlay;
 }
 
-/* Micro noise for realism */
 .liquid-noise {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
 }
+
 
