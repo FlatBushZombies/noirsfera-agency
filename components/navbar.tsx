@@ -67,6 +67,7 @@ export function NavBar() {
 
   return (
     <>
+      {/* NAV WRAPPER */}
       <div
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? "px-4 sm:px-6 lg:px-8 pt-4" : "px-0 pt-0"
@@ -78,10 +79,10 @@ export function NavBar() {
             y: 0,
             opacity: 1,
             backdropFilter: isScrolled
-              ? "blur(20px) saturate(180%)"
-              : "blur(14px) saturate(140%)",
+              ? "blur(32px) saturate(240%)"
+              : "blur(22px) saturate(200%)",
           }}
-          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+          transition={{ type: "spring", stiffness: 90, damping: 18 }}
           className={`relative overflow-hidden transition-all duration-300 liquid-glass ${
             isScrolled
               ? "rounded-2xl max-w-7xl mx-auto"
@@ -93,23 +94,26 @@ export function NavBar() {
             e.currentTarget.style.setProperty("--y", `${e.clientY - rect.top}px`)
           }}
         >
+          {/* Noise */}
           <span className="liquid-noise rounded-inherit" />
 
+          {/* Strong refraction layer */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.35 }}
             style={{
               background:
-                "radial-gradient(600px circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.15), transparent 40%)",
+                "radial-gradient(700px circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.22), transparent 38%)",
             }}
           />
 
+          {/* CONTENT */}
           <div className="relative px-4 sm:px-6 lg:px-8">
             <div className={`flex items-center justify-between ${isScrolled ? "h-16" : "h-20"}`}>
               
-              {/* Logo */}
+              {/* LOGO */}
               <motion.div
                 whileHover={{ rotate: -8, scale: 1.1 }}
                 className="flex items-center gap-2 cursor-pointer"
@@ -120,7 +124,7 @@ export function NavBar() {
                 </span>
               </motion.div>
 
-              {/* Desktop Nav */}
+              {/* DESKTOP NAV */}
               <div className="hidden md:flex flex-1 justify-center gap-2">
                 {navLinks.map(link => (
                   <motion.a
@@ -133,7 +137,7 @@ export function NavBar() {
                     whileHover={{ y: -2 }}
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       activeSection === link.href.slice(1)
-                        ? "text-white bg-white/20"
+                        ? "text-white bg-white/25"
                         : "text-white hover:text-white"
                     }`}
                   >
@@ -142,7 +146,7 @@ export function NavBar() {
                 ))}
               </div>
 
-              {/* Actions */}
+              {/* ACTIONS */}
               <div className="hidden md:flex items-center gap-3">
                 <LanguageSwitcher />
                 <motion.div
@@ -163,7 +167,7 @@ export function NavBar() {
                 </motion.div>
               </div>
 
-              {/* Mobile */}
+              {/* MOBILE */}
               <div className="md:hidden flex items-center gap-2">
                 <LanguageSwitcher />
                 <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
@@ -179,16 +183,17 @@ export function NavBar() {
         </motion.nav>
       </div>
 
+      {/* SPACER */}
       <div className={isScrolled ? "h-24" : "h-20"} />
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ x: "100%", opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "100%", opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-[#047CFF]/90 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-[60] bg-[#047CFF]/95 backdrop-blur-2xl md:hidden"
           >
             <div className="flex flex-col items-center justify-center h-full gap-8">
               {navLinks.map(link => (
