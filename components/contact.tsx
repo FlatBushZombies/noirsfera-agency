@@ -22,8 +22,8 @@ export default function Contact() {
   const [focusedField, setFocusedField] = useState<FieldType>(null)
   const [loading, setLoading] = useState(false)
 
-  const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
 
   const sectionRef = useRef<HTMLElement>(null)
   const nameRef = useRef<HTMLDivElement>(null)
@@ -56,6 +56,25 @@ export default function Contact() {
           delay: 0.1,
           ease: "power2.out",
         })
+
+      if (formRef.current) {
+        gsap.fromTo(
+          formRef.current,
+          { opacity: 0, y: 40, scale: 0.95 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: formRef.current,
+              start: "top 85%",
+              once: true,
+            },
+          },
+        )
+      }
     }, sectionRef)
     return () => ctx.revert()
   }, [])
@@ -147,18 +166,18 @@ export default function Contact() {
 
             <div ref={ctaContainerRef} className="space-y-6 pt-4">
               <a href="#portfolio">
-              <button className="group text-primary hover:text-primary/80 font-bold inline-flex items-center gap-2 transition-all hover:gap-3 text-base">
-                <Sparkles className="w-5 h-5" />
-                {t.contact.viewRecentWork}
-                <svg
-                  className="w-4 h-4 transition-transform group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+                <button className="group text-primary hover:text-primary/80 font-bold inline-flex items-center gap-2 transition-all hover:gap-3 text-base">
+                  <Sparkles className="w-5 h-5" />
+                  {t.contact.viewRecentWork}
+                  <svg
+                    className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </a>
               <div className="flex flex-wrap gap-8">
                 <button className="group text-foreground hover:text-primary font-semibold inline-flex items-center gap-3 transition-all text-base">
@@ -177,80 +196,87 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Form Section */}
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div ref={nameRef}>
-              <Label htmlFor="name" className="text-foreground font-bold mb-3 block text-base">
-                {t.contact.fullNameLabel}
-              </Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder={t.contact.fullNamePlaceholder}
-                required
-                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
-              />
-            </div>
+          <form
+            ref={formRef}
+            onSubmit={handleSubmit}
+            className="relative liquid-glass-modal rounded-3xl p-8 md:p-10 space-y-6 overflow-hidden"
+          >
+            <span className="liquid-noise rounded-3xl" />
 
-            <div ref={emailRef}>
-              <Label htmlFor="email" className="text-foreground font-bold mb-3 block text-base">
-                {t.contact.emailLabel}
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                placeholder={t.contact.emailPlaceholder}
-                required
-                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12"
-              />
-            </div>
+            <div className="relative z-10 space-y-6">
+              <div ref={nameRef}>
+                <Label htmlFor="name" className="text-foreground font-bold mb-3 block text-base">
+                  {t.contact.fullNameLabel}
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder={t.contact.fullNamePlaceholder}
+                  required
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                />
+              </div>
 
-            <div ref={messageRef}>
-              <Label htmlFor="message" className="text-foreground font-bold mb-3 block text-base">
-                {t.contact.messageLabel}
-              </Label>
-              <Textarea
-                id="message"
-                name="message"
-                placeholder={t.contact.messagePlaceholder}
-                rows={6}
-                required
-                className="bg-white border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none"
-              />
-            </div>
+              <div ref={emailRef}>
+                <Label htmlFor="email" className="text-foreground font-bold mb-3 block text-base">
+                  {t.contact.emailLabel}
+                </Label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t.contact.emailPlaceholder}
+                  required
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                />
+              </div>
 
-            <div className="relative inline-block pt-4 w-full">
-              <Button
-                ref={buttonRef}
-                type="submit"
-                disabled={loading}
-                className="w-full bg-primary hover:bg-[#00C7E6] text-white font-bold px-10 py-4 text-base rounded-lg transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 relative z-10 h-auto border-0"
-                onMouseEnter={handleButtonHover}
-                onMouseLeave={handleButtonLeave}
-              >
-                {loading ? t.contact.sending : t.contact.sendMessage}
-              </Button>
+              <div ref={messageRef}>
+                <Label htmlFor="message" className="text-foreground font-bold mb-3 block text-base">
+                  {t.contact.messageLabel}
+                </Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  placeholder={t.contact.messagePlaceholder}
+                  rows={6}
+                  required
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
+                />
+              </div>
 
-              {/* Fireworks particle container */}
-              <div
-                ref={fireworksContainerRef}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ zIndex: 5 }}
-              >
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="firework-particle absolute top-0 left-0 w-2.5 h-2.5 rounded-full"
-                    style={{
-                      backgroundColor: "#00D9FF",
-                      boxShadow: "0 0 12px #00D9FF, 0 0 24px #00D9FF",
-                      opacity: 0,
-                      transform: "scale(0)",
-                    }}
-                  />
-                ))}
+              <div className="relative inline-block pt-4 w-full">
+                <Button
+                  ref={buttonRef}
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary hover:bg-[#00C7E6] text-white font-bold px-10 py-4 text-base rounded-lg transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 relative z-10 h-auto border-0"
+                  onMouseEnter={handleButtonHover}
+                  onMouseLeave={handleButtonLeave}
+                >
+                  {loading ? t.contact.sending : t.contact.sendMessage}
+                </Button>
+
+                {/* Fireworks particle container */}
+                <div
+                  ref={fireworksContainerRef}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                  style={{ zIndex: 5 }}
+                >
+                  {Array.from({ length: 12 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="firework-particle absolute top-0 left-0 w-2.5 h-2.5 rounded-full"
+                      style={{
+                        backgroundColor: "#00D9FF",
+                        boxShadow: "0 0 12px #00D9FF, 0 0 24px #00D9FF",
+                        opacity: 0,
+                        transform: "scale(0)",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </form>

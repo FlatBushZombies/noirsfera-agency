@@ -121,13 +121,13 @@ export function Services() {
     >
       <div className="max-w-7xl mx-auto space-y-20">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">{t.services.sectionBadge}</p>
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">
+            {t.services.sectionBadge}
+          </p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight text-balance font-display">
             {t.services.heading}
           </h2>
-          <p className="text-lg text-text-secondary font-medium leading-relaxed">
-            {t.services.subheading}
-          </p>
+          <p className="text-lg text-text-secondary font-medium leading-relaxed">{t.services.subheading}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
@@ -137,17 +137,12 @@ export function Services() {
               ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
-              className="group relative rounded-2xl p-8 md:p-10 bg-white border-2 border-border hover:border-primary/30 shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden"
-              style={{ boxShadow: "inset 0 0 30px rgba(0, 217, 255, 0.05)" }}
+              className="group relative liquid-glass-card rounded-2xl p-8 md:p-10 overflow-hidden"
             >
-              {/* Premium background glow */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                style={{ boxShadow: "inset 0 0 30px rgba(0, 217, 255, 0.05)" }}
-              />
+              <span className="liquid-noise rounded-2xl" />
 
               {/* Top Visual Section */}
-              <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10">
+              <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10 z-10">
                 <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
                 {index === 0 && (
                   <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
@@ -170,21 +165,17 @@ export function Services() {
                 {index === 2 && (
                   <div className="relative space-y-2 w-full px-6">
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">
-                        {t.services.items.uiux.userRetention}
-                      </span>
+                      <span className="text-xs font-bold text-foreground">{t.services.items.uiux.userRetention}</span>
                     </div>
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">
-                        {t.services.items.uiux.conversions}
-                      </span>
+                      <span className="text-xs font-bold text-foreground">{t.services.items.uiux.conversions}</span>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Text Content */}
-              <div className="relative space-y-6">
+              <div className="relative space-y-6 z-10">
                 <div className="space-y-3">
                   <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight font-display">
                     {service.title}
@@ -233,13 +224,13 @@ export function Services() {
           className="bg-gradient-to-br from-foreground to-foreground/95 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-foreground/10"
         >
           <div className="space-y-4 max-w-2xl mx-auto">
-            <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">{t.services.cta.badge}</p>
+            <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">
+              {t.services.cta.badge}
+            </p>
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight text-balance font-display">
               {t.services.cta.heading}
             </h3>
-            <p className="text-lg text-white/80 font-medium leading-relaxed">
-              {t.services.cta.description}
-            </p>
+            <p className="text-lg text-white/80 font-medium leading-relaxed">{t.services.cta.description}</p>
           </div>
           <Button
             asChild

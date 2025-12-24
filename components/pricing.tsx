@@ -46,9 +46,8 @@ interface PricingCardData {
 }
 
 export default function Pricing() {
-
-  const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
   const pricingData = useMemo<PricingCardData[]>(
     () => [
       {
@@ -263,7 +262,7 @@ function PricingCard({
       <button
         onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
         className={`relative w-16 h-8 rounded-full transition-colors duration-300 ${
-          plan === "subscription" ? "bg-[#054F56]" : "bg-gray-300"
+          plan === "subscription" ? "bg-primary" : "bg-gray-300"
         }`}
         aria-label="Toggle pricing plan"
       >
@@ -286,8 +285,10 @@ function PricingCard({
   return (
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
-        <Card className="relative bg-white border-2 border-border hover:border-[#054F56]/30 overflow-hidden group hover:shadow-2xl transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
-          <div className="flex flex-col h-full">
+        <Card className="relative liquid-glass-pricing overflow-hidden group hover:shadow-2xl transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full border-0">
+          <span className="liquid-noise rounded-2xl" />
+
+          <div className="flex flex-col h-full relative z-10">
             <ToggleSwitch className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2" />
 
             <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-8 tracking-tight leading-tight font-display">
@@ -303,15 +304,15 @@ function PricingCard({
                     key={tier}
                     onClick={() => setSelectedPackage(tier)}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                      isSelected ? "bg-[#054F56] text-white shadow-lg" : "bg-surface text-foreground hover:bg-border"
+                      isSelected ? "bg-primary text-white shadow-lg" : "bg-surface text-foreground hover:bg-border"
                     }`}
                   >
                     {pkg.icon && (
-                      <span className={`w-4 h-4 ${isSelected ? "text-white" : "text-[#054F56]"}`}>{pkg.icon}</span>
+                      <span className={`w-4 h-4 ${isSelected ? "text-white" : "text-primary"}`}>{pkg.icon}</span>
                     )}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
-                      <span className="absolute -top-3 -right-3 bg-teal-600 text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold">
+                      <span className="absolute -top-3 -right-3 bg-primary text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold">
                         {translations.pricing.mostPopular}
                       </span>
                     )}
@@ -333,8 +334,8 @@ function PricingCard({
             <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto mb-10 min-h-[300px] max-h-[400px]">
               {currentPlan.features.map((feature, index) => (
                 <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
-                  <div className="w-5 h-5 rounded-full bg-[#054F56] flex items-center justify-center mt-0.5 flex-shrink-0">
-                    <Check className="w-3 h-3 text-white font-bold" strokeWidth={3} />
+                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <Check className="w-3 h-3 text-primary" strokeWidth={3} />
                   </div>
                   <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
                 </div>
@@ -349,7 +350,7 @@ function PricingCard({
       <div ref={buttonRef} className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
         <Button
           asChild
-          className="w-full sm:w-1/2 h-14 md:h-16 bg-[#054F56] hover:bg-[#043940] text-white font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] border-0"
+          className="w-full sm:w-1/2 h-14 md:h-16 bg-primary hover:bg-primary/90 text-white font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] border-0"
         >
           <a
             href="https://wa.me/79778148423"
@@ -364,7 +365,7 @@ function PricingCard({
         <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
           <Button
             variant="outline"
-            className="w-full h-14 md:h-16 bg-white border-2 border-[#054F56] hover:border-[#054F56] text-[#054F56] hover:text-white hover:bg-[#054F56] font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full h-14 md:h-16 bg-white border-2 border-primary hover:border-primary text-primary hover:text-white hover:bg-primary font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
           >
             {translations.pricing.connectTelegram}
           </Button>

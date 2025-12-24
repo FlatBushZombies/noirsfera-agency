@@ -81,10 +81,7 @@ export function Testimonials() {
   }, [])
 
   return (
-    <section
-      id="testimonials"
-      className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans"
-    >
+    <section id="testimonials" className="pt-12 md:pt-16 pb-10 md:pb-20 bg-background font-sans">
       <div className="container w-screen px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <motion.div
@@ -115,7 +112,7 @@ export function Testimonials() {
             transition={{
               duration: 45,
               ease: "linear",
-              repeat: Infinity,
+              repeat: Number.POSITIVE_INFINITY,
             }}
             style={{
               animationPlayState: isPaused ? "paused" : "running",
@@ -146,17 +143,12 @@ export function Testimonials() {
                       {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: item.rating }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]"
-                          />
+                          <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                         ))}
                       </div>
 
                       {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
-                        “{item.text}”
-                      </p>
+                      <p className="text-sm md:text-base leading-relaxed text-muted-foreground">“{item.text}”</p>
 
                       {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
@@ -171,9 +163,7 @@ export function Testimonials() {
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                             {item.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">
-                            {item.company}
-                          </p>
+                          <p className="text-xs md:text-sm text-muted-foreground">{item.company}</p>
                         </div>
                       </div>
                     </CardContent>

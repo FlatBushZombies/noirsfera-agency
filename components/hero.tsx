@@ -10,9 +10,8 @@ import { getTranslations } from "@/lib/translations"
 import Image from "next/image"
 
 export function Hero() {
-
-   const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
 
   const heroRef = useRef<HTMLDivElement>(null)
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -88,13 +87,13 @@ export function Hero() {
 
   return (
     <section
-      id="about"
+      id="hero"
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-surface pt-2"
     >
       <div
         ref={curlyRef}
-        className="absolute top-1/4 right-0 w-[600px] h-[600px] pointer-events-none opacity-50 blur-[0.5px]"
+        className="absolute top-1/4 right-0 w-[600px] h-[600px] pointer-events-none opacity-60 blur-sm"
         style={{ transform: "translate(20%, -10%)" }}
       >
         <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -117,49 +116,58 @@ export function Hero() {
         </svg>
       </div>
 
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+      <div className="absolute top-24 right-1/4 w-[400px] h-[400px] bg-primary/12 rounded-full blur-3xl opacity-40 animate-pulse" />
       <div
-        className="absolute bottom-20 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-20 animate-pulse"
+        className="absolute bottom-24 left-1/4 w-[350px] h-[350px] bg-primary/8 rounded-full blur-3xl opacity-30 animate-pulse"
         style={{ animationDelay: "1s" }}
-      ></div>
+      />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-10">
-          <div className="space-y-6">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative z-10">
+        <div className="max-w-5xl mx-auto text-center space-y-12">
+          <div className="space-y-8">
             <div ref={badgeRef} className="flex justify-center">
-              <div className="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-green-500/10 border border-green-500/30 backdrop-blur-sm hover:bg-green-500/15 transition-colors">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
+              <div className="relative inline-flex items-center gap-3 px-5 py-3 rounded-full liquid-glass-card overflow-hidden shadow-lg">
+                <span className="liquid-noise rounded-full" />
+                <span className="relative flex h-3 w-3 z-10">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-400 shadow-sm" />
                 </span>
-                <span className="text-sm font-semibold text-green-500 font-sans">{t.hero.availableBadge}</span>
+                <span className="text-sm font-bold text-foreground font-sans z-10 tracking-wide">
+                  {t.hero.availableBadge}
+                </span>
               </div>
             </div>
 
             <h1
               ref={headingRef}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight text-balance font-display drop-shadow-sm"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.08] text-balance font-display"
+              style={{ textShadow: "0 2px 8px rgba(0,0,0,0.04)" }}
             >
-              {t.hero.heading.modernising}<FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />{t.hero.heading.through}{" "}
-              <span className="text-primary">{t.hero.heading.futuristic}</span> {t.hero.heading.software}
+              {t.hero.heading.modernising}
+              <FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />
+              {t.hero.heading.through} <span className="text-primary">{t.hero.heading.futuristic}</span>{" "}
+              {t.hero.heading.software}
             </h1>
           </div>
 
-          <div ref={avatarsRef} className="flex flex-col items-center gap-4">
-            <div className="flex -space-x-4">
-              <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-1.png" alt="Client avatar 1" fill className="object-cover" />
-              </div>
-              <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-2.jpg" alt="Client avatar 2" fill className="object-cover" />
-              </div>
-              <div className="w-14 h-14 rounded-full border-2 border-background overflow-hidden relative shadow-lg ring-4 ring-surface">
-                <Image src="/avatar-3.jpg" alt="Client avatar 3" fill className="object-cover" />
+          <div ref={avatarsRef} className="flex flex-col items-center gap-6">
+            <div className="relative liquid-glass-card rounded-full p-4 overflow-hidden shadow-xl">
+              <span className="liquid-noise rounded-full" />
+              <div className="flex -space-x-5 relative z-10">
+                <div className="w-16 h-16 rounded-full border-3 border-white overflow-hidden relative shadow-lg ring-4 ring-primary/15">
+                  <Image src="/avatar-1.png" alt="Client avatar 1" fill className="object-cover" />
+                </div>
+                <div className="w-16 h-16 rounded-full border-3 border-white overflow-hidden relative shadow-lg ring-4 ring-primary/15">
+                  <Image src="/avatar-2.jpg" alt="Client avatar 2" fill className="object-cover" />
+                </div>
+                <div className="w-16 h-16 rounded-full border-3 border-white overflow-hidden relative shadow-lg ring-4 ring-primary/15">
+                  <Image src="/avatar-3.jpg" alt="Client avatar 3" fill className="object-cover" />
+                </div>
               </div>
             </div>
             <p
               ref={descriptionRef}
-              className="text-text-secondary md:text-lg lg:text-xl max-w-2xl text-base font-medium leading-relaxed"
+              className="text-foreground/80 md:text-xl lg:text-2xl max-w-2xl text-lg font-medium leading-relaxed"
             >
               {t.hero.description}
             </p>
@@ -190,7 +198,6 @@ export function Hero() {
                   `}
                 >
                   <span className="text-primary-light">{t.hero.youLetsChat}</span>
-                  
                 </div>
               </div>
             </Button>
