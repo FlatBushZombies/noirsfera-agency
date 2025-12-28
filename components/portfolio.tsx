@@ -27,58 +27,59 @@ export default function Portfolio() {
 
   const isScrolled = useScrollGlass(180)
 
-  const projects = useMemo<Project[]>(
-    () => [
-      {
-        id: 1,
-        title: t.portfolio.projects.tutschool.title,
-        description: t.portfolio.projects.tutschool.description,
-        tags: t.portfolio.projects.tutschool.tags,
-        duration: t.portfolio.projects.tutschool.duration,
-        industry: t.portfolio.projects.tutschool.industry,
-        image: "/tutschool-flag.jpg",
-        imageAlt: t.portfolio.projects.tutschool.imageAlt,
-        link: "https://tutschool.ru/",
-      },
-      {
-        id: 2,
-        title: t.portfolio.projects.campGuide.title,
-        description: t.portfolio.projects.campGuide.description,
-        tags: t.portfolio.projects.campGuide.tags,
-        duration: t.portfolio.projects.campGuide.duration,
-        industry: t.portfolio.projects.campGuide.industry,
-        image: "/camp-guide.png",
-        imageAlt: t.portfolio.projects.campGuide.imageAlt,
-        link: "https://resonant-sunflower-1bb1e7.netlify.app/",
-      },
-      {
-        id: 3,
-        title: t.portfolio.projects.dmbPay.title,
-        description: t.portfolio.projects.dmbPay.description,
-        tags: t.portfolio.projects.dmbPay.tags,
-        duration: t.portfolio.projects.dmbPay.duration,
-        industry: t.portfolio.projects.dmbPay.industry,
-        image: "/robot.png",
-        imageAlt: t.portfolio.projects.dmbPay.imageAlt,
-        link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
-      },
-      {
-        id: 4,
-        title: t.portfolio.projects.oakwood.title,
-        description: t.portfolio.projects.oakwood.description,
-        tags: t.portfolio.projects.oakwood.tags,
-        duration: t.portfolio.projects.oakwood.duration,
-        industry: t.portfolio.projects.oakwood.industry,
-        image: "/oakwood.jpg",
-        imageAlt: t.portfolio.projects.oakwood.imageAlt,
-        link: "https://oakwoodesl.com/",
-      },
-    ],
-    [t],
-  )
+  const projects = useMemo<Project[]>(() => [
+    {
+      id: 1,
+      title: t.portfolio.projects.tutschool.title,
+      description: t.portfolio.projects.tutschool.description,
+      tags: t.portfolio.projects.tutschool.tags,
+      duration: t.portfolio.projects.tutschool.duration,
+      industry: t.portfolio.projects.tutschool.industry,
+      image: "/tutschool-flag.jpg",
+      imageAlt: t.portfolio.projects.tutschool.imageAlt,
+      link: "https://tutschool.ru/",
+    },
+    {
+      id: 2,
+      title: t.portfolio.projects.campGuide.title,
+      description: t.portfolio.projects.campGuide.description,
+      tags: t.portfolio.projects.campGuide.tags,
+      duration: t.portfolio.projects.campGuide.duration,
+      industry: t.portfolio.projects.campGuide.industry,
+      image: "/camp-guide.png",
+      imageAlt: t.portfolio.projects.campGuide.imageAlt,
+      link: "https://resonant-sunflower-1bb1e7.netlify.app/",
+    },
+    {
+      id: 3,
+      title: t.portfolio.projects.dmbPay.title,
+      description: t.portfolio.projects.dmbPay.description,
+      tags: t.portfolio.projects.dmbPay.tags,
+      duration: t.portfolio.projects.dmbPay.duration,
+      industry: t.portfolio.projects.dmbPay.industry,
+      image: "/robot.png",
+      imageAlt: t.portfolio.projects.dmbPay.imageAlt,
+      link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
+    },
+    {
+      id: 4,
+      title: t.portfolio.projects.oakwood.title,
+      description: t.portfolio.projects.oakwood.description,
+      tags: t.portfolio.projects.oakwood.tags,
+      duration: t.portfolio.projects.oakwood.duration,
+      industry: t.portfolio.projects.oakwood.industry,
+      image: "/oakwood.jpg",
+      imageAlt: t.portfolio.projects.oakwood.imageAlt,
+      link: "https://oakwoodesl.com/",
+    },
+  ], [t])
 
   return (
-    <section id="portfolio" className="w-full bg-surface py-24 md:py-32 lg:py-40">
+    <section id="portfolio" className="w-full bg-surface py-24 md:py-32 lg:py-40 relative overflow-hidden">
+      {/* Floating liquid glass blobs */}
+      <div className="absolute top-10 left-1/3 w-96 h-96 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent blur-[120px] opacity-40 animate-liquid" />
+      <div className="absolute bottom-16 right-1/4 w-80 h-80 rounded-full bg-gradient-to-br from-primary/15 via-primary/10 to-transparent blur-[100px] opacity-30 animate-liquid" />
+
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-16">
         {/* Header */}
         <div className="text-center mb-20 lg:mb-24">
@@ -87,15 +88,14 @@ export default function Portfolio() {
           </p>
           <div className="flex justify-center mb-8">
             <div className="flex -space-x-4">
-              <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-1.png" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
-              </div>
-              <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-2.jpg" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
-              </div>
-              <div className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface">
-                <Image src="/avatar-3.jpg" alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
-              </div>
+              {["/avatar-1.png", "/avatar-2.jpg", "/avatar-3.jpg"].map((src, i) => (
+                <div
+                  key={i}
+                  className="w-10 h-10 rounded-full border-3 border-background overflow-hidden relative shadow-lg ring-2 ring-surface backdrop-blur-[16px] bg-white/5"
+                >
+                  <Image src={src} alt={t.portfolio.clientAvatarAlt} fill className="object-cover" />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -112,12 +112,8 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{
-                duration: 0.7,
-                delay: index * 0.15,
-                ease: [0.21, 0.47, 0.32, 0.98],
-              }}
-              className="group"
+              transition={{ duration: 0.7, delay: index * 0.15, ease: [0.21, 0.47, 0.32, 0.98] }}
+              className="group relative"
             >
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-10 lg:gap-16 items-start">
                 <Link
@@ -126,19 +122,21 @@ export default function Portfolio() {
                   rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredId(project.id)}
                   onMouseLeave={() => setHoveredId(null)}
-                  className={`relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.08)] transition-all duration-700 bg-gradient-to-br from-foreground/[0.02] to-foreground/[0.04] scroll-blur-overlay ${isScrolled ? "active" : ""}`}
+                  className={`relative aspect-[4/3] w-full rounded-3xl overflow-hidden transition-all duration-700 bg-white/5 backdrop-blur-[24px] border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.08)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15)] hover:bg-white/10`}
                 >
-                  <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-foreground/[0.08] group-hover:ring-foreground/[0.12] transition-all duration-500" />
+                  {/* Inner glass ring overlay */}
+                  <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/20 group-hover:ring-white/30 transition-all duration-500" />
 
                   <Image
                     src={project.image || "/placeholder.svg?height=800&width=1280"}
                     alt={project.imageAlt}
                     fill
-                    className="object-cover transition-all duration-700 group-hover:scale-[1.05]"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     priority={index === 0}
                   />
 
+                  {/* Hover overlay */}
                   <AnimatePresence>
                     {hoveredId === project.id && (
                       <motion.div
@@ -146,7 +144,7 @@ export default function Portfolio() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70 backdrop-blur-[1px] flex items-center justify-center"
+                        className="absolute inset-0 bg-white/10 backdrop-blur-[32px] flex items-center justify-center rounded-3xl"
                       >
                         <motion.div
                           initial={{ y: 30, opacity: 0, scale: 0.85 }}
@@ -157,8 +155,7 @@ export default function Portfolio() {
                         >
                           <div className="group/button relative">
                             <div className="absolute -inset-1 bg-gradient-to-r from-primary/50 via-primary/30 to-primary/50 rounded-full opacity-0 group-hover/button:opacity-70 blur-xl transition-all duration-500" />
-
-                            <div className="relative px-10 py-4 bg-white/95 backdrop-blur-sm text-black font-bold font-inter rounded-full transition-all duration-300 hover:scale-[1.08] hover:bg-white shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-white/20">
+                            <div className="relative px-10 py-4 bg-white/95 backdrop-blur-[32px] text-black font-bold font-inter rounded-full transition-all duration-300 hover:scale-[1.08] hover:bg-white shadow-[0_12px_48px_rgba(0,0,0,0.25)] border border-white/20">
                               <span className="relative z-10 text-base tracking-wide flex items-center gap-2.5">
                                 {t.portfolio.viewProject}
                                 <svg
@@ -184,7 +181,7 @@ export default function Portfolio() {
                     {project.tags.map((tag, tagIndex) => (
                       <span
                         key={tagIndex}
-                        className="px-4 py-2 text-xs font-bold tracking-wider text-primary/90 bg-primary/[0.06] rounded-full border border-primary/15 hover:bg-primary/[0.12] hover:border-primary/25 transition-all duration-300"
+                        className="px-4 py-2 text-xs font-bold tracking-wider text-primary/90 bg-white/5 rounded-full border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300"
                       >
                         {tag}
                       </span>
@@ -214,7 +211,7 @@ export default function Portfolio() {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-3 text-primary font-bold hover:gap-5 transition-all duration-300 group/link lg:hidden mt-4 text-base px-6 py-3.5 rounded-full bg-primary/[0.06] hover:bg-primary/[0.12] border border-primary/15 hover:border-primary/25"
+                    className="inline-flex items-center gap-3 text-primary font-bold hover:gap-5 transition-all duration-300 group/link lg:hidden mt-4 text-base px-6 py-3.5 rounded-full bg-white/5 backdrop-blur-[24px] border border-white/10 hover:bg-white/10 hover:border-white/20"
                   >
                     <span>{t.portfolio.viewProject}</span>
                     <svg

@@ -83,14 +83,17 @@ export function Hero() {
     window.open("https://t.me/itsslucki", "_blank")
   }
 
-  const words = ["businesses", "startups", "brands"]
-
   return (
     <section
       id="about"
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-surface pt-2"
     >
+      {/* Premium Liquid Background Blobs */}
+      <div className="absolute top-16 right-0 w-[600px] h-[600px] rounded-full opacity-30 blur-[120px] bg-gradient-to-tr from-primary/30 via-primary/15 to-transparent animate-liquid"></div>
+      <div className="absolute bottom-16 left-1/4 w-80 h-80 rounded-full opacity-25 blur-[100px] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent animate-liquid" style={{ animationDelay: "1s" }}></div>
+
+      {/* Curly Liquid Shape */}
       <div
         ref={curlyRef}
         className="absolute top-1/4 right-0 w-[600px] h-[600px] pointer-events-none opacity-50 blur-[0.5px]"
@@ -116,47 +119,45 @@ export function Hero() {
         </svg>
       </div>
 
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-primary/15 rounded-full blur-3xl opacity-30 animate-pulse"></div>
-      <div
-        className="absolute bottom-20 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl opacity-20 animate-pulse"
-        style={{ animationDelay: "1s" }}
-      ></div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-10">
-          <div className="space-y-6">
-            <div ref={badgeRef} className="flex justify-center">
-              <div className="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-green-500/10 border border-green-500/30 backdrop-blur-xl hover:bg-green-500/15 transition-all shadow-lg hover:shadow-xl">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400 shadow-lg shadow-green-400/50"></span>
-                </span>
-                <span className="text-sm font-semibold text-green-500 font-sans">{t.hero.availableBadge}</span>
-              </div>
+          {/* Premium Glass Badge */}
+          <div ref={badgeRef} className="flex justify-center">
+            <div className="relative inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 border border-white/25 backdrop-blur-[32px] hover:bg-white/15 transition-all shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.15)]">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400 shadow-lg shadow-green-400/50"></span>
+              </span>
+              <span className="text-sm font-semibold text-green-500 font-sans">{t.hero.availableBadge}</span>
             </div>
-
-            <h1
-              ref={headingRef}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight text-balance font-display drop-shadow-sm"
-            >
-              {t.hero.heading.modernising}
-              <FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />
-              {t.hero.heading.through} <span className="text-primary">{t.hero.heading.futuristic}</span>{" "}
-              {t.hero.heading.software}
-            </h1>
           </div>
 
+          {/* Heading */}
+          <h1
+            ref={headingRef}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight text-balance font-display drop-shadow-sm"
+          >
+            {t.hero.heading.modernising}
+            <FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />
+            {t.hero.heading.through} <span className="text-primary">{t.hero.heading.futuristic}</span>{" "}
+            {t.hero.heading.software}
+          </h1>
+
+          {/* Avatars */}
           <div ref={avatarsRef} className="flex flex-col items-center gap-4">
             <div className="flex -space-x-4">
-              <div className="w-14 h-14 rounded-full border-2 border-white/50 overflow-hidden relative shadow-lg ring-4 ring-white/20 backdrop-blur-sm">
-                <Image src="/avatar-1.png" alt="Client avatar 1" fill className="object-cover" />
-              </div>
-              <div className="w-14 h-14 rounded-full border-2 border-white/50 overflow-hidden relative shadow-lg ring-4 ring-white/20 backdrop-blur-sm">
-                <Image src="/avatar-2.jpg" alt="Client avatar 2" fill className="object-cover" />
-              </div>
-              <div className="w-14 h-14 rounded-full border-2 border-white/50 overflow-hidden relative shadow-lg ring-4 ring-white/20 backdrop-blur-sm">
-                <Image src="/avatar-3.jpg" alt="Client avatar 3" fill className="object-cover" />
-              </div>
+              {[
+                { src: "/avatar-1.png", alt: "Client avatar 1" },
+                { src: "/avatar-2.jpg", alt: "Client avatar 2" },
+                { src: "/avatar-3.jpg", alt: "Client avatar 3" },
+              ].map((avatar, i) => (
+                <div
+                  key={i}
+                  className="w-14 h-14 rounded-full border-2 border-white/25 overflow-hidden relative shadow-[0_8px_32px_rgba(0,0,0,0.1)] ring-4 ring-white/20 backdrop-blur-[28px]"
+                >
+                  <Image src={avatar.src} alt={avatar.alt} fill className="object-cover" />
+                </div>
+              ))}
             </div>
             <p
               ref={descriptionRef}
@@ -165,6 +166,8 @@ export function Hero() {
               {t.hero.description}
             </p>
           </div>
+
+          {/* Telegram Button */}
           <div ref={buttonsRef} className="flex justify-center items-center font-sans">
             <Button
               size="default"
@@ -172,11 +175,11 @@ export function Hero() {
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               onClick={handleTelegramClick}
-              className="bg-primary/90 hover:bg-primary backdrop-blur-xl transition-all text-lg font-bold px-8 py-4 h-auto rounded-full shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,217,255,0.6)] text-white border border-white/20 relative overflow-hidden"
+              className="bg-primary/90 hover:bg-primary backdrop-blur-[32px] transition-all text-lg font-bold px-8 py-4 h-auto rounded-full shadow-[0_20px_60px_-15px_rgba(0,217,255,0.6)] hover:shadow-[0_28px_80px_-15px_rgba(0,217,255,0.7)] text-white border border-white/20 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
               <div className="flex items-center gap-3 relative z-10">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 font-sans shadow-lg backdrop-blur-sm">
+                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 font-sans shadow-[0_8px_32px_rgba(0,0,0,0.1)] backdrop-blur-[28px]">
                   <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
                 </div>
                 <span

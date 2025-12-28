@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
-const links = ["Home", "Services", "Work", "Contact"];
+const links = ["Home", "Services", "Portfolio", "Pricing", "Contact"];
 
 export default function NavBar() {
   const [pos, setPos] = useState({ x: "50%", y: "50%" });
@@ -74,14 +74,29 @@ export default function NavBar() {
 
       {/* Links */}
       <ul className="relative z-10 flex gap-8 text-sm">
-        {links.map((link) => (
-          <li
-            key={link}
-            className="cursor-pointer transition-opacity hover:opacity-70"
-          >
-            {link}
-          </li>
-        ))}
+        {links.map((link) => {
+          // Map link text to section ID
+          const idMap: Record<string, string> = {
+            Home: "#",
+            Services: "services",
+            Portfolio: "portfolio",
+            Pricing: "pricing",
+            Contact: "contact",
+          };
+
+          return (
+            <li
+              key={link}
+              className="cursor-pointer transition-opacity hover:opacity-70"
+              onClick={() => {
+                const section = document.getElementById(idMap[link]);
+                section?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {link}
+            </li>
+          );
+        })}
       </ul>
     </motion.nav>
   );

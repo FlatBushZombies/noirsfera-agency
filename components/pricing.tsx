@@ -1,17 +1,13 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect, useRef, useMemo } from "react"
 import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Check, Zap } from "lucide-react"
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations, type Translations } from "@/lib/translations"
-
-gsap.registerPlugin(ScrollTrigger)
 
 type PricingPlan = "oneTime" | "subscription"
 type PackageTier = "starter" | "growth" | "professional"
@@ -48,131 +44,128 @@ interface PricingCardData {
 export default function Pricing() {
   const { language } = useLanguage()
   const t = getTranslations(language)
-  const pricingData = useMemo<PricingCardData[]>(
-    () => [
-      {
-        title: t.pricing.webDevelopment.title,
-        packages: {
-          starter: {
-            name: t.pricing.webDevelopment.starter.name,
-            oneTime: {
-              price: "$1,200",
-              priceRange: "$1,200 - $2,000",
-              period: t.pricing.webDevelopment.starter.oneTime.period,
-              description: t.pricing.webDevelopment.starter.oneTime.description,
-              features: t.pricing.webDevelopment.starter.oneTime.features,
-            },
-            subscription: {
-              price: "$150",
-              priceRange: "$150 - $200/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.starter.subscription.description,
-              features: t.pricing.webDevelopment.starter.subscription.features,
-            },
+
+  const pricingData = useMemo<PricingCardData[]>(() => [
+    {
+      title: t.pricing.webDevelopment.title,
+      packages: {
+        starter: {
+          name: t.pricing.webDevelopment.starter.name,
+          oneTime: {
+            price: "$1,200",
+            priceRange: "$1,200 - $2,000",
+            period: t.pricing.webDevelopment.starter.oneTime.period,
+            description: t.pricing.webDevelopment.starter.oneTime.description,
+            features: t.pricing.webDevelopment.starter.oneTime.features,
           },
-          growth: {
-            name: t.pricing.webDevelopment.growth.name,
-            popular: true,
-            icon: <Zap className="w-4 h-4" />,
-            oneTime: {
-              price: "$2,200",
-              priceRange: "$2,200 - $3,000",
-              period: t.pricing.webDevelopment.growth.oneTime.period,
-              description: t.pricing.webDevelopment.growth.oneTime.description,
-              features: t.pricing.webDevelopment.growth.oneTime.features,
-            },
-            subscription: {
-              price: "$250",
-              priceRange: "$250 - $350/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.growth.subscription.description,
-              features: t.pricing.webDevelopment.growth.subscription.features,
-            },
+          subscription: {
+            price: "$150",
+            priceRange: "$150 - $200/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.webDevelopment.starter.subscription.description,
+            features: t.pricing.webDevelopment.starter.subscription.features,
           },
-          professional: {
-            name: t.pricing.webDevelopment.professional.name,
-            oneTime: {
-              price: "$3,200",
-              priceRange: "$3,200 - $6,000+",
-              period: t.pricing.webDevelopment.professional.oneTime.period,
-              description: t.pricing.webDevelopment.professional.oneTime.description,
-              features: t.pricing.webDevelopment.professional.oneTime.features,
-            },
-            subscription: {
-              price: "$400",
-              priceRange: "$400 - $600/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.professional.subscription.description,
-              features: t.pricing.webDevelopment.professional.subscription.features,
-            },
+        },
+        growth: {
+          name: t.pricing.webDevelopment.growth.name,
+          popular: true,
+          icon: <Zap className="w-4 h-4" />,
+          oneTime: {
+            price: "$2,200",
+            priceRange: "$2,200 - $3,000",
+            period: t.pricing.webDevelopment.growth.oneTime.period,
+            description: t.pricing.webDevelopment.growth.oneTime.description,
+            features: t.pricing.webDevelopment.growth.oneTime.features,
+          },
+          subscription: {
+            price: "$250",
+            priceRange: "$250 - $350/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.webDevelopment.growth.subscription.description,
+            features: t.pricing.webDevelopment.growth.subscription.features,
+          },
+        },
+        professional: {
+          name: t.pricing.webDevelopment.professional.name,
+          oneTime: {
+            price: "$3,200",
+            priceRange: "$3,200 - $6,000+",
+            period: t.pricing.webDevelopment.professional.oneTime.period,
+            description: t.pricing.webDevelopment.professional.oneTime.description,
+            features: t.pricing.webDevelopment.professional.oneTime.features,
+          },
+          subscription: {
+            price: "$400",
+            priceRange: "$400 - $600/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.webDevelopment.professional.subscription.description,
+            features: t.pricing.webDevelopment.professional.subscription.features,
           },
         },
       },
-      {
-        title: t.pricing.productDesign.title,
-        packages: {
-          starter: {
-            name: t.pricing.productDesign.startupMvp.name,
-            oneTime: {
-              price: "$2,000",
-              priceRange: "$2,000 - $4,000",
-              period: t.pricing.productDesign.startupMvp.oneTime.period,
-              description: t.pricing.productDesign.startupMvp.oneTime.description,
-              features: t.pricing.productDesign.startupMvp.oneTime.features,
-            },
-            subscription: {
-              price: "$100",
-              priceRange: "$100 - $200/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.startupMvp.subscription.description,
-              features: t.pricing.productDesign.startupMvp.subscription.features,
-            },
+    },
+    {
+      title: t.pricing.productDesign.title,
+      packages: {
+        starter: {
+          name: t.pricing.productDesign.startupMvp.name,
+          oneTime: {
+            price: "$2,000",
+            priceRange: "$2,000 - $4,000",
+            period: t.pricing.productDesign.startupMvp.oneTime.period,
+            description: t.pricing.productDesign.startupMvp.oneTime.description,
+            features: t.pricing.productDesign.startupMvp.oneTime.features,
           },
-          growth: {
-            name: t.pricing.productDesign.growth.name,
-            popular: true,
-            icon: <Zap className="w-4 h-4" />,
-            oneTime: {
-              price: "$5,000",
-              priceRange: "$5,000 - $10,000",
-              period: t.pricing.productDesign.growth.oneTime.period,
-              description: t.pricing.productDesign.growth.oneTime.description,
-              features: t.pricing.productDesign.growth.oneTime.features,
-            },
-            subscription: {
-              price: "$250",
-              priceRange: "$250 - $550/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.growth.subscription.description,
-              features: t.pricing.productDesign.growth.subscription.features,
-            },
+          subscription: {
+            price: "$100",
+            priceRange: "$100 - $200/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.productDesign.startupMvp.subscription.description,
+            features: t.pricing.productDesign.startupMvp.subscription.features,
           },
-          professional: {
-            name: t.pricing.productDesign.scale.name,
-            oneTime: {
-              price: "$12,000",
-              priceRange: "$12,000 - $20,000+",
-              period: t.pricing.productDesign.scale.oneTime.period,
-              description: t.pricing.productDesign.scale.oneTime.description,
-              features: t.pricing.productDesign.scale.oneTime.features,
-            },
-            subscription: {
-              price: "$750",
-              priceRange: "$750 - $1,000/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.scale.subscription.description,
-              features: t.pricing.productDesign.scale.subscription.features,
-            },
+        },
+        growth: {
+          name: t.pricing.productDesign.growth.name,
+          popular: true,
+          icon: <Zap className="w-4 h-4" />,
+          oneTime: {
+            price: "$5,000",
+            priceRange: "$5,000 - $10,000",
+            period: t.pricing.productDesign.growth.oneTime.period,
+            description: t.pricing.productDesign.growth.oneTime.description,
+            features: t.pricing.productDesign.growth.oneTime.features,
+          },
+          subscription: {
+            price: "$250",
+            priceRange: "$250 - $550/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.productDesign.growth.subscription.description,
+            features: t.pricing.productDesign.growth.subscription.features,
+          },
+        },
+        professional: {
+          name: t.pricing.productDesign.scale.name,
+          oneTime: {
+            price: "$12,000",
+            priceRange: "$12,000 - $20,000+",
+            period: t.pricing.productDesign.scale.oneTime.period,
+            description: t.pricing.productDesign.scale.oneTime.description,
+            features: t.pricing.productDesign.scale.oneTime.features,
+          },
+          subscription: {
+            price: "$750",
+            priceRange: "$750 - $1,000/mo",
+            period: t.pricing.perMonth,
+            description: t.pricing.productDesign.scale.subscription.description,
+            features: t.pricing.productDesign.scale.subscription.features,
           },
         },
       },
-    ],
-    [t],
-  )
+    },
+  ], [t])
 
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-  const buttonsRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -180,7 +173,6 @@ export default function Pricing() {
     const ctx = gsap.context(() => {
       cardsRef.current.forEach((card, index) => {
         if (!card) return
-
         gsap.fromTo(
           card,
           { opacity: 0, y: 80, scale: 0.95 },
@@ -191,12 +183,6 @@ export default function Pricing() {
             duration: 0.8,
             delay: index * 0.15,
             ease: "back.out(1.2)",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 85%",
-              toggleActions: "play none none none",
-              once: true,
-            },
           },
         )
       })
@@ -230,7 +216,6 @@ export default function Pricing() {
               key={index}
               data={card}
               cardRef={(el) => (cardsRef.current[index] = el)}
-              buttonRef={(el) => (buttonsRef.current[index] = el)}
               translations={t}
             />
           ))}
@@ -243,12 +228,10 @@ export default function Pricing() {
 function PricingCard({
   data,
   cardRef,
-  buttonRef,
   translations,
 }: {
   data: PricingCardData
   cardRef: (el: HTMLDivElement | null) => void
-  buttonRef: (el: HTMLDivElement | null) => void
   translations: Translations
 }) {
   const [plan, setPlan] = useState<PricingPlan>("oneTime")
@@ -257,37 +240,39 @@ function PricingCard({
   const currentPackage = data.packages[selectedPackage]
   const currentPlan = currentPackage[plan]
 
-  const ToggleSwitch = ({ className = "" }: { className?: string }) => (
-    <div className={`flex items-center justify-center gap-3 ${className}`}>
-      <button
-        onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
-        className={`relative w-16 h-8 rounded-full transition-all duration-300 backdrop-blur-md shadow-lg border ${
-          plan === "subscription" ? "bg-[#00b8d4]/80 border-[#00b8d4]/30" : "bg-gray-300/80 border-gray-400/30"
-        }`}
-        aria-label="Toggle pricing plan"
-      >
-        <div
-          className={`absolute top-1 w-6 h-6 bg-white rounded-full shadow-xl transition-transform duration-300 backdrop-blur-sm border border-white/50 ${
-            plan === "subscription" ? "translate-x-8" : "translate-x-1"
-          }`}
-        />
-      </button>
-      <span
-        className={`text-sm font-semibold transition-colors ${
-          plan === "subscription" ? "text-foreground" : "text-muted"
-        }`}
-      >
-        {translations.pricing.subscription}
-      </span>
-    </div>
-  )
+const ToggleSwitch = ({ className = "" }: { className?: string }) => (
+  <div className={`flex items-center justify-center gap-3 ${className}`}>
+    <button
+      onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
+      className={`relative w-16 h-8 rounded-full transition-all duration-300 border backdrop-blur-xl shadow-md ${
+        plan === "subscription"
+          ? "bg-[#0EC8F3]/70 border-[#0EC8F3]/50"
+          : "bg-white/20 border-primary" // off state
+      }`}
+      aria-label="Toggle pricing plan"
+    >
+      <div
+        className={`absolute top-1 w-6 h-6 rounded-full shadow-xl border border-white/50 transition-transform duration-300
+          ${plan === "subscription" ? "translate-x-8 bg-white/80" : "translate-x-1 bg-black/80 shadow-[0_0_12px_2px_rgba(14,200,243,0.5)]"}
+        `}
+      />
+    </button>
+    <span
+      className={`text-sm font-semibold transition-colors ${
+        plan === "subscription" ? "text-[#0EC8F3]" : "text-muted"
+      }`}
+    >
+      {translations.pricing.subscription}
+    </span>
+  </div>
+)
+
 
   return (
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
-        <Card className="relative bg-white/85 backdrop-blur-3xl border-2 border-white/50 hover:border-white/70 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(255,255,255,0.4),0_8px_32px_rgba(31,38,135,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full shadow-[0_8px_32px_rgba(31,38,135,0.15),0_0_0_1px_rgba(255,255,255,0.6),inset_0_1px_0_rgba(255,255,255,0.9)]">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-          <span className="liquid-noise rounded-2xl" />
+        <Card className="relative bg-white/10 backdrop-blur-3xl border-2 border-white/30 hover:border-[#0EC8F3]/50 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(14,200,243,0.4),0_8px_32px_rgba(14,200,243,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
+          <span className="liquid-noise rounded-2xl absolute inset-0" />
           <div className="flex flex-col h-full relative z-10">
             <div className="min-h-[80px] flex items-start mb-6">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-tight font-display">
@@ -305,18 +290,14 @@ function PricingCard({
                     onClick={() => setSelectedPackage(tier)}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-xl ${
                       isSelected
-                        ? "bg-[#00b8d4]/90 text-white border border-white/20"
-                        : "bg-surface/80 text-foreground hover:bg-border/80 border border-border/30"
+                        ? "bg-[#0EC8F3]/40 text-white border border-[#0EC8F3]/50"
+                        : "bg-white/10 text-foreground hover:bg-[#0EC8F3]/10 border border-white/20"
                     }`}
                   >
-                    {pkg.icon && (
-                      <span className={`w-4 h-4 ${isSelected ? "text-white drop-shadow-lg" : "text-[#054F56]"}`}>
-                        {pkg.icon}
-                      </span>
-                    )}
+                    {pkg.icon && <span className={`w-4 h-4 ${isSelected ? "text-white drop-shadow-lg" : "text-[#054F56]"}`}>{pkg.icon}</span>}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
-                      <span className="absolute -top-3 -right-3 bg-primary-600/90 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg hover:shadow-xl font-bold border border-white/30">
+                      <span className="absolute -top-3 -right-3 bg-[#0EC8F3]/90 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold border border-white/30">
                         {translations.pricing.mostPopular}
                       </span>
                     )}
@@ -338,7 +319,7 @@ function PricingCard({
             <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto min-h-[300px] max-h-[400px]">
               {currentPlan.features.map((feature, index) => (
                 <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
-                  <div className="w-5 h-5 rounded-full bg-[#00b8d4]/90 backdrop-blur-sm flex items-center justify-center mt-0.5 flex-shrink-0 shadow-md border border-white/20">
+                  <div className="w-5 h-5 rounded-full bg-[#0EC8F3]/50 backdrop-blur-md flex items-center justify-center mt-0.5 flex-shrink-0 shadow-md border border-white/20">
                     <Check className="w-3 h-3 text-white font-bold drop-shadow-sm" strokeWidth={3} />
                   </div>
                   <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
@@ -346,38 +327,11 @@ function PricingCard({
               ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 flex justify-center">
               <ToggleSwitch />
             </div>
           </div>
         </Card>
-      </div>
-
-      <div ref={buttonRef} className="flex flex-col sm:flex-row gap-4 mt-6 w-full">
-        <Button
-          asChild
-          className="w-full sm:w-1/2 h-14 md:h-16 bg-[#00b8d4]/90 hover:bg-[#00d9ff] backdrop-blur-xl text-white font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-xl hover:shadow-[0_20px_50px_-15px_rgba(5,79,86,0.6)] hover:scale-[1.02] active:scale-[0.98] border border-white/20 relative overflow-hidden"
-        >
-          <a
-            href="https://wa.me/79778148423"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={translations.pricing.scheduleMeetingAria}
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
-            <span className="relative z-10">{translations.pricing.scheduleAMeeting}</span>
-          </a>
-        </Button>
-
-        <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="w-full sm:w-1/2">
-          <Button
-            variant="outline"
-            className="w-full h-14 md:h-16 bg-white/80 backdrop-blur-xl border-2 border-[#00d9ff]/50 hover:border-[#054F56] text-[#054F56] hover:text-white hover:bg-primary/90 font-bold text-base md:text-lg transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] relative overflow-hidden"
-          >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[#054F56]/10 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
-            <span className="relative z-10">{translations.pricing.connectTelegram}</span>
-          </Button>
-        </a>
       </div>
     </div>
   )
