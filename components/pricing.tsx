@@ -285,8 +285,9 @@ function PricingCard({
   return (
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
-        <Card className="relative bg-white/80 backdrop-blur-xl border-2 border-border/50 hover:border-[#054F56]/40 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(5,79,86,0.3)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-[#054F56]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        <Card className="relative bg-white/85 backdrop-blur-3xl border-2 border-white/50 hover:border-white/70 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(255,255,255,0.4),0_8px_32px_rgba(31,38,135,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full shadow-[0_8px_32px_rgba(31,38,135,0.15),0_0_0_1px_rgba(255,255,255,0.6),inset_0_1px_0_rgba(255,255,255,0.9)]">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <span className="liquid-noise rounded-2xl" />
           <div className="flex flex-col h-full relative z-10">
             <div className="min-h-[80px] flex items-start mb-6">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-tight font-display">

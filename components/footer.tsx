@@ -10,8 +10,8 @@ import { getTranslations } from "@/lib/translations"
 export default function Footer() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isButtonHovered, setIsButtonHovered] = useState(false)
-  const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -48,7 +48,7 @@ export default function Footer() {
 
               {/* CTA Button with Hover Effect - Updated button colors */}
               <div className="relative inline-block group">
-                 <div
+                <div
                   className="absolute -right-12 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{
                     transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`,
@@ -66,12 +66,12 @@ export default function Footer() {
                 </div>
                 <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" className="inline-block">
                   <button
-                  onMouseEnter={() => setIsButtonHovered(true)}
-                  onMouseLeave={() => setIsButtonHovered(false)}
-                  className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
-                >
-                  {isButtonHovered ? t.footer.letsGo : t.footer.getStarted}
-                </button>
+                    onMouseEnter={() => setIsButtonHovered(true)}
+                    onMouseLeave={() => setIsButtonHovered(false)}
+                    className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
+                  >
+                    {isButtonHovered ? t.footer.letsGo : t.footer.getStarted}
+                  </button>
                 </a>
               </div>
             </div>

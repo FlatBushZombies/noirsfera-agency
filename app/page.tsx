@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { NavBar } from "@/components/navbar"
+import  NavBar  from "@/components/navbar"
 import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"
 import Portfolio from "@/components/portfolio"

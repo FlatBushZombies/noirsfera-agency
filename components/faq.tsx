@@ -6,8 +6,8 @@ import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
 
 const FAQ = () => {
-  const { language } = useLanguage();
-  const t = getTranslations(language);
+  const { language } = useLanguage()
+  const t = getTranslations(language)
   const founders = useMemo(
     () => [
       { src: "/favicon-png.png", alt: t.faq.founderAlt },
@@ -41,7 +41,9 @@ const FAQ = () => {
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
         <div className="max-w-3xl">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">{t.faq.badge}</p>
+          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
+            {t.faq.badge}
+          </p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground tracking-tight font-display text-balance">
             {t.faq.heading}{" "}
             <span className="relative inline-block">
@@ -49,9 +51,7 @@ const FAQ = () => {
               <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
             </span>
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
-            {t.faq.subheading}
-          </p>
+          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">{t.faq.subheading}</p>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ const FAQ = () => {
         <div className="relative">
           {/* Rotating Founder Image (Centered Above) */}
           <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
-            <div className="relative size-20 overflow-hidden rounded-full border-2 border-primary/40 bg-[#080D27] shadow-lg shadow-primary/15">
+            <div className="relative size-20 overflow-hidden rounded-full border-2 border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2),0_0_0_1px_rgba(255,255,255,0.8),inset_0_1px_0_rgba(255,255,255,0.9)]">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}

@@ -4,6 +4,7 @@ import type React from "react"
 import clsx from "clsx"
 import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Minus } from "lucide-react"
+import { useScrollGlass, getScrollGlassClass } from "@/lib/use-scroll-glass"
 
 interface FaqItemProps {
   item: {
@@ -18,6 +19,7 @@ interface FaqItemProps {
 
 const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId }) => {
   const isActive = activeId === item.id
+  const isScrolled = useScrollGlass(120)
 
   const toggleActive = () => {
     setActiveId(isActive ? null : item.id)
@@ -26,11 +28,13 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
   return (
     <div className="relative z-2 mb-3 group">
       <div
-        className="relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl border-2 border-[#e5e5e5] hover:border-[#00D9FF]/40 transition-all duration-300 bg-white hover:bg-white/80 h-30"
+        className={`relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl transition-all duration-300 h-30 overflow-hidden ${getScrollGlassClass(isScrolled)} border-2 ${isActive ? "border-[#00D9FF]/50" : "border-white/40 hover:border-[#00D9FF]/40"}`}
         onClick={toggleActive}
       >
+        <span className="liquid-noise rounded-xl" />
+
         {/* Left Content */}
-        <div className="flex-1">
+        <div className="flex-1 relative z-10">
           <div className="text-xs font-bold leading-5 tracking-widest mb-2 text-[#00D9FF] uppercase opacity-70 max-lg:hidden">
             {index < 10 ? `0${index}` : index}
           </div>
@@ -46,10 +50,10 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
 
         <div
           className={clsx(
-            "relative flex size-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-sm",
+            "relative flex size-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-sm backdrop-blur-sm z-10",
             isActive
               ? "border-[#00D9FF] bg-[#00D9FF]/10 shadow-lg shadow-[#00D9FF]/20"
-              : "border-[#00D9FF]/20 hover:border-[#00D9FF] hover:shadow-md hover:shadow-[#00D9FF]/15 bg-white group-hover:bg-[#00D9FF]/5",
+              : "border-[#00D9FF]/20 hover:border-[#00D9FF] hover:shadow-md hover:shadow-[#00D9FF]/15 bg-white/60 group-hover:bg-[#00D9FF]/5",
           )}
         >
           {isActive ? (
@@ -70,8 +74,9 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-[#00D9FF]/40 ml-0 mt-2 bg-[#00D9FF]/5 rounded-r-lg">
-              {item.answer}
+            <div className="relative text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-[#00D9FF]/40 ml-0 mt-2 rounded-r-lg overflow-hidden bg-gradient-to-r from-[#00D9FF]/8 to-[#00D9FF]/4 backdrop-blur-sm">
+              <span className="liquid-noise rounded-r-lg opacity-50" />
+              <span className="relative z-10">{item.answer}</span>
             </div>
           </motion.div>
         )}

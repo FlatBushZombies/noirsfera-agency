@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
 import Link from "next/link"
+import { useScrollGlass } from "@/lib/use-scroll-glass"
 
 interface Project {
   id: number
@@ -23,6 +24,8 @@ export default function Portfolio() {
   const { language } = useLanguage()
   const t = getTranslations(language)
   const [hoveredId, setHoveredId] = useState<number | null>(null)
+
+  const isScrolled = useScrollGlass(180)
 
   const projects = useMemo<Project[]>(
     () => [
@@ -123,7 +126,7 @@ export default function Portfolio() {
                   rel="noopener noreferrer"
                   onMouseEnter={() => setHoveredId(project.id)}
                   onMouseLeave={() => setHoveredId(null)}
-                  className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.08)] transition-all duration-700 bg-gradient-to-br from-foreground/[0.02] to-foreground/[0.04]"
+                  className={`relative aspect-[4/3] w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08),0_0_0_1px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.08)] transition-all duration-700 bg-gradient-to-br from-foreground/[0.02] to-foreground/[0.04] scroll-blur-overlay ${isScrolled ? "active" : ""}`}
                 >
                   <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-foreground/[0.08] group-hover:ring-foreground/[0.12] transition-all duration-500" />
 
