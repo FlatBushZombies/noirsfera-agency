@@ -87,7 +87,7 @@ export function Hero() {
     <section
       id="about"
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-surface pt-2"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden mt-8 bg-gradient-to-b from-background via-background to-surface pt-2"
     >
       {/* Premium Liquid Background Blobs */}
       <div className="absolute top-16 right-0 w-[600px] h-[600px] rounded-full opacity-30 blur-[120px] bg-gradient-to-tr from-primary/30 via-primary/15 to-transparent animate-liquid"></div>

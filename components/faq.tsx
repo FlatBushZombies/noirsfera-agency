@@ -40,7 +40,7 @@ const FAQ = () => {
 
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl text-center">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
             {t.faq.badge}
           </p>
@@ -51,16 +51,18 @@ const FAQ = () => {
               <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
             </span>
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">{t.faq.subheading}</p>
+          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
+            {t.faq.subheading}
+          </p>
         </div>
       </div>
 
       {/* FAQ Content */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="relative">
-          {/* Rotating Founder Image (Centered Above) */}
+          {/* Rotating Founder Image */}
           <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
-            <div className="relative size-20 overflow-hidden rounded-full border-2 border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2),0_0_0_1px_rgba(255,255,255,0.8),inset_0_1px_0_rgba(255,255,255,0.9)]">
+            <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2),0_0_0_1px_rgba(255,255,255,0.8),inset_0_1px_0_rgba(255,255,255,0.9)]">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
@@ -76,14 +78,11 @@ const FAQ = () => {
             </div>
           </div>
 
-          {/* FAQ Grid - Even Columns with Perfect Alignment */}
+          {/* FAQ Grid */}
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8 auto-rows-fr">
-            {/* Left Column */}
             {faqItems.slice(0, halfLength).map((item, index) => (
               <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
             ))}
-
-            {/* Right Column */}
             {faqItems.slice(halfLength).map((item, index) => (
               <FaqItem
                 key={item.id}

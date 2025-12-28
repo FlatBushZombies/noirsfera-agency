@@ -42,7 +42,7 @@ export function LanguageSwitcher() {
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-1.5 rounded-md text-white hover:text-primary hover:bg-primary/10 transition"
       >
-        <Globe className="w-6 h-6" />
+        <Globe className="w-6 h-6" color="black" />
       </button>
 
       {/* Dropdown */}
