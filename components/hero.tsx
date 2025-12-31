@@ -91,7 +91,10 @@ export function Hero() {
     >
       {/* Premium Liquid Background Blobs */}
       <div className="absolute top-16 right-0 w-[600px] h-[600px] rounded-full opacity-30 blur-[120px] bg-gradient-to-tr from-primary/30 via-primary/15 to-transparent animate-liquid"></div>
-      <div className="absolute bottom-16 left-1/4 w-80 h-80 rounded-full opacity-25 blur-[100px] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent animate-liquid" style={{ animationDelay: "1s" }}></div>
+      <div
+        className="absolute bottom-16 left-1/4 w-80 h-80 rounded-full opacity-25 blur-[100px] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent animate-liquid"
+        style={{ animationDelay: "1s" }}
+      ></div>
 
       {/* Curly Liquid Shape */}
       <div
@@ -155,7 +158,7 @@ export function Hero() {
                   key={i}
                   className="w-14 h-14 rounded-full border-2 border-white/25 overflow-hidden relative shadow-[0_8px_32px_rgba(0,0,0,0.1)] ring-4 ring-white/20 backdrop-blur-[28px]"
                 >
-                  <Image src={avatar.src} alt={avatar.alt} fill className="object-cover" />
+                  <Image src={avatar.src || "/placeholder.svg"} alt={avatar.alt} fill className="object-cover" />
                 </div>
               ))}
             </div>
@@ -167,21 +170,18 @@ export function Hero() {
             </p>
           </div>
 
-          {/* Telegram Button */}
-          <div ref={buttonsRef} className="flex justify-center items-center font-sans">
+          {/* Buttons */}
+          <div ref={buttonsRef} className="flex justify-center items-center gap-4 font-sans">
             <Button
               size="default"
               aria-label="Connect on Telegram"
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               onClick={handleTelegramClick}
-              className="bg-primary/90 hover:bg-primary backdrop-blur-[32px] transition-all text-lg font-bold px-8 py-4 h-auto rounded-full shadow-[0_20px_60px_-15px_rgba(0,217,255,0.6)] hover:shadow-[0_28px_80px_-15px_rgba(0,217,255,0.7)] text-white border border-white/20 relative overflow-hidden"
+              className="bg-[#50506f] hover:bg-[#5a5a7a] backdrop-blur-[32px] transition-all text-lg font-semibold px-6 py-3 h-auto rounded-full shadow-lg hover:shadow-xl text-white border-0 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
               <div className="flex items-center gap-3 relative z-10">
-                <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-white/30 font-sans shadow-[0_8px_32px_rgba(0,0,0,0.1)] backdrop-blur-[28px]">
-                  <Image src="/profiles/lackson.jpg" alt="Profile" fill className="object-cover" />
-                </div>
                 <span
                   className={`transition-all duration-300 
                     ${isHovered ? "opacity-0 scale-95 max-w-0" : "opacity-100 scale-100 max-w-[200px]"}
@@ -189,12 +189,37 @@ export function Hero() {
                 >
                   {t.hero.connectTelegram}
                 </span>
+
+                {/* 🔥 ONLY CHANGE: profile image + single + */}
                 <div
                   className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
                     ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
                   `}
                 >
-                  <span className="text-white/90">{t.hero.youLetsChat}</span>
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-white/30 flex-shrink-0">
+                    <Image
+                      src="/profiles/lackson.jpg"
+                      alt="Your profile"
+                      width={24}
+                      height={24}
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <span className="text-white/90">+ You lets chat</span>
+                </div>
+
+                {/* Blue circular icon */}
+                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M5 12H19M19 12L12 5M19 12L12 19"
+                      stroke="white"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
               </div>
             </Button>
