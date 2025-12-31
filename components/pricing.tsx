@@ -240,33 +240,29 @@ function PricingCard({
   const currentPackage = data.packages[selectedPackage]
   const currentPlan = currentPackage[plan]
 
-const ToggleSwitch = ({ className = "" }: { className?: string }) => (
-  <div className={`flex items-center justify-center gap-3 ${className}`}>
-    <button
-      onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
-      className={`relative w-16 h-8 rounded-full transition-all duration-300 border backdrop-blur-xl shadow-md ${
-        plan === "subscription"
-          ? "bg-[#0EC8F3]/70 border-[#0EC8F3]/50"
-          : "bg-white/20 border-primary" // off state
-      }`}
-      aria-label="Toggle pricing plan"
-    >
-      <div
-        className={`absolute top-1 w-6 h-6 rounded-full shadow-xl border border-white/50 transition-transform duration-300
+  const ToggleSwitch = ({ className = "" }: { className?: string }) => (
+    <div className={`flex items-center justify-center gap-3 ${className}`}>
+      <button
+        onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
+        className={`relative w-16 h-8 rounded-full transition-all duration-300 border backdrop-blur-xl shadow-md ${
+          plan === "subscription"
+            ? "bg-[#0EC8F3]/70 border-[#0EC8F3]/50"
+            : "bg-white/20 border-primary"
+        }`}
+        aria-label="Toggle pricing plan"
+      >
+        <div
+          className={`absolute top-1 w-6 h-6 rounded-full shadow-xl border border-white/50 transition-transform duration-300
           ${plan === "subscription" ? "translate-x-8 bg-white/80" : "translate-x-1 bg-black/80 shadow-[0_0_12px_2px_rgba(14,200,243,0.5)]"}
         `}
-      />
-    </button>
-    <span
-      className={`text-sm font-semibold transition-colors ${
-        plan === "subscription" ? "text-[#0EC8F3]" : "text-muted"
-      }`}
-    >
-      {translations.pricing.subscription}
-    </span>
-  </div>
-)
-
+        />
+      </button>
+      {/* ✅ ALWAYS TEXT BLACK */}
+      <span className="text-sm font-semibold text-black">
+        {translations.pricing.subscription}
+      </span>
+    </div>
+  )
 
   return (
     <div className="flex flex-col h-full">
@@ -332,6 +328,40 @@ const ToggleSwitch = ({ className = "" }: { className?: string }) => (
             </div>
           </div>
         </Card>
+
+        {/* PRIMARY COLOR CTA BUTTONS BELOW CARD */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-6">
+          <a
+            href="https://wa.me/79778148423"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative group w-full sm:w-1/2"
+          >
+            <span className="absolute inset-0 rounded-xl bg-[conic-gradient(from_0deg,#0EC8F3,transparent,#0EC8F3)] animate-[spin_6s_linear_infinite] blur-sm opacity-70 group-hover:opacity-100" />
+            <span className="absolute inset-[2px] rounded-xl bg-[#0EC8F3]" />
+
+            <Button className="relative w-full h-14 md:h-16 bg-[#0EC8F3] text-white font-bold text-base md:text-lg rounded-xl hover:scale-[1.03] transition">
+              {translations.pricing.scheduleAMeeting}
+            </Button>
+          </a>
+
+          <a
+            href="https://t.me/itsslucki"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative group w-full sm:w-1/2"
+          >
+            <span className="absolute inset-0 rounded-xl bg-[conic-gradient(from_180deg,#0EC8F3,transparent,#0EC8F3)] animate-[spin_7s_linear_infinite] blur-sm opacity-60 group-hover:opacity-100" />
+            <span className="absolute inset-[2px] rounded-xl bg-white" />
+
+            <Button
+              variant="outline"
+              className="relative w-full h-14 md:h-16 border-2 border-[#0EC8F3] text-[#0EC8F3] font-bold text-base md:text-lg rounded-xl hover:bg-[#0EC8F3] hover:text-white hover:scale-[1.03] transition"
+            >
+              {translations.pricing.connectTelegram}
+            </Button>
+          </a>
+        </div>
       </div>
     </div>
   )
