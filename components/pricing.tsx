@@ -335,9 +335,7 @@ function PricingCard({
             rel="noopener noreferrer"
             className="relative group w-full sm:w-1/2"
           >
-            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#0EC8F3,transparent,#0EC8F3)] animate-[spin_6s_linear_infinite] blur-sm opacity-70 group-hover:opacity-100" />
-            <span className="absolute inset-[2px] rounded-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500" />
-
+          
             <Button className="relative w-full h-14 md:h-16 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-base md:text-lg rounded-full hover:scale-[1.03] transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 overflow-hidden">
               {/* Animated glow background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
@@ -355,21 +353,22 @@ function PricingCard({
             rel="noopener noreferrer"
             className="relative group w-full sm:w-1/2"
           >
-            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_180deg,#0EC8F3,transparent,#0EC8F3)] animate-[spin_7s_linear_infinite] blur-sm opacity-60 group-hover:opacity-100" />
-            <span className="absolute inset-[2px] rounded-full bg-white" />
-
+            
             <Button
-              variant="outline"
-              className="relative w-full h-14 md:h-16 border-2 border-transparent bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-base md:text-lg rounded-full hover:scale-[1.03] transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] overflow-hidden"
-            >
-              {/* Animated glow background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
-
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-              <span className="relative z-10">{translations.pricing.connectTelegram}</span>
-            </Button>
+  className="
+    w-full h-14 md:h-16
+    bg-transparent
+    border-2 border-primary
+    text-primary
+    hover:bg-primary
+    hover:text-primary-foreground
+    rounded-full
+    transition-colors
+    shadow-none
+  "
+>
+  {translations.pricing.connectTelegram}
+</Button>
           </a>
         </div>
       </div>

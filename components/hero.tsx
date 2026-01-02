@@ -196,22 +196,22 @@ export function Hero() {
                 </span>
 
                 <div
-                  className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
-                    ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
-                  `}
-                >
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-white/30 flex-shrink-0">
-                    <Image
-                      src="/profiles/lackson.jpg"
-                      alt="Your profile"
-                      width={24}
-                      height={24}
-                      className="object-cover"
-                    />
-                  </div>
+  className={`flex items-center gap-2 transition-all duration-300 flex-nowrap
+    ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
+  `}
+>
+  <div className="w-8 h-8 rounded-full overflow-hidden border border-white/30 flex-shrink-0">
+    <Image
+      src="/profiles/lackson.jpg"
+      alt="Your profile"
+      width={32}
+      height={32}
+      className="object-cover"
+    />
+  </div>
+  <span className="text-white/90 font-semibold whitespace-nowrap">{t.hero.youLetsChat}</span>
+</div>
 
-                  <span className="text-white/90 font-semibold">+ You lets chat</span>
-                </div>
 
                 {/* Blue circular icon with enhanced styling */}
                 <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 relative overflow-hidden group-hover:bg-white/30 transition-colors">
