@@ -234,10 +234,16 @@ export function Services() {
           </div>
           <Button
             asChild
-            className="bg-primary text-white hover:bg-[#00C7E6] rounded-full px-10 py-6 text-lg  transition-all duration-300 hover:scale-105 shadow-lg font-inter focus:outline-none"
+            className="relative group bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold px-10 py-5 text-lg rounded-full transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 h-auto overflow-hidden"
           >
             <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" aria-label="Start via Telegram">
-              {t.services.cta.button}
+              {/* Animated glow background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
+
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+
+              <span className="relative z-10">{t.services.cta.button}</span>
             </a>
           </Button>
         </div>

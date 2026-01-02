@@ -25,7 +25,7 @@ const FAQ = () => {
       setCurrentIndex((prev) => (prev + 1) % founders.length)
     }, 4000)
     return () => clearInterval(interval)
-  }, [])
+  }, [founders.length])
 
   return (
     <section
@@ -51,9 +51,7 @@ const FAQ = () => {
               <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
             </span>
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
-            {t.faq.subheading}
-          </p>
+          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">{t.faq.subheading}</p>
         </div>
       </div>
 
@@ -79,7 +77,7 @@ const FAQ = () => {
           </div>
 
           {/* FAQ Grid */}
-          <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8 auto-rows-fr">
+          <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8">
             {faqItems.slice(0, halfLength).map((item, index) => (
               <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
             ))}

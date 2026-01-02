@@ -251,11 +251,17 @@ export default function Contact() {
                   ref={buttonRef}
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-primary hover:bg-[#00C7E6] text-white font-bold px-10 py-4 text-base rounded-lg transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 relative z-10 h-auto border-0"
+                  className="relative group w-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold px-10 py-5 text-base rounded-full transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 h-auto overflow-hidden"
                   onMouseEnter={handleButtonHover}
                   onMouseLeave={handleButtonLeave}
                 >
-                  {loading ? t.contact.sending : t.contact.sendMessage}
+                  {/* Animated glow background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
+
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+
+                  <span className="relative z-10">{loading ? t.contact.sending : t.contact.sendMessage}</span>
                 </Button>
 
                 {/* Fireworks particle container */}

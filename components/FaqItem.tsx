@@ -25,10 +25,10 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
   }
 
   return (
-    <div className="relative z-2 mb-3 group">
+    <div className="relative z-2 group">
       <div
         className={clsx(
-          "relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl transition-all duration-300 h-30 overflow-hidden",
+          "relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl transition-all duration-300",
           getScrollGlassClass(isScrolled),
           "backdrop-blur-xl border-2 border-white/30 hover:border-primary/50",
           isActive && "border-primary/50",
@@ -40,7 +40,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
         {/* Left Content */}
         <div className="flex-1 relative z-10">
           <div className="text-xs font-bold leading-5 tracking-widest mb-2 text-primary uppercase opacity-70 max-lg:hidden">
-            {index < 10 ? `0${index}` : index}
+            {index < 10 ? `0${index + 1}` : index + 1}
           </div>
           <div
             className={clsx(
@@ -76,7 +76,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
             className="overflow-hidden"
           >
             <div className="relative text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-primary/40 ml-0 mt-2 rounded-r-lg overflow-hidden bg-gradient-to-r from-primary/8 to-primary/4 backdrop-blur-xl">

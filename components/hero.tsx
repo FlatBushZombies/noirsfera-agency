@@ -178,19 +178,23 @@ export function Hero() {
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               onClick={handleTelegramClick}
-              className="bg-[#50506f] hover:bg-[#5a5a7a] backdrop-blur-[32px] transition-all text-lg font-semibold px-6 py-3 h-auto rounded-full shadow-lg hover:shadow-xl text-white border-0 relative overflow-hidden"
+              className="relative group bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 backdrop-blur-[32px] transition-all text-lg font-bold px-8 py-3 h-auto rounded-full shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] text-white border-0 overflow-hidden"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
+              {/* Animated glow background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
+
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+
               <div className="flex items-center gap-3 relative z-10">
                 <span
-                  className={`transition-all duration-300 
+                  className={`transition-all duration-300 font-bold
                     ${isHovered ? "opacity-0 scale-95 max-w-0" : "opacity-100 scale-100 max-w-[200px]"}
                   `}
                 >
                   {t.hero.connectTelegram}
                 </span>
 
-                {/* 🔥 ONLY CHANGE: profile image + single + */}
                 <div
                   className={`flex items-center gap-2 transition-all duration-300 overflow-hidden
                     ${isHovered ? "opacity-100 scale-100 max-w-[200px]" : "opacity-0 scale-95 max-w-0"}
@@ -206,11 +210,11 @@ export function Hero() {
                     />
                   </div>
 
-                  <span className="text-white/90">+ You lets chat</span>
+                  <span className="text-white/90 font-semibold">+ You lets chat</span>
                 </div>
 
-                {/* Blue circular icon */}
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+                {/* Blue circular icon with enhanced styling */}
+                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0 relative overflow-hidden group-hover:bg-white/30 transition-colors">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M5 12H19M19 12L12 5M19 12L12 19"
