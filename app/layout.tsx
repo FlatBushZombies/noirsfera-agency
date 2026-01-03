@@ -25,22 +25,23 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://noirsfera.com"),
 
   title: {
-    default: "Noirsfera",
+    default: "Noirsfera | Futuristic Software & Digital Solutions",
     template: "%s | Noirsfera",
   },
 
   description:
-    "Noirsfera modernises businesses through futuristic software, scalable systems, and high-performance digital solutions.",
+    "Noirsfera helps businesses scale with futuristic software, AI-powered systems, and high-performance digital solutions built for growth.",
 
   applicationName: "Noirsfera",
 
   keywords: [
     "Noirsfera",
-    "software development",
     "futuristic software",
-    "modern web apps",
-    "AI solutions",
+    "software development company",
+    "AI-powered systems",
+    "digital transformation",
     "business automation",
+    "scalable web applications",
     "SaaS development",
   ],
 
@@ -60,29 +61,33 @@ export const metadata: Metadata = {
     },
   },
 
+  alternates: {
+    canonical: "https://noirsfera.com",
+  },
+
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://noirsfera.com",
     siteName: "Noirsfera",
-    title: "Noirsfera — Futuristic Software Solutions",
+    title: "Futuristic Software & Digital Solutions for Business Growth",
     description:
-      "Modernising businesses through futuristic, scalable, and intelligent software systems.",
+      "Build scalable, AI-powered software systems designed to modernise businesses and drive long-term growth.",
     images: [
       {
-        url: "/logo.png", 
+        url: "/logo.png",
         width: 1200,
         height: 630,
-        alt: "Noirsfera",
+        alt: "Noirsfera – Futuristic Software Solutions",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Noirsfera — Futuristic Software Solutions",
+    title: "Futuristic Software & Digital Solutions for Business Growth",
     description:
-      "Modernising businesses through futuristic, scalable, and intelligent software systems.",
+      "Scalable, AI-powered software systems built to modernise and grow businesses.",
     images: ["/logo.png"],
     creator: "@from_noirsfera",
   },
@@ -90,10 +95,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png", // optional
-  },
-
-  alternates: {
-    canonical: "https://noirsfera.com",
   },
 };
 
