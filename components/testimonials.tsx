@@ -61,7 +61,6 @@ export function Testimonials() {
   const [hovered, setHovered] = useState<number | null>(null)
   const [isPaused, setIsPaused] = useState(false)
 
-  // Measure scroll width (half of duplicated content)
   useEffect(() => {
     const measure = () => {
       if (!containerRef.current) return
@@ -89,19 +88,22 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-10 md:mb-14"
+          className="mb-10 md:mb-14"
         >
-          <p className="text-[#0EC8F3] text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
-            {t.testimonials.badge}
-          </p>
-          <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2 max-w-2xl mx-auto">
-            {t.testimonials.heading}
-          </h2>
+          {/* ⬇️ FIX: centered header container */}
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-[#0EC8F3] text-xs md:text-sm font-semibold uppercase tracking-wider mb-2 md:mb-3">
+              {t.testimonials.badge}
+            </p>
+
+            <h2 className="text-2xl md:text-4xl font-bold text-balance mb-2">
+              {t.testimonials.heading}
+            </h2>
+          </div>
         </motion.div>
 
         {/* Infinite Scroll */}
         <div className="relative w-full overflow-hidden pt-2">
-          {/* Edge gradients – desktop only */}
           <div className="hidden md:block absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-background via-background/60 to-transparent z-10 pointer-events-none" />
           <div className="hidden md:block absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-background via-background/60 to-transparent z-10 pointer-events-none" />
 
@@ -140,17 +142,16 @@ export function Testimonials() {
                 >
                   <Card className="h-full flex flex-col border border-border hover:border-[#0EC8F3] transition-all duration-300">
                     <CardContent className="p-5 md:p-6 space-y-4 flex flex-col h-full">
-                      {/* Stars */}
                       <div className="flex gap-1">
                         {Array.from({ length: item.rating }).map((_, i) => (
                           <Star key={i} className="w-4 h-4 fill-[#0EC8F3] text-[#0EC8F3]" />
                         ))}
                       </div>
 
-                      {/* Text */}
-                      <p className="text-sm md:text-base leading-relaxed text-muted-foreground">“{item.text}”</p>
+                      <p className="text-sm md:text-base leading-relaxed text-muted-foreground">
+                        “{item.text}”
+                      </p>
 
-                      {/* Author */}
                       <div className="flex items-center gap-3 pt-3 border-t border-border mt-auto">
                         <Image
                           src={item.image || "/placeholder.svg"}
@@ -163,7 +164,9 @@ export function Testimonials() {
                           <p className="font-semibold text-foreground group-hover:text-[#0EC8F3] transition-colors">
                             {item.name}
                           </p>
-                          <p className="text-xs md:text-sm text-muted-foreground">{item.company}</p>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            {item.company}
+                          </p>
                         </div>
                       </div>
                     </CardContent>

@@ -8,13 +8,15 @@ import { getTranslations } from "@/lib/translations"
 const FAQ = () => {
   const { language } = useLanguage()
   const t = getTranslations(language)
+
   const founders = useMemo(
     () => [
-      { src: "/favicon-png.png", alt: t.faq.founderAlt },
-      { src: "/favicon-png.png", alt: t.faq.founderAlt },
+      { src: "/logo.png", alt: t.faq.founderAlt },
+      { src: "/logo.png", alt: t.faq.founderAlt },
     ],
     [t],
   )
+
   const [activeId, setActiveId] = useState<string | number | null>(null)
   const faqItems = t.faq.items
   const halfLength = Math.floor(faqItems.length / 2)
@@ -40,18 +42,25 @@ const FAQ = () => {
 
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
-        <div className="max-w-3xl text-center">
+        {/* ⬇️ FIX: mx-auto added */}
+        <div className="max-w-3xl mx-auto text-center">
           <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
             {t.faq.badge}
           </p>
+
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground tracking-tight font-display text-balance">
             {t.faq.heading}{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 text-primary">{t.faq.questions}</span>
+              <span className="relative z-10 text-primary">
+                {t.faq.questions}
+              </span>
               <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
             </span>
           </h2>
-          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">{t.faq.subheading}</p>
+
+          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
+            {t.faq.subheading}
+          </p>
         </div>
       </div>
 
@@ -79,7 +88,13 @@ const FAQ = () => {
           {/* FAQ Grid */}
           <div className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8">
             {faqItems.slice(0, halfLength).map((item, index) => (
-              <FaqItem key={item.id} item={item} index={index} activeId={activeId} setActiveId={setActiveId} />
+              <FaqItem
+                key={item.id}
+                item={item}
+                index={index}
+                activeId={activeId}
+                setActiveId={setActiveId}
+              />
             ))}
             {faqItems.slice(halfLength).map((item, index) => (
               <FaqItem

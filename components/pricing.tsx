@@ -360,6 +360,7 @@ function PricingCard({
     bg-transparent
     border-2 border-primary
     text-primary
+    md:text-lg
     hover:bg-primary
     hover:text-primary-foreground
     rounded-full
