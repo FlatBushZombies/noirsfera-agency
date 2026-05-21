@@ -137,7 +137,7 @@ export function Services() {
               ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
-              className="group relative liquid-glass-card rounded-2xl p-8 md:p-10 overflow-hidden"
+              className="group relative liquid-glass-card rounded-2xl p-8 md:p-10 overflow-hidden border border-primary/10 shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_18px_60px_rgba(0,0,0,0.08)] transition-all duration-300"
             >
               <span className="liquid-noise rounded-2xl" />
 
@@ -177,6 +177,12 @@ export function Services() {
               {/* Text Content */}
               <div className="relative space-y-6 z-10">
                 <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
+                      {t.services.sectionBadge}
+                    </span>
+                    <span className="text-[11px] font-bold text-foreground/70">0{index + 1}</span>
+                  </div>
                   <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight font-display">
                     {service.title}
                   </h3>
@@ -186,16 +192,18 @@ export function Services() {
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="flex items-center gap-2 text-sm font-bold text-foreground hover:text-primary transition-colors duration-200 focus:outline-none group/toggle"
+                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/70 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
-                  {openIndex === index ? (
-                    <Minus className="w-5 h-5 text-primary transition-transform" />
-                  ) : (
-                    <Plus className="w-5 h-5 group-hover/toggle:text-primary transition-colors" />
-                  )}
                   <span>{openIndex === index ? t.services.showLess : t.services.showMore}</span>
+                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 group-hover/toggle:bg-primary/15 transition-colors">
+                    {openIndex === index ? (
+                      <Minus className="w-4 h-4 text-primary transition-transform" />
+                    ) : (
+                      <Plus className="w-4 h-4 text-primary transition-colors" />
+                    )}
+                  </span>
                 </button>
 
                 {/* Accordion Content */}
@@ -204,9 +212,12 @@ export function Services() {
                   className="overflow-hidden transition-all duration-300"
                   style={{ height: 0 }}
                 >
-                  <ul className="space-y-3 pt-2">
+                  <ul className="space-y-3 pt-3">
                     {service.details.map((detail, detailIndex) => (
-                      <li key={detailIndex} className="flex items-start gap-3">
+                      <li
+                        key={detailIndex}
+                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/70 px-3 py-2"
+                      >
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
                       </li>
