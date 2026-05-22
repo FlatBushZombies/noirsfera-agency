@@ -99,6 +99,24 @@ export interface Translations {
         industry: string;
         imageAlt: string;
       };
+      duoApp: {
+        title: string;
+        description: string;
+        tags: string[];
+        duration: string;
+        industry: string;
+        imageAlt: string;
+        link: string;
+      };
+      quickhands: {
+        title: string;
+        description: string;
+        tags: string[];
+        duration: string;
+        industry: string;
+        imageAlt: string;
+        link: string;
+      };
     };
   };
   pricing: {
@@ -344,6 +362,24 @@ export const translations: Record<Language, Translations> = {
           duration: '2 weeks',
           industry: 'Education',
           imageAlt: 'Educational Platform',
+        },
+        duoApp: {
+          title: 'Duo',
+          description: 'A sleek social companion app designed for seamless connection — intuitive flows, expressive UI, and a product experience that keeps users coming back.',
+          tags: ['Mobile', 'iOS', 'Social'],
+          duration: '3 months',
+          industry: 'Lifestyle',
+          imageAlt: 'Duo App Screenshot',
+          link: '#',
+        },
+        quickhands: {
+          title: 'QuickHands',
+          description: 'On-demand service marketplace connecting users with skilled professionals in seconds — fast booking, real-time tracking, and a beautifully simple interface.',
+          tags: ['Mobile', 'Android', 'On-demand'],
+          duration: '4 months',
+          industry: 'Services',
+          imageAlt: 'QuickHands App Screenshot',
+          link: '#',
         },
       },
     },
@@ -690,7 +726,7 @@ export const translations: Record<Language, Translations> = {
           title: 'TutSchool',
           description: 'Комплексный сайт для школы TUT School, языкового и художественного учреждения с информацией о курсах, записью и ресурсами для студентов.',
           tags: ['Образование', 'Разработка', 'Платформа'],
-          duration: '3 недель',
+          duration: '3 недели',
           industry: 'SaaS',
           imageAlt: 'Сайт TutSchool',
         },
@@ -698,7 +734,7 @@ export const translations: Record<Language, Translations> = {
           title: 'Camp Guide',
           description: 'Интерактивный гид для любителей кемпинга с рекомендациями локаций и списками снаряжения.',
           tags: ['Продуктовый дизайн', 'UI/UX'],
-          duration: '4 недель',
+          duration: '4 недели',
           industry: 'Курорт',
           imageAlt: 'Лендинг Camp Guide',
         },
@@ -706,7 +742,7 @@ export const translations: Record<Language, Translations> = {
           title: 'DMB Pay+',
           description: 'Безопасная платформа цифровых платежей с интуитивным интерфейсом и отслеживанием транзакций в реальном времени.',
           tags: ['Мобильное приложение', 'web3'],
-          duration: '4 недель',
+          duration: '4 недели',
           industry: 'ФинТех',
           imageAlt: 'Web3 платформа',
         },
@@ -714,9 +750,27 @@ export const translations: Record<Language, Translations> = {
           title: 'Oakwood ESL',
           description: 'Профессиональная школа обучения ESL',
           tags: ['веб-сайт', 'веб'],
-          duration: '2 недель',
+          duration: '2 недели',
           industry: 'Образование',
           imageAlt: 'Образовательная платформа',
+        },
+        duoApp: {
+          title: 'Duo',
+          description: 'Стильное приложение для общения с продуманными сценариями использования, выразительным UI и продуктовым опытом, который возвращает пользователей снова и снова.',
+          tags: ['Мобильное', 'iOS', 'Социальное'],
+          duration: '3 месяца',
+          industry: 'Лайфстайл',
+          imageAlt: 'Скриншот приложения Duo',
+          link: '#',
+        },
+        quickhands: {
+          title: 'QuickHands',
+          description: 'Маркетплейс услуг по запросу — мгновенный поиск специалистов, бронирование в реальном времени и простой до совершенства интерфейс.',
+          tags: ['Мобильное', 'Android', 'По запросу'],
+          duration: '4 месяца',
+          industry: 'Сервисы',
+          imageAlt: 'Скриншот приложения QuickHands',
+          link: '#',
         },
       },
     },

@@ -158,7 +158,7 @@ function PolaroidCard({ project, index, t }: CardProps) {
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
 
         {/* ── Photo area ── */}
-        <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+        <div className="relative overflow-hidden" style={{ aspectRatio: project.category === "Apps" ? "3/2" : "4/3" }}>
           <Image
             src={project.image || "/placeholder.svg?height=600&width=800"}
             alt={project.imageAlt}
@@ -351,16 +351,46 @@ export default function Portfolio() {
       link: "https://oakwoodesl.com/",
       category: "Websites",
     },
+    // ── App-only projects (excluded from "All") ──
+    {
+      id: 5,
+      title: t.portfolio.projects.duoApp?.title ?? "Duo",
+      description: t.portfolio.projects.duoApp?.description ?? "A beautifully crafted mobile experience built for connection and productivity.",
+      tags: t.portfolio.projects.duoApp?.tags ?? ["Mobile", "iOS", "UX"],
+      duration: t.portfolio.projects.duoApp?.duration ?? "3 months",
+      industry: t.portfolio.projects.duoApp?.industry ?? "Lifestyle",
+      image: "/duo-app.png",
+      imageAlt: t.portfolio.projects.duoApp?.imageAlt ?? "Duo app screenshot",
+      link: t.portfolio.projects.duoApp?.link ?? "#",
+      category: "Apps",
+    },
+    {
+      id: 6,
+      title: t.portfolio.projects.quickhands?.title ?? "QuickHands",
+      description: t.portfolio.projects.quickhands?.description ?? "On-demand services at your fingertips — fast, reliable, beautifully simple.",
+      tags: t.portfolio.projects.quickhands?.tags ?? ["Mobile", "Android", "On-demand"],
+      duration: t.portfolio.projects.quickhands?.duration ?? "4 months",
+      industry: t.portfolio.projects.quickhands?.industry ?? "Services",
+      image: "/quickhands-app.png",
+      imageAlt: t.portfolio.projects.quickhands?.imageAlt ?? "QuickHands app screenshot",
+      link: t.portfolio.projects.quickhands?.link ?? "#",
+      category: "Apps",
+    },
   ], [t])
 
   const filtered = useMemo(
-    () => activeCategory === "All" ? projects : projects.filter(p => p.category === activeCategory),
+    () =>
+      activeCategory === "All"
+        ? projects.filter((p) => p.category !== "Apps")   // Apps are hidden from "All"
+        : projects.filter((p) => p.category === activeCategory),
     [projects, activeCategory]
   )
 
+  // counts["All"] reflects only the non-Apps projects shown in that view
   const counts = useMemo(() => {
-    const map: Record<string, number> = { All: projects.length }
-    projects.forEach(p => { map[p.category] = (map[p.category] ?? 0) + 1 })
+    const map: Record<string, number> = {}
+    projects.forEach((p) => { map[p.category] = (map[p.category] ?? 0) + 1 })
+    map["All"] = projects.filter((p) => p.category !== "Apps").length
     return map
   }, [projects])
 
@@ -513,11 +543,6 @@ export default function Portfolio() {
                 <p className="text-text-secondary font-medium">No projects in this category yet.</p>
               </motion.div>
             ) : (
-              /*
-               * The grid:
-               *   1 col on mobile → 2 cols on md → 3 cols on lg
-               * pt-8 so the pins above each card have room to breathe
-               */
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-8">
                 {filtered.map((project, index) => (
                   <PolaroidCard
@@ -531,6 +556,34 @@ export default function Portfolio() {
             )}
           </motion.div>
         </AnimatePresence>
+
+        {/* ── See All link ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          className="flex justify-center mt-16 lg:mt-20"
+        >
+          <Link
+            href="/our-projects"
+            className="group flex items-center gap-2.5 text-primary font-bold text-sm tracking-wide transition-all duration-300 hover:gap-3.5"
+          >
+            <span className="relative">
+              See All Projects
+              {/* Animated underline */}
+              <span
+                className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 group-hover:w-full"
+              />
+            </span>
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </motion.div>
+
       </div>
     </section>
   )
