@@ -29,12 +29,77 @@ interface Project {
 
 const CATEGORIES: Category[] = ["All", "Web Apps", "Websites", "Apps", "Startups"]
 
-const CATEGORY_META: Record<Category, { emoji: string }> = {
-  All:        { emoji: "✦" },
-  "Web Apps": { emoji: "⬡" },
-  Websites:   { emoji: "◈" },
-  Apps:       { emoji: "⬟" },
-  Startups:   { emoji: "◎" },
+// ── Category SVG icons (no external icon lib) ────────────────────────────────
+
+function IconAll({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+    </svg>
+  )
+}
+
+function IconWebApps({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="2.5" width="14" height="11" rx="1.8" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M1 6h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="3.8" cy="4.25" r="0.8" fill="currentColor"/>
+      <circle cx="6.2" cy="4.25" r="0.8" fill="currentColor"/>
+      <circle cx="8.6" cy="4.25" r="0.8" fill="currentColor"/>
+      <path d="M4 9.5h3M4 11.5h5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function IconWebsites({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M8 1.5C8 1.5 5.5 4.5 5.5 8s2.5 6.5 2.5 6.5M8 1.5C8 1.5 10.5 4.5 10.5 8S8 14.5 8 14.5" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M1.5 8h13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <path d="M2.5 5h11M2.5 11h11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  )
+}
+
+function IconApps({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3.5" y="1" width="9" height="14" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+      <path d="M6.5 3h3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+      <circle cx="8" cy="12.5" r="0.9" fill="currentColor"/>
+    </svg>
+  )
+}
+
+function IconStartups({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 1.5C8 1.5 3.5 5 3.5 9.5c0 1.5.5 2.5 1.5 3l1-2.5h4l1 2.5c1-.5 1.5-1.5 1.5-3C12.5 5 8 1.5 8 1.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+      <path d="M6 12l-.5 2.5h5L10 12" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round"/>
+      <circle cx="8" cy="7.5" r="1.5" stroke="currentColor" strokeWidth="1.3"/>
+    </svg>
+  )
+}
+
+function CategoryIcon({ category, className }: { category: Category; className?: string }) {
+  if (category === "All")        return <IconAll className={className} />
+  if (category === "Web Apps")   return <IconWebApps className={className} />
+  if (category === "Websites")   return <IconWebsites className={className} />
+  if (category === "Apps")       return <IconApps className={className} />
+  return <IconStartups className={className} />
+}
+
+const CATEGORY_META: Record<Category, Record<string, never>> = {
+  All:        {},
+  "Web Apps": {},
+  Websites:   {},
+  Apps:       {},
+  Startups:   {},
 }
 
 // Per-card rotation in degrees, cycles through projects
@@ -445,36 +510,76 @@ export default function Portfolio() {
 
           {/* Desktop */}
           <div className="hidden sm:flex justify-center">
-            <div className="relative flex items-center gap-1 p-1.5 rounded-full bg-white/[0.04] backdrop-blur-[32px] border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.06)]">
-              <div className="absolute inset-x-0 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            {/* Outer track */}
+            <div
+              className="relative flex items-center gap-0.5 p-1 rounded-2xl"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 0 0 1px rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.2)",
+              }}
+            >
+              {/* Top shimmer line */}
+              <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
+
               <LayoutGroup>
                 {CATEGORIES.map((cat) => {
                   const isActive = activeCategory === cat
-                  const meta = CATEGORY_META[cat]
                   return (
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className="relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold tracking-wide transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                      className="relative flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
                     >
+                      {/* Dark gradient fill */}
                       {isActive && (
                         <motion.div
                           layoutId="filter-pill-desktop"
-                          className="absolute inset-0 rounded-full bg-white/10 backdrop-blur-[16px] border border-white/20 shadow-[0_2px_16px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.15)]"
-                          transition={{ type: "spring", stiffness: 400, damping: 38 }}
+                          className="absolute inset-0 rounded-xl"
+                          style={{
+                            background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #a78bfa) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #a78bfa) 18%, #000) 100%)",
+                          }}
+                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
                         />
                       )}
-                      <span className={`relative z-10 text-xs transition-colors duration-300 ${isActive ? "text-primary" : "text-foreground/30"}`}>
-                        {meta.emoji}
-                      </span>
-                      <span className={`relative z-10 transition-colors duration-300 ${isActive ? "text-foreground" : "text-foreground/50 hover:text-foreground/75"}`}>
+                      {/* Active border glow */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="filter-border-desktop"
+                          className="absolute inset-0 rounded-xl"
+                          style={{
+                            border: "1px solid",
+                            borderColor: "color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent)",
+                            boxShadow: "0 0 20px -4px color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)",
+                          }}
+                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                        />
+                      )}
+
+                      {/* Icon */}
+                      <CategoryIcon
+                        category={cat}
+                        className={`relative z-10 transition-all duration-300 ${isActive ? "text-primary" : "text-foreground/30"}`}
+                      />
+                      {/* Label */}
+                      <span className={`relative z-10 transition-colors duration-300 ${isActive ? "text-foreground" : "text-foreground/45 hover:text-foreground/70"}`}>
                         {cat}
                       </span>
-                      <span className={`relative z-10 flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-black tabular-nums transition-all duration-300 ${
-                        isActive
-                          ? "bg-primary/20 text-primary border border-primary/30"
-                          : "bg-white/5 text-foreground/30 border border-white/[0.08]"
-                      }`}>
+                      {/* Count badge */}
+                      <span
+                        className="relative z-10 flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-black tabular-nums transition-all duration-300"
+                        style={isActive ? {
+                          background: "color-mix(in srgb, var(--color-primary, #a78bfa) 28%, transparent)",
+                          color: "var(--color-primary, #a78bfa)",
+                          border: "1px solid color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent)",
+                        } : {
+                          background: "rgba(255,255,255,0.04)",
+                          color: "rgba(255,255,255,0.25)",
+                          border: "1px solid rgba(255,255,255,0.07)",
+                        }}
+                      >
                         {counts[cat] ?? 0}
                       </span>
                     </button>
@@ -484,9 +589,12 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Mobile */}
+          {/* Mobile — horizontal scroll chips */}
           <div className="sm:hidden -mx-5 px-5">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-2"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
               <LayoutGroup>
                 {CATEGORIES.map((cat) => {
                   const isActive = activeCategory === cat
@@ -495,23 +603,52 @@ export default function Portfolio() {
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className="relative flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 border"
+                      className="relative flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
                       style={{
-                        background: isActive ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.02)",
-                        borderColor: isActive ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.07)",
+                        border: "1px solid",
+                        borderColor: isActive
+                          ? "color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent)"
+                          : "rgba(255,255,255,0.07)",
+                        boxShadow: isActive
+                          ? "0 0 18px -6px color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)"
+                          : "none",
                       }}
                     >
-                      <span className={`text-[10px] transition-colors duration-300 ${isActive ? "text-primary" : "text-foreground/30"}`}>
+                      {/* Gradient fill for active */}
+                      {isActive && (
+                        <motion.div
+                          layoutId="filter-pill-mobile"
+                          className="absolute inset-0 rounded-xl"
+                          style={{
+                            background: "linear-gradient(135deg, var(--color-primary, #a78bfa) 0%, color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent) 100%)",
+                            opacity: 0.18,
+                          }}
+                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                        />
+                      )}
+                      {/* Inactive fill */}
+                      {!isActive && (
+                        <div className="absolute inset-0 rounded-xl" style={{ background: "rgba(255,255,255,0.02)" }} />
+                      )}
+
+                      <span className={`relative z-10 text-[10px] transition-all duration-300 ${isActive ? "text-primary" : "text-foreground/25"}`}>
                         {meta.emoji}
                       </span>
-                      <span className={`transition-colors duration-300 whitespace-nowrap ${isActive ? "text-foreground" : "text-foreground/50"}`}>
+                      <span className={`relative z-10 whitespace-nowrap transition-colors duration-300 ${isActive ? "text-foreground" : "text-foreground/45"}`}>
                         {cat}
                       </span>
-                      <span className={`flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-black tabular-nums transition-all duration-300 ${
-                        isActive
-                          ? "bg-primary/20 text-primary border border-primary/30"
-                          : "bg-white/5 text-foreground/30 border border-white/[0.07]"
-                      }`}>
+                      <span
+                        className="relative z-10 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-black tabular-nums transition-all duration-300"
+                        style={isActive ? {
+                          background: "color-mix(in srgb, var(--color-primary, #a78bfa) 22%, transparent)",
+                          color: "var(--color-primary, #a78bfa)",
+                          border: "1px solid color-mix(in srgb, var(--color-primary, #a78bfa) 40%, transparent)",
+                        } : {
+                          background: "rgba(255,255,255,0.04)",
+                          color: "rgba(255,255,255,0.22)",
+                          border: "1px solid rgba(255,255,255,0.07)",
+                        }}
+                      >
                         {counts[cat] ?? 0}
                       </span>
                     </button>
