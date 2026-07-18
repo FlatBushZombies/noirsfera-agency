@@ -117,10 +117,8 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
+      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
     >
-      <div className="absolute top-1/4 -left-24 w-96 h-96 bg-primary/[0.06] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 -right-24 w-80 h-80 bg-primary/[0.06] rounded-full blur-[100px] pointer-events-none" />
       <div className="max-w-7xl mx-auto space-y-20">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <p className="eyebrow-label">
@@ -194,7 +192,7 @@ export function Services() {
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/[0.06] px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.08] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
+                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/70 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
@@ -218,7 +216,7 @@ export function Services() {
                     {service.details.map((detail, detailIndex) => (
                       <li
                         key={detailIndex}
-                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/[0.06] px-3 py-2"
+                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/70 px-3 py-2"
                       >
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
@@ -234,7 +232,7 @@ export function Services() {
         {/* Call to Action */}
         <div
           ref={ctaRef}
-          className="bg-gradient-to-br from-gray-950 to-gray-900 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-white/[0.08]"
+          className="bg-gradient-to-br from-foreground to-foreground/95 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-foreground/10"
         >
           <div className="space-y-4 max-w-2xl mx-auto">
             <p className="eyebrow-label">

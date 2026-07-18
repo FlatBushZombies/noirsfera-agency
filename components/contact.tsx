@@ -214,7 +214,7 @@ export default function Contact() {
                   type="text"
                   placeholder={t.contact.fullNamePlaceholder}
                   required
-                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
                 />
               </div>
 
@@ -228,7 +228,7 @@ export default function Contact() {
                   type="email"
                   placeholder={t.contact.emailPlaceholder}
                   required
-                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
                 />
               </div>
 
@@ -242,7 +242,7 @@ export default function Contact() {
                   placeholder={t.contact.messagePlaceholder}
                   rows={6}
                   required
-                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
+                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
                 />
               </div>
 
