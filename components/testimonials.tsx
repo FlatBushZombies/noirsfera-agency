@@ -104,10 +104,10 @@ export function Testimonials() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-14 md:mb-18"
         >
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-3">
+          <p className="eyebrow-label mb-4">
             {t.testimonials.badge}
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground font-display leading-tight text-balance">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground font-display leading-tight tracking-tight text-balance">
             {t.testimonials.heading}
           </h2>
         </motion.div>
@@ -158,7 +158,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
           relative h-full flex flex-col p-6 md:p-7 rounded-3xl overflow-hidden
           bg-white/[0.04] backdrop-blur-[24px]
           border transition-all duration-500
-          ${hovered ? "border-primary/40 shadow-[0_12px_48px_rgba(0,0,0,0.18),0_0_0_1px_rgba(14,200,243,0.15)]" : "border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"}
+          ${hovered ? "border-primary/40 shadow-[0_12px_48px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,217,255,0.15)]" : "border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"}
         `}
       >
         {/* Top-edge glass highlight */}
@@ -203,7 +203,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
               />
             </div>
             {/* Online-style glow dot */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary/80 border-2 border-background shadow-[0_0_6px_rgba(14,200,243,0.6)]" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary/80 border-2 border-background shadow-[0_0_6px_rgba(0,217,255,0.6)]" />
           </div>
 
           <div>

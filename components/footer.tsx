@@ -22,7 +22,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="relative bg-foreground text-white overflow-hidden">
+    <footer className="relative bg-gray-950 text-white overflow-hidden">
       <div className="relative z-10 px-6 py-16 md:py-24 lg:py-32">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section with CTA */}
@@ -30,17 +30,17 @@ export default function Footer() {
             {/* Animated Gradient Background - Updated to exact primary color */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none -z-10">
               <div
-                className="absolute w-[500px] h-[500px] rounded-full opacity-20 blur-3xl"
+                className="absolute w-[500px] h-[500px] rounded-full opacity-25 blur-3xl"
                 style={{
                   background: `radial-gradient(circle at center, #00D9FF 0%, transparent 70%)`,
-                  animation: `spin 8s linear infinite`,
+                  animation: `breathe 7s ease-in-out infinite`,
                 }}
               />
             </div>
 
             {/* Content */}
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-inter mb-8 leading-tight text-balance">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black font-display mb-8 leading-tight tracking-tight text-balance">
                 {t.footer.heading.line1},
                 <br />
                 {t.footer.heading.line2}
@@ -68,7 +68,7 @@ export default function Footer() {
                   <button
                     onMouseEnter={() => setIsButtonHovered(true)}
                     onMouseLeave={() => setIsButtonHovered(false)}
-                    className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(14,200,243,0.5)]"
+                    className="relative px-8 py-4 bg-black border-2 border-white font-display rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 cursor-pointer group-hover:shadow-[0_0_30px_rgba(0,217,255,0.5)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
                   >
                     {isButtonHovered ? t.footer.letsGo : t.footer.getStarted}
                   </button>
@@ -87,7 +87,7 @@ export default function Footer() {
               <div className="flex gap-6">
                 <a
                   href="https://x.com/from_noirsfera"
-                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
+                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
                   aria-label={t.footer.twitterAria}
                 >
                   <Twitter size={20} />
@@ -95,7 +95,7 @@ export default function Footer() {
 
                 <a
                   href="https://www.instagram.com/noirsfera/"
-                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
+                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
                   aria-label={t.footer.instagramAria}
                 >
                   <Instagram size={20} />
@@ -103,7 +103,7 @@ export default function Footer() {
 
                 <a
                   href="https://t.me/itsslucki"
-                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg"
+                  className="hover:text-primary transition-colors duration-200 p-2 hover:bg-white/10 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-gray-950"
                   aria-label={t.footer.telegramAria}
                   target="_blank"
                   rel="noopener noreferrer"

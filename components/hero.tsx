@@ -180,7 +180,7 @@ export function Hero() {
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               onClick={handleTelegramClick}
-              className="relative group cursor-pointer bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 backdrop-blur-[32px] transition-all duration-300 text-base font-bold px-8 py-4 h-auto rounded-full shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] text-white border-0 overflow-hidden"
+              className="btn-cta-primary relative group cursor-pointer backdrop-blur-[32px] text-base px-8 py-4 h-auto rounded-full overflow-hidden"
             >
               {/* Animated glow */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500 pointer-events-none" />

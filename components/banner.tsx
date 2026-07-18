@@ -71,7 +71,7 @@ export default function Banner() {
         <div className="flex flex-col items-center gap-4">
           <h1 className="text-6xl font-bold tracking-tight md:text-7xl lg:text-8xl">
             <span className="text-white">noir</span>
-            <span className="text-[#00BFA6]">sfera</span>
+            <span className="text-primary">sfera</span>
           </h1>
         </div>
 
@@ -80,13 +80,13 @@ export default function Banner() {
           {/* Loading text and percentage */}
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium tracking-widest text-white/60">{t.banner.loading}</span>
-            <span className="text-2xl font-bold text-[#00BFA6]">{Math.round(progress)}%</span>
+            <span className="text-2xl font-bold text-primary">{Math.round(progress)}%</span>
           </div>
 
           {/* Loading bar */}
           <div className="h-1 w-full overflow-hidden bg-white/10">
             <div
-              className="h-full bg-[#00BFA6] transition-all duration-300 ease-out"
+              className="h-full bg-primary shadow-[0_0_12px_rgba(0,217,255,0.6)] transition-all duration-300 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>

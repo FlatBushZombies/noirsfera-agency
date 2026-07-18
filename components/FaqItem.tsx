@@ -26,16 +26,20 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
 
   return (
     <div className="relative z-2 group">
-      <div
+      <button
+        type="button"
         className={clsx(
-          "relative flex cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-xl transition-all duration-300",
+          "relative flex w-full cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-2xl text-left transition-all duration-300",
           getScrollGlassClass(isScrolled),
           "backdrop-blur-xl border-2 border-white/30 hover:border-primary/50",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
           isActive && "border-primary/50",
         )}
         onClick={toggleActive}
+        aria-expanded={isActive}
+        aria-controls={`faq-answer-${item.id}`}
       >
-        <span className="liquid-noise rounded-xl" />
+        <span className="liquid-noise rounded-2xl" />
 
         {/* Left Content */}
         <div className="flex-1 relative z-10">
@@ -67,12 +71,13 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             <Plus className="w-5 h-5 text-primary/60 group-hover:text-primary transition-all duration-300" />
           )}
         </div>
-      </div>
+      </button>
 
       <AnimatePresence initial={false}>
         {isActive && (
           <motion.div
             key="content"
+            id={`faq-answer-${item.id}`}
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}

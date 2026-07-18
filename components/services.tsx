@@ -117,14 +117,16 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
+      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
     >
+      <div className="absolute top-1/4 -left-24 w-96 h-96 bg-primary/[0.06] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/3 -right-24 w-80 h-80 bg-primary/[0.06] rounded-full blur-[100px] pointer-events-none" />
       <div className="max-w-7xl mx-auto space-y-20">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">
+          <p className="eyebrow-label">
             {t.services.sectionBadge}
           </p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground leading-tight text-balance font-display">
+          <h2 className="section-heading">
             {t.services.heading}
           </h2>
           <p className="text-lg text-text-secondary font-medium leading-relaxed">{t.services.subheading}</p>
@@ -192,7 +194,7 @@ export function Services() {
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/70 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 group/toggle"
+                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/[0.06] px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.08] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
@@ -216,7 +218,7 @@ export function Services() {
                     {service.details.map((detail, detailIndex) => (
                       <li
                         key={detailIndex}
-                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/70 px-3 py-2"
+                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/[0.06] px-3 py-2"
                       >
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
@@ -232,20 +234,20 @@ export function Services() {
         {/* Call to Action */}
         <div
           ref={ctaRef}
-          className="bg-gradient-to-br from-foreground to-foreground/95 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-foreground/10"
+          className="bg-gradient-to-br from-gray-950 to-gray-900 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-white/[0.08]"
         >
           <div className="space-y-4 max-w-2xl mx-auto">
-            <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest">
+            <p className="eyebrow-label">
               {t.services.cta.badge}
             </p>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight text-balance font-display">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight text-balance font-display">
               {t.services.cta.heading}
             </h3>
             <p className="text-lg text-white/80 font-medium leading-relaxed">{t.services.cta.description}</p>
           </div>
           <Button
             asChild
-            className="relative group bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold px-10 py-5 text-lg rounded-full transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 h-auto overflow-hidden"
+            className="btn-cta-primary relative group hover:scale-[1.02] px-10 py-5 text-lg rounded-full h-auto overflow-hidden"
           >
             <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" aria-label="Start via Telegram">
               {/* Animated glow background */}

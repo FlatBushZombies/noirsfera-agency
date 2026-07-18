@@ -152,7 +152,7 @@ export default function Contact() {
           <div className="space-y-8">
             <h2
               ref={headingRef}
-              className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground text-balance leading-tight tracking-tight font-display"
+              className="section-heading"
             >
               {t.contact.heading}{" "}
               <span className="relative inline-block">
@@ -214,7 +214,7 @@ export default function Contact() {
                   type="text"
                   placeholder={t.contact.fullNamePlaceholder}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
                 />
               </div>
 
@@ -228,7 +228,7 @@ export default function Contact() {
                   type="email"
                   placeholder={t.contact.emailPlaceholder}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
                 />
               </div>
 
@@ -242,7 +242,7 @@ export default function Contact() {
                   placeholder={t.contact.messagePlaceholder}
                   rows={6}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
+                  className="bg-white/[0.07] border border-white/[0.12] hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
                 />
               </div>
 
@@ -251,7 +251,7 @@ export default function Contact() {
                   ref={buttonRef}
                   type="submit"
                   disabled={loading}
-                  className="relative group w-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold px-10 py-5 text-base rounded-full transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 h-auto overflow-hidden"
+                  className="btn-cta-primary relative group hover:scale-[1.02] w-full px-10 py-5 text-base rounded-full h-auto overflow-hidden"
                   onMouseEnter={handleButtonHover}
                   onMouseLeave={handleButtonLeave}
                 >

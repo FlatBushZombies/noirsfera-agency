@@ -40,9 +40,9 @@ export function LanguageSwitcher() {
       {/* Globe trigger */}
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="p-1.5 rounded-md text-white hover:text-primary hover:bg-primary/10 transition"
+        className="p-1.5 rounded-md text-foreground/70 hover:text-primary hover:bg-primary/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
       >
-        <Globe className="w-6 h-6" color="black" />
+        <Globe className="w-5 h-5" />
       </button>
 
       {/* Dropdown */}
@@ -53,9 +53,9 @@ export function LanguageSwitcher() {
             animate={{ opacity: 1, y: 2, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="absolute left-1/2 -translate-x-1/2 mt-1 
-                       bg-white border border-border shadow-lg rounded-md 
-                       w-40 z-50 py-1"
+            className="absolute left-1/2 -translate-x-1/2 mt-2
+                       bg-gray-900/92 backdrop-blur-xl border border-white/[0.10] shadow-[0_12px_32px_rgba(0,0,0,0.5)] rounded-xl
+                       w-40 z-50 py-1.5 overflow-hidden"
           >
             {languages.map((lang) => (
               <button
@@ -64,11 +64,11 @@ export function LanguageSwitcher() {
                   setLanguage(lang.code);
                   setIsOpen(false);
                 }}
-                className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-sm 
-                  transition ${
+                className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg mx-1
+                  transition-colors ${
                     language === lang.code
-                      ? "bg-primary text-white"
-                      : "hover:bg-border"
+                      ? "bg-primary/15 text-primary border border-primary/30"
+                      : "hover:bg-white/[0.08]"
                   }`}
               >
                 <div className="flex items-center gap-2">

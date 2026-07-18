@@ -104,6 +104,7 @@ export default function NavBar() {
                   onClick={() => scrollTo(id)}
                   className={`
                     relative cursor-pointer px-4 py-2 rounded-full font-medium tracking-wide transition-all duration-200
+                    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
                     ${isActive
                       ? "text-foreground bg-white/10"
                       : "text-foreground/60 hover:text-foreground/90 hover:bg-white/[0.06]"
@@ -134,7 +135,7 @@ export default function NavBar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer"
+            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             aria-label="Open menu"
           >
             <Menu size={17} strokeWidth={2.5} />
@@ -179,7 +180,7 @@ export default function NavBar() {
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer"
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                   aria-label="Close menu"
                 >
                   <X size={17} strokeWidth={2.5} />
@@ -194,7 +195,7 @@ export default function NavBar() {
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-medium text-foreground/80 hover:text-foreground hover:bg-white/8 transition-all duration-200 cursor-pointer group"
+                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-medium text-foreground/80 hover:text-foreground hover:bg-white/8 transition-all duration-200 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                     onClick={() => {
                       scrollTo(id);
                       setOpen(false);

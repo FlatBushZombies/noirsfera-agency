@@ -36,19 +36,18 @@ const FAQ = () => {
     >
       {/* Background blobs */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48" />
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/3 rounded-full blur-3xl -ml-48" />
+        <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -mr-48" />
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl -ml-48" />
       </div>
 
       {/* Section Header */}
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
-        {/* ⬇️ FIX: mx-auto added */}
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
+          <p className="eyebrow-label mb-4">
             {t.faq.badge}
           </p>
 
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 text-foreground tracking-tight font-display text-balance">
+          <h2 className="section-heading mb-6">
             {t.faq.heading}{" "}
             <span className="relative inline-block">
               <span className="relative z-10 text-primary">

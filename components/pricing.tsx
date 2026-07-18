@@ -202,10 +202,10 @@ export default function Pricing() {
     >
       <div className="relative max-w-7xl mx-auto">
         <div className="text-center mb-20 max-w-3xl mx-auto">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
+          <p className="eyebrow-label mb-4">
             {t.pricing.badge}
           </p>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-6 tracking-tight leading-tight font-display text-balance">
+          <h2 className="section-heading mb-6">
             {t.pricing.heading}
           </h2>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
@@ -243,25 +243,24 @@ function PricingCard({
       <button
         onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
         className={`relative w-16 h-8 rounded-full transition-all duration-300 border backdrop-blur-xl shadow-md ${
-          plan === "subscription" ? "bg-[#0EC8F3]/70 border-[#0EC8F3]/50" : "bg-white/20 border-primary"
+          plan === "subscription" ? "bg-primary/70 border-primary/50" : "bg-white/20 border-primary"
         }`}
         aria-label="Toggle pricing plan"
       >
         <div
           className={`absolute top-1 w-6 h-6 rounded-full shadow-xl border border-white/50 transition-transform duration-300
-          ${plan === "subscription" ? "translate-x-8 bg-white/80" : "translate-x-1 bg-black/80 shadow-[0_0_12px_2px_rgba(14,200,243,0.5)]"}
+          ${plan === "subscription" ? "translate-x-8 bg-white/80" : "translate-x-1 bg-black/80 shadow-[0_0_12px_2px_rgba(0,217,255,0.5)]"}
         `}
         />
       </button>
-      {/* ✅ ALWAYS TEXT BLACK */}
-      <span className="text-sm font-semibold text-black">{translations.pricing.subscription}</span>
+      <span className="text-sm font-semibold text-foreground">{translations.pricing.subscription}</span>
     </div>
   )
 
   return (
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
-        <Card className="relative bg-white/10 backdrop-blur-3xl border-2 border-white/30 hover:border-[#0EC8F3]/50 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(14,200,243,0.4),0_8px_32px_rgba(14,200,243,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
+        <Card className="relative bg-white/10 backdrop-blur-3xl border-2 border-white/30 hover:border-primary/50 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(0,217,255,0.4),0_8px_32px_rgba(0,217,255,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
           <span className="liquid-noise rounded-2xl absolute inset-0" />
           <div className="flex flex-col h-full relative z-10">
             <div className="min-h-[80px] flex items-start mb-6">
@@ -280,18 +279,18 @@ function PricingCard({
                     onClick={() => setSelectedPackage(tier)}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-xl ${
                       isSelected
-                        ? "bg-[#0EC8F3]/40 text-white border border-[#0EC8F3]/50"
-                        : "bg-white/10 text-foreground hover:bg-[#0EC8F3]/10 border border-white/20"
+                        ? "bg-primary/40 text-white border border-primary/50"
+                        : "bg-white/10 text-foreground hover:bg-primary/10 border border-white/20"
                     }`}
                   >
                     {pkg.icon && (
-                      <span className={`w-4 h-4 ${isSelected ? "text-white drop-shadow-lg" : "text-[#054F56]"}`}>
+                      <span className={`w-4 h-4 ${isSelected ? "text-white drop-shadow-lg" : "text-primary"}`}>
                         {pkg.icon}
                       </span>
                     )}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
-                      <span className="absolute -top-3 -right-3 bg-[#0EC8F3]/90 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold border border-white/30">
+                      <span className="absolute -top-3 -right-3 bg-primary/90 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold border border-white/30">
                         {translations.pricing.mostPopular}
                       </span>
                     )}
@@ -304,7 +303,7 @@ function PricingCard({
               <div className="text-5xl md:text-6xl font-black text-foreground mb-3 font-display tracking-tight">
                 {currentPlan.price}
               </div>
-              {currentPlan.priceRange && <div className="text-sm text-muted mb-2">{currentPlan.priceRange}</div>}
+              {currentPlan.priceRange && <div className="text-sm text-text-secondary/70 mb-2">{currentPlan.priceRange}</div>}
               <div className="text-text-secondary text-base font-semibold tracking-wide">
                 {plan === "subscription" ? translations.pricing.perMonth : currentPlan.period}
               </div>
@@ -313,7 +312,7 @@ function PricingCard({
             <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto min-h-[300px] max-h-[400px]">
               {currentPlan.features.map((feature, index) => (
                 <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
-                  <div className="w-5 h-5 rounded-full bg-[#0EC8F3]/50 backdrop-blur-md flex items-center justify-center mt-0.5 flex-shrink-0 shadow-md border border-white/20">
+                  <div className="w-5 h-5 rounded-full bg-primary/50 backdrop-blur-md flex items-center justify-center mt-0.5 flex-shrink-0 shadow-md border border-white/20">
                     <Check className="w-3 h-3 text-white font-bold drop-shadow-sm" strokeWidth={3} />
                   </div>
                   <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
@@ -335,8 +334,7 @@ function PricingCard({
             rel="noopener noreferrer"
             className="relative group w-full sm:w-1/2"
           >
-          
-            <Button className="relative w-full h-14 md:h-16 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-base md:text-lg rounded-full hover:scale-[1.03] transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.5),0_0_80px_rgba(59,130,246,0.3)] hover:shadow-[0_0_60px_rgba(59,130,246,0.7),0_0_100px_rgba(59,130,246,0.4)] border-0 overflow-hidden">
+            <Button className="btn-cta-primary relative w-full h-14 md:h-16 text-base md:text-lg rounded-full hover:scale-[1.02] overflow-hidden">
               {/* Animated glow background */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
 
@@ -353,23 +351,11 @@ function PricingCard({
             rel="noopener noreferrer"
             className="relative group w-full sm:w-1/2"
           >
-            
             <Button
-  className="
-    w-full h-14 md:h-16
-    bg-transparent
-    border-2 border-primary
-    text-primary
-    md:text-lg
-    hover:bg-primary
-    hover:text-primary-foreground
-    rounded-full
-    transition-colors
-    shadow-none
-  "
->
-  {translations.pricing.connectTelegram}
-</Button>
+              className="w-full h-14 md:h-16 bg-transparent border-2 border-primary text-primary md:text-lg hover:bg-primary hover:text-primary-foreground rounded-full transition-colors shadow-none"
+            >
+              {translations.pricing.connectTelegram}
+            </Button>
           </a>
         </div>
       </div>

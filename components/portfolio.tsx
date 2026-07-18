@@ -6,13 +6,8 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
 import Link from "next/link"
-import { useScrollGlass } from "@/lib/use-scroll-glass"
 
-// ─── Add to your globals.css ──────────────────────────────────────────────────
-// @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap');
-// ─────────────────────────────────────────────────────────────────────────────
-
-type Category = "All" | "Web Apps" | "Websites" | "Apps" | "Startups"
+type Category = "Web Apps" | "Websites" | "Apps" | "Startups"
 
 interface Project {
   id: number
@@ -27,20 +22,9 @@ interface Project {
   category: Category
 }
 
-const CATEGORIES: Category[] = ["All", "Web Apps", "Websites", "Apps", "Startups"]
+const CATEGORIES: Category[] = ["Web Apps", "Websites", "Apps", "Startups"]
 
 // ── Category SVG icons (no external icon lib) ────────────────────────────────
-
-function IconAll({ className }: { className?: string }) {
-  return (
-    <svg className={className} width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
-    </svg>
-  )
-}
 
 function IconWebApps({ className }: { className?: string }) {
   return (
@@ -87,19 +71,10 @@ function IconStartups({ className }: { className?: string }) {
 }
 
 function CategoryIcon({ category, className }: { category: Category; className?: string }) {
-  if (category === "All")        return <IconAll className={className} />
   if (category === "Web Apps")   return <IconWebApps className={className} />
   if (category === "Websites")   return <IconWebsites className={className} />
   if (category === "Apps")       return <IconApps className={className} />
   return <IconStartups className={className} />
-}
-
-const CATEGORY_META: Record<Category, Record<string, never>> = {
-  All:        {},
-  "Web Apps": {},
-  Websites:   {},
-  Apps:       {},
-  Startups:   {},
 }
 
 // Per-card rotation in degrees, cycles through projects
@@ -114,18 +89,27 @@ type AttachmentType = (typeof ATTACHMENTS)[number]
 function PushPin() {
   return (
     <svg
-      className="absolute -top-5 left-1/2 -translate-x-1/2 z-20 drop-shadow-md"
-      width="22" height="34" viewBox="0 0 22 34" fill="none"
+      className="absolute -top-[18px] left-1/2 -translate-x-1/2 z-20"
+      width="26" height="38" viewBox="0 0 26 38" fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Outer pin head */}
-      <circle cx="11" cy="11" r="10" className="fill-primary" />
-      {/* Sheen */}
-      <ellipse cx="8.5" cy="8" rx="4" ry="3.5" fill="rgba(255,255,255,0.28)" />
-      {/* Dark centre dot */}
-      <circle cx="11" cy="11" r="3" fill="rgba(0,0,0,0.25)" />
+      {/* Cast shadow on the card below */}
+      <ellipse cx="13" cy="33" rx="6" ry="1.6" fill="rgba(0,0,0,0.35)" />
       {/* Shaft */}
-      <rect x="10" y="20" width="2" height="13" rx="1" fill="rgba(255,255,255,0.25)" />
+      <rect x="11.5" y="16" width="3" height="16" rx="1.5" fill="rgba(255,255,255,0.3)" />
+      {/* Pin head — gradient sphere */}
+      <circle cx="13" cy="12" r="12" fill="url(#pinHeadGradient)" />
+      <circle cx="13" cy="12" r="12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="1" />
+      {/* Sheen */}
+      <ellipse cx="9.5" cy="8" rx="4.2" ry="3.6" fill="rgba(255,255,255,0.45)" />
+      {/* Dark centre dot */}
+      <circle cx="13" cy="12" r="3.2" fill="rgba(0,0,0,0.22)" />
+      <defs>
+        <radialGradient id="pinHeadGradient" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stopColor="var(--color-primary, #00d9ff)" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="var(--color-primary, #00d9ff)" stopOpacity="0.65" />
+        </radialGradient>
+      </defs>
     </svg>
   )
 }
@@ -133,16 +117,25 @@ function PushPin() {
 function PaperClip() {
   return (
     <svg
-      className="absolute -top-3 right-6 z-20 drop-shadow-sm"
-      width="24" height="52" viewBox="0 0 24 52" fill="none"
+      className="absolute -top-4 right-7 z-20 rotate-[8deg]"
+      width="22" height="46" viewBox="0 0 22 46" fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M14 4 C6 4 4 10 4 14 L4 44 C4 48 7 50 10 50 C13 50 16 48 16 44 L16 14 C16 11 14 9 12 9 C10 9 8 11 8 14 L8 40"
-        stroke="rgba(255,255,255,0.35)"
-        strokeWidth="2.5"
+        d="M13 3 C6 3 4 8 4 12 L4 38 C4 41.5 6.5 43.5 9.5 43.5 C12.5 43.5 15 41.5 15 38 L15 12 C15 9.5 13.2 7.8 11.3 7.8 C9.4 7.8 7.6 9.5 7.6 12 L7.6 35"
+        stroke="rgba(255,255,255,0.55)"
+        strokeWidth="2.4"
         strokeLinecap="round"
         fill="none"
+      />
+      <path
+        d="M13 3 C6 3 4 8 4 12 L4 38 C4 41.5 6.5 43.5 9.5 43.5 C12.5 43.5 15 41.5 15 38 L15 12 C15 9.5 13.2 7.8 11.3 7.8 C9.4 7.8 7.6 9.5 7.6 12 L7.6 35"
+        stroke="rgba(0,0,0,0.18)"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        fill="none"
+        opacity="0.4"
+        transform="translate(0.8, 0.8)"
       />
     </svg>
   )
@@ -151,18 +144,16 @@ function PaperClip() {
 function Tape() {
   return (
     <div
-      className="absolute -top-3 left-1/2 -translate-x-1/2 z-20"
+      className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20"
       style={{
-        width: 64,
-        height: 20,
-        background: "rgba(255,255,255,0.12)",
+        width: 68,
+        height: 22,
+        background: "linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 100%)",
         backdropFilter: "blur(4px)",
-        borderLeft: "1px solid rgba(255,255,255,0.1)",
-        borderRight: "1px solid rgba(255,255,255,0.1)",
-        borderTop: "1px solid rgba(255,255,255,0.15)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
-        transform: "translateX(-50%) rotate(-1.5deg)",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        border: "1px solid rgba(255,255,255,0.14)",
+        borderTop: "1px solid rgba(255,255,255,0.22)",
+        transform: "translateX(-50%) rotate(-2deg)",
+        boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
       }}
     />
   )
@@ -174,7 +165,7 @@ function Attachment({ type }: { type: AttachmentType }) {
   return <Tape />
 }
 
-// ── Single polaroid project card ──────────────────────────────────────────────
+// ── Single project card ───────────────────────────────────────────────────────
 
 interface CardProps {
   project: Project
@@ -182,21 +173,21 @@ interface CardProps {
   t: ReturnType<typeof getTranslations>
 }
 
-function PolaroidCard({ project, index, t }: CardProps) {
+function ProjectCard({ project, index, t }: CardProps) {
   const [hovered, setHovered] = useState(false)
   const rotation = ROTATIONS[index % ROTATIONS.length]
   const attachType = ATTACHMENTS[index % ATTACHMENTS.length]
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 48, rotate: rotation * 0.5, scale: 0.9 }}
+      initial={{ opacity: 0, y: 40, rotate: rotation * 0.5, scale: 0.94 }}
       animate={{ opacity: 1, y: 0, rotate: rotation, scale: 1 }}
       transition={{
-        duration: 0.65,
-        delay: index * 0.09,
+        duration: 0.6,
+        delay: index * 0.08,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
-      whileHover={{ rotate: 0, scale: 1.03, zIndex: 20 }}
+      whileHover={{ rotate: 0, y: -6, scale: 1.02, zIndex: 20 }}
       style={{ transformOrigin: "center bottom", position: "relative", zIndex: hovered ? 20 : 1 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
@@ -205,9 +196,9 @@ function PolaroidCard({ project, index, t }: CardProps) {
       {/* Attachment decoration */}
       <Attachment type={attachType} />
 
-      {/* ── Polaroid frame ── */}
+      {/* ── Card frame ── */}
       <div
-        className="relative rounded-sm overflow-visible"
+        className="relative rounded-2xl overflow-hidden"
         style={{
           background: "rgba(255,255,255,0.04)",
           backdropFilter: "blur(24px)",
@@ -216,30 +207,27 @@ function PolaroidCard({ project, index, t }: CardProps) {
           boxShadow: hovered
             ? "0 28px 72px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.14) inset, 0 1px 0 rgba(255,255,255,0.12) inset"
             : "0 8px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.06) inset",
-          transition: "box-shadow 0.4s ease",
+          transition: "box-shadow 0.5s cubic-bezier(0.32,0.72,0,1)",
         }}
       >
         {/* ── Top inset highlight line ── */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
 
         {/* ── Photo area ── */}
-        <div className="relative overflow-hidden" style={{ aspectRatio: project.category === "Apps" ? "3/2" : "4/3" }}>
+        <div className="relative overflow-hidden" style={{ aspectRatio: project.category === "Apps" ? "3/2" : "16/10" }}>
           <Image
             src={project.image || "/placeholder.svg?height=600&width=800"}
             alt={project.imageAlt}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.07]"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             priority={index < 3}
           />
 
-          {/* Category chip — top-left */}
-          <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
-            <span className="text-primary text-[9px]">{CATEGORY_META[project.category].emoji}</span>
-            <span className="text-[10px] font-black uppercase tracking-[0.14em] text-white/70">
-              {project.category}
-            </span>
-          </div>
+          {/* Category badge — top-right */}
+          <span className="absolute top-3 right-3 z-10 flex items-center justify-center w-7 h-7 rounded-full bg-black/45 backdrop-blur-md border border-white/15 text-primary">
+            <CategoryIcon category={project.category} />
+          </span>
 
           {/* Tags — bottom left */}
           <div className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1.5">
@@ -306,7 +294,7 @@ function PolaroidCard({ project, index, t }: CardProps) {
           </AnimatePresence>
         </div>
 
-        {/* ── Polaroid bottom strip ── */}
+        {/* ── Bottom info strip ── */}
         <div
           className="px-4 pt-4 pb-5 flex flex-col gap-2"
           style={{
@@ -314,11 +302,7 @@ function PolaroidCard({ project, index, t }: CardProps) {
             borderTop: "1px solid rgba(255,255,255,0.06)",
           }}
         >
-          {/* Handwritten title */}
-          <p
-            className="text-foreground/90 text-xl leading-tight"
-            style={{ fontFamily: "'Caveat', cursive", fontWeight: 600 }}
-          >
+          <p className="text-foreground text-lg font-bold font-display tracking-tight leading-tight">
             {project.title}
           </p>
 
@@ -349,9 +333,9 @@ function PolaroidCard({ project, index, t }: CardProps) {
         </div>
       </div>
 
-      {/* Drop shadow pseudo-element effect via extra div */}
+      {/* Soft contact shadow grounding the card */}
       <div
-        className="absolute inset-x-3 -bottom-2 h-4 -z-10 rounded-sm blur-md opacity-40 transition-opacity duration-500 group-hover:opacity-60"
+        className="absolute inset-x-4 -bottom-2 h-4 -z-10 rounded-full blur-md opacity-40 transition-opacity duration-500 group-hover:opacity-60"
         style={{ background: "rgba(0,0,0,0.5)" }}
       />
     </motion.div>
@@ -363,9 +347,7 @@ function PolaroidCard({ project, index, t }: CardProps) {
 export default function Portfolio() {
   const { language } = useLanguage()
   const t = getTranslations(language)
-  const [activeCategory, setActiveCategory] = useState<Category>("All")
-
-  const isScrolled = useScrollGlass(180)
+  const [activeCategory, setActiveCategory] = useState<Category>("Web Apps")
 
   const projects = useMemo<Project[]>(() => [
     {
@@ -444,25 +426,20 @@ export default function Portfolio() {
   ], [t])
 
   const filtered = useMemo(
-    () =>
-      activeCategory === "All"
-        ? projects.filter((p) => p.category !== "Apps")   // Apps are hidden from "All"
-        : projects.filter((p) => p.category === activeCategory),
+    () => projects.filter((p) => p.category === activeCategory),
     [projects, activeCategory]
   )
 
-  // counts["All"] reflects only the non-Apps projects shown in that view
   const counts = useMemo(() => {
     const map: Record<string, number> = {}
     projects.forEach((p) => { map[p.category] = (map[p.category] ?? 0) + 1 })
-    map["All"] = projects.filter((p) => p.category !== "Apps").length
     return map
   }, [projects])
 
   return (
     <section
       id="portfolio"
-      className="w-full bg-surface py-16 md:py-28 lg:py-40 relative overflow-hidden"
+      className="w-full bg-surface py-20 md:py-28 lg:py-36 relative overflow-hidden"
     >
       {/* ── Floating ambient blobs ── */}
       <div className="absolute top-10 left-1/3 w-96 h-96 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent blur-[120px] opacity-40 animate-liquid pointer-events-none" />
@@ -482,7 +459,7 @@ export default function Portfolio() {
 
         {/* ── Header ── */}
         <div className="text-center mb-12 lg:mb-20">
-          <p className="text-sm md:text-base font-semibold text-primary uppercase tracking-widest mb-4">
+          <p className="eyebrow-label mb-4">
             {t.portfolio.badge}
           </p>
           <div className="flex justify-center mb-6">
@@ -497,7 +474,7 @@ export default function Portfolio() {
               ))}
             </div>
           </div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground mb-4 font-display leading-tight text-balance">
+          <h2 className="section-heading mb-4">
             {t.portfolio.heading}
           </h2>
           <p className="text-base md:text-lg text-text-secondary font-medium">
@@ -539,7 +516,7 @@ export default function Portfolio() {
                           layoutId="filter-pill-desktop"
                           className="absolute inset-0 rounded-xl"
                           style={{
-                            background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #a78bfa) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #a78bfa) 18%, #000) 100%)",
+                            background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #00d9ff) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #00d9ff) 18%, #000) 100%)",
                           }}
                           transition={{ type: "spring", stiffness: 420, damping: 36 }}
                         />
@@ -551,8 +528,8 @@ export default function Portfolio() {
                           className="absolute inset-0 rounded-xl"
                           style={{
                             border: "1px solid",
-                            borderColor: "color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent)",
-                            boxShadow: "0 0 20px -4px color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)",
+                            borderColor: "color-mix(in srgb, var(--color-primary, #00d9ff) 55%, transparent)",
+                            boxShadow: "0 0 20px -4px color-mix(in srgb, var(--color-primary, #00d9ff) 45%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)",
                           }}
                           transition={{ type: "spring", stiffness: 420, damping: 36 }}
                         />
@@ -561,19 +538,19 @@ export default function Portfolio() {
                       {/* Icon */}
                       <CategoryIcon
                         category={cat}
-                        className={`relative z-10 transition-all duration-300 ${isActive ? "text-primary" : "text-foreground/30"}`}
+                        className={`relative z-10 transition-all duration-300 ${isActive ? "text-white" : "text-foreground/30"}`}
                       />
                       {/* Label */}
-                      <span className={`relative z-10 transition-colors duration-300 ${isActive ? "text-foreground" : "text-foreground/45 hover:text-foreground/70"}`}>
+                      <span className={`relative z-10 transition-colors duration-300 ${isActive ? "text-white" : "text-foreground/45 hover:text-foreground/70"}`}>
                         {cat}
                       </span>
                       {/* Count badge */}
                       <span
                         className="relative z-10 flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-[10px] font-black tabular-nums transition-all duration-300"
                         style={isActive ? {
-                          background: "color-mix(in srgb, var(--color-primary, #a78bfa) 28%, transparent)",
-                          color: "var(--color-primary, #a78bfa)",
-                          border: "1px solid color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent)",
+                          background: "rgba(255,255,255,0.18)",
+                          color: "#fff",
+                          border: "1px solid rgba(255,255,255,0.28)",
                         } : {
                           background: "rgba(255,255,255,0.04)",
                           color: "rgba(255,255,255,0.25)",
@@ -598,7 +575,6 @@ export default function Portfolio() {
               <LayoutGroup>
                 {CATEGORIES.map((cat) => {
                   const isActive = activeCategory === cat
-                  const meta = CATEGORY_META[cat]
                   return (
                     <button
                       key={cat}
@@ -607,21 +583,20 @@ export default function Portfolio() {
                       style={{
                         border: "1px solid",
                         borderColor: isActive
-                          ? "color-mix(in srgb, var(--color-primary, #a78bfa) 45%, transparent)"
+                          ? "color-mix(in srgb, var(--color-primary, #00d9ff) 55%, transparent)"
                           : "rgba(255,255,255,0.07)",
                         boxShadow: isActive
-                          ? "0 0 18px -6px color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)"
+                          ? "0 0 18px -6px color-mix(in srgb, var(--color-primary, #00d9ff) 55%, transparent), inset 0 1px 0 rgba(255,255,255,0.10)"
                           : "none",
                       }}
                     >
-                      {/* Gradient fill for active */}
+                      {/* Dark gradient fill for active */}
                       {isActive && (
                         <motion.div
                           layoutId="filter-pill-mobile"
                           className="absolute inset-0 rounded-xl"
                           style={{
-                            background: "linear-gradient(135deg, var(--color-primary, #a78bfa) 0%, color-mix(in srgb, var(--color-primary, #a78bfa) 55%, transparent) 100%)",
-                            opacity: 0.18,
+                            background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #00d9ff) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #00d9ff) 18%, #000) 100%)",
                           }}
                           transition={{ type: "spring", stiffness: 420, damping: 36 }}
                         />
@@ -631,18 +606,19 @@ export default function Portfolio() {
                         <div className="absolute inset-0 rounded-xl" style={{ background: "rgba(255,255,255,0.02)" }} />
                       )}
 
-                      <span className={`relative z-10 text-[10px] transition-all duration-300 ${isActive ? "text-primary" : "text-foreground/25"}`}>
-                        {meta.emoji}
-                      </span>
-                      <span className={`relative z-10 whitespace-nowrap transition-colors duration-300 ${isActive ? "text-foreground" : "text-foreground/45"}`}>
+                      <CategoryIcon
+                        category={cat}
+                        className={`relative z-10 transition-all duration-300 ${isActive ? "text-white" : "text-foreground/25"}`}
+                      />
+                      <span className={`relative z-10 whitespace-nowrap transition-colors duration-300 ${isActive ? "text-white" : "text-foreground/45"}`}>
                         {cat}
                       </span>
                       <span
                         className="relative z-10 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full text-[10px] font-black tabular-nums transition-all duration-300"
                         style={isActive ? {
-                          background: "color-mix(in srgb, var(--color-primary, #a78bfa) 22%, transparent)",
-                          color: "var(--color-primary, #a78bfa)",
-                          border: "1px solid color-mix(in srgb, var(--color-primary, #a78bfa) 40%, transparent)",
+                          background: "rgba(255,255,255,0.18)",
+                          color: "#fff",
+                          border: "1px solid rgba(255,255,255,0.28)",
                         } : {
                           background: "rgba(255,255,255,0.04)",
                           color: "rgba(255,255,255,0.22)",
@@ -659,7 +635,7 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* ── Polaroid Grid ── */}
+        {/* ── Project Grid ── */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -680,9 +656,9 @@ export default function Portfolio() {
                 <p className="text-text-secondary font-medium">No projects in this category yet.</p>
               </motion.div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-6">
                 {filtered.map((project, index) => (
-                  <PolaroidCard
+                  <ProjectCard
                     key={project.id}
                     project={project}
                     index={index}
