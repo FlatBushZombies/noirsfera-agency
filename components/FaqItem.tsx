@@ -28,7 +28,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
         type="button"
         className={clsx(
           "relative flex w-full cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-2xl text-left transition-all duration-300",
-          "bg-white border border-gray-100 hover:border-primary/30 hover:bg-gray-50/50 shadow-sm hover:shadow-md",
+          "bg-[#0d0d0d] border border-white/[0.07] hover:border-primary/25 hover:bg-white/[0.04] shadow-none",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
           isActive && "border-primary/50",
         )}
@@ -59,7 +59,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             "relative flex w-12 h-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-md z-10",
             isActive
               ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-              : "border-gray-200 hover:border-primary hover:shadow-md hover:shadow-primary/15 bg-white group-hover:bg-primary/5",
+              : "border-white/[0.10] hover:border-primary hover:shadow-md hover:shadow-primary/20 bg-white/[0.04] group-hover:bg-primary/[0.08]",
           )}
         >
           {isActive ? (

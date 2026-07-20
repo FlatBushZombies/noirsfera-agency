@@ -93,7 +93,7 @@ export function Testimonials() {
   return (
     <section id="testimonials" className="relative py-20 md:py-28 bg-background overflow-hidden">
       {/* Ambient blob */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-primary/[0.08] blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── Header ── */}
@@ -142,76 +142,78 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 
   return (
     <motion.div
-      className="relative flex-shrink-0 w-[82vw] sm:w-[360px] md:w-[380px] cursor-default"
+      className="relative flex-shrink-0 w-[82vw] sm:w-[360px] md:w-[400px] cursor-default"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      animate={{
-        y: hovered ? -6 : 0,
-        scale: hovered ? 1.02 : 1,
-      }}
+      animate={{ y: hovered ? -6 : 0 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      style={{ perspective: "1000px" }}
     >
-      {/* Card */}
       <div
         className={`
-          relative h-full flex flex-col p-6 md:p-7 rounded-3xl overflow-hidden
-          bg-white
+          relative h-full flex flex-col p-6 md:p-7 rounded-2xl obsidian-card
           border transition-all duration-500
-          ${hovered ? "border-primary/40 shadow-[0_12px_48px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,217,255,0.12)]" : "border-gray-100 shadow-sm"}
+          ${hovered
+            ? "border-white/[0.12]"
+            : "border-white/[0.07]"}
         `}
+        style={{
+          backgroundColor: "#0d0d0d",
+          backgroundImage: [
+            "radial-gradient(280px circle at var(--cursor-x, 50%) var(--cursor-y, -10%), rgba(255,255,255,0.032) 0%, rgba(255,255,255,0.007) 50%, transparent 72%)",
+            "repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.009) 3px, rgba(255,255,255,0.009) 4px)",
+            "repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px)",
+          ].join(","),
+        }}
+        onMouseMove={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect()
+          e.currentTarget.style.setProperty("--cursor-x", `${((e.clientX - rect.left) / rect.width) * 100}%`)
+          e.currentTarget.style.setProperty("--cursor-y", `${((e.clientY - rect.top) / rect.height) * 100}%`)
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.setProperty("--cursor-x", "50%")
+          e.currentTarget.style.setProperty("--cursor-y", "-10%")
+        }}
       >
-        {/* Primary glow on hover */}
+        {/* Subtle cyan glow on hover */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br from-primary/[0.06] to-transparent transition-opacity duration-500 pointer-events-none rounded-3xl ${hovered ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/[0.04] to-transparent pointer-events-none transition-opacity duration-500 ${hovered ? "opacity-100" : "opacity-0"}`}
         />
 
+        {/* ── Author row — top, social-proof style ── */}
+        <div className="flex items-center gap-3.5 relative z-10 mb-5">
+          <div className={`w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 transition-colors duration-300 ${hovered ? "border-primary/30" : "border-white/[0.08]"}`}>
+            <Image
+              src={item.image || "/placeholder.svg"}
+              alt={item.name}
+              width={48}
+              height={48}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="min-w-0">
+            <p className="font-bold text-[15px] text-foreground leading-tight truncate">
+              {item.name}
+            </p>
+            <p className="text-sm text-text-secondary/65 font-medium mt-0.5 truncate">
+              {item.company}
+            </p>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-white/[0.07] mb-5 relative z-10" />
+
         {/* Stars */}
-        <div className="flex gap-1 mb-4 relative z-10">
+        <div className="flex gap-0.5 mb-3 relative z-10">
           {Array.from({ length: item.rating }).map((_, i) => (
             <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
           ))}
         </div>
 
-        {/* Opening quote glyph */}
-        <div className="absolute top-5 right-6 text-5xl font-black text-gray-100 leading-none select-none pointer-events-none font-display">
-          ❝
-        </div>
-
         {/* Quote text */}
-        <p className="text-sm md:text-base leading-relaxed text-text-secondary flex-1 relative z-10 mb-6">
+        <p className="text-sm md:text-[15px] leading-relaxed text-text-secondary relative z-10">
           {item.text}
         </p>
-
-        {/* Divider */}
-        <div className="w-full h-px bg-gray-100 mb-5 relative z-10" />
-
-        {/* Author row */}
-        <div className="flex items-center gap-3 relative z-10">
-          {/* Avatar with ring */}
-          <div className="relative flex-shrink-0">
-            <div className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-300 ${hovered ? "border-primary/50" : "border-gray-200"}`}>
-              <Image
-                src={item.image || "/placeholder.svg"}
-                alt={`${item.name} avatar`}
-                width={40}
-                height={40}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Online-style glow dot */}
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-primary/80 border-2 border-background shadow-[0_0_6px_rgba(0,217,255,0.6)]" />
-          </div>
-
-          <div>
-            <p className={`font-bold text-sm transition-colors duration-300 ${hovered ? "text-primary" : "text-foreground"}`}>
-              {item.name}
-            </p>
-            <p className="text-xs text-text-secondary/70 font-medium tracking-wide">
-              {item.company}
-            </p>
-          </div>
-        </div>
       </div>
     </motion.div>
   )

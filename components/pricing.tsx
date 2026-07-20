@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useEffect, useRef, useMemo } from "react"
 import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Check, Zap } from "lucide-react"
@@ -169,11 +170,31 @@ export default function Pricing() {
 
   const sectionRef = useRef<HTMLElement>(null)
   const cardsRef = useRef<(HTMLDivElement | null)[]>([])
+  const headingAreaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!sectionRef.current) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    gsap.registerPlugin(ScrollTrigger)
 
     const ctx = gsap.context(() => {
+      // Section heading reveal
+      if (headingAreaRef.current) {
+        gsap.fromTo(
+          headingAreaRef.current,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: { trigger: headingAreaRef.current, start: "top 85%", once: true },
+          }
+        )
+      }
+
+      // Cards — scroll-triggered, not on mount
       cardsRef.current.forEach((card, index) => {
         if (!card) return
         gsap.fromTo(
@@ -183,9 +204,10 @@ export default function Pricing() {
             opacity: 1,
             y: 0,
             scale: 1,
-            duration: 0.8,
-            delay: index * 0.15,
+            duration: 0.85,
+            delay: index * 0.12,
             ease: "back.out(1.2)",
+            scrollTrigger: { trigger: card, start: "top 88%", once: true },
           },
         )
       })
@@ -201,7 +223,7 @@ export default function Pricing() {
       className="relative min-h-screen bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8"
     >
       <div className="relative max-w-7xl mx-auto">
-        <div className="text-center mb-20 max-w-3xl mx-auto">
+        <div ref={headingAreaRef} className="text-center mb-20 max-w-3xl mx-auto">
           <p className="eyebrow-label mb-4">
             {t.pricing.badge}
           </p>
@@ -261,9 +283,24 @@ function PricingCard({
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
         <Card
-          className={`relative bg-white border border-gray-100 hover:border-primary/30 overflow-hidden group shadow-sm hover:shadow-[0_25px_60px_-15px_rgba(0,217,255,0.15),0_8px_32px_rgba(0,217,255,0.08)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
-            currentPackage.popular ? "ring-2 ring-primary/20 shadow-[0_8px_32px_rgba(0,217,255,0.08)]" : ""
+          className={`relative bg-[#0d0d0d] border border-white/[0.08] hover:border-primary/25 overflow-hidden group obsidian-card transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
+            currentPackage.popular ? "ring-1 ring-primary/30" : ""
           }`}
+          style={{
+            backgroundImage: [
+              "radial-gradient(380px circle at var(--cursor-x, 50%) var(--cursor-y, -10%), rgba(255,255,255,0.030) 0%, rgba(255,255,255,0.006) 52%, transparent 75%)",
+              "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(255,255,255,0.007) 2px, rgba(255,255,255,0.007) 3px)",
+            ].join(","),
+          }}
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            e.currentTarget.style.setProperty("--cursor-x", `${((e.clientX - rect.left) / rect.width) * 100}%`)
+            e.currentTarget.style.setProperty("--cursor-y", `${((e.clientY - rect.top) / rect.height) * 100}%`)
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.setProperty("--cursor-x", "50%")
+            e.currentTarget.style.setProperty("--cursor-y", "-10%")
+          }}
         >
           <div className="flex flex-col h-full relative z-10">
             <div className="min-h-[80px] flex items-start mb-6">
@@ -282,8 +319,8 @@ function PricingCard({
                     onClick={() => setSelectedPackage(tier)}
                     className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
                       isSelected
-                        ? "bg-foreground text-white shadow-md"
-                        : "bg-gray-100 text-foreground/60 hover:bg-gray-200"
+                        ? "bg-white/[0.12] text-foreground border border-white/[0.16] shadow-none"
+                        : "bg-white/[0.04] text-foreground/50 border border-white/[0.06] hover:bg-white/[0.08] hover:text-foreground/80"
                     }`}
                   >
                     {pkg.icon && (

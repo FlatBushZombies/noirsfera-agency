@@ -1,8 +1,12 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Image from "next/image"
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion"
+
+gsap.registerPlugin(ScrollTrigger)
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
 import Link from "next/link"
@@ -128,11 +132,11 @@ function ProjectCard({ project, index, t }: CardProps) {
       <div
         className="relative rounded-2xl overflow-hidden"
         style={{
-          background: "#fff",
-          border: "1px solid rgba(0,0,0,0.07)",
+          background: "#0d0d0d",
+          border: "1px solid rgba(255,255,255,0.08)",
           boxShadow: hovered
-            ? "0 24px 48px -12px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.06)"
-            : "0 2px 8px rgba(0,0,0,0.04)",
+            ? "0 24px 60px -12px rgba(0,0,0,0.8), 0 8px 24px rgba(0,0,0,0.5)"
+            : "0 4px 20px rgba(0,0,0,0.5)",
           transition: "box-shadow 0.5s cubic-bezier(0.32,0.72,0,1)",
         }}
       >
@@ -333,8 +337,34 @@ export default function Portfolio() {
     return map
   }, [projects])
 
+  const sectionRef = useRef<HTMLElement>(null)
+  const headerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+    const ctx = gsap.context(() => {
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current,
+          { opacity: 0, y: 48 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true },
+          }
+        )
+      }
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <section
+      ref={sectionRef}
       id="portfolio"
       className="w-full bg-surface py-20 md:py-28 lg:py-36 relative overflow-hidden"
     >
@@ -346,8 +376,8 @@ export default function Portfolio() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`,
           backgroundSize: "48px 48px",
         }}
       />
@@ -355,7 +385,7 @@ export default function Portfolio() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">
 
         {/* ── Header ── */}
-        <div className="text-center mb-12 lg:mb-20">
+        <div ref={headerRef} className="text-center mb-12 lg:mb-20">
           <p className="eyebrow-label mb-4">
             {t.portfolio.badge}
           </p>

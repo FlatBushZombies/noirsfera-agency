@@ -101,10 +101,40 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
+        {/* Two-point studio ambient light — subconscious depth, never obvious */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 0,
+            backgroundImage: [
+              "radial-gradient(ellipse 90% 55% at 12% 8%, rgba(0,217,255,0.016) 0%, transparent 60%)",
+              "radial-gradient(ellipse 70% 45% at 88% 92%, rgba(0,217,255,0.012) 0%, transparent 55%)",
+              "radial-gradient(ellipse 50% 30% at 50% 50%, rgba(255,255,255,0.004) 0%, transparent 60%)",
+            ].join(","),
+          }}
+        />
+
         <LanguageProvider>
           {children}
           <Toaster />
         </LanguageProvider>
+
+        {/* Film grain — premium material texture, visible only subconsciously */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            pointerEvents: "none",
+            zIndex: 9999,
+            opacity: 0.040,
+            mixBlendMode: "overlay" as const,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
       </body>
     </html>
   );

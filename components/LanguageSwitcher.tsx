@@ -54,7 +54,7 @@ export function LanguageSwitcher() {
             exit={{ opacity: 0, y: -4, scale: 0.98 }}
             transition={{ duration: 0.18 }}
             className="absolute left-1/2 -translate-x-1/2 mt-2
-                       bg-white/95 backdrop-blur-xl border border-border shadow-[0_12px_32px_rgba(0,0,0,0.12)] rounded-xl
+                       bg-[#0d0d0d] backdrop-blur-xl border border-white/[0.09] shadow-[0_12px_40px_rgba(0,0,0,0.7)] rounded-xl
                        w-40 z-50 py-1.5 overflow-hidden"
           >
             {languages.map((lang) => (
@@ -67,8 +67,8 @@ export function LanguageSwitcher() {
                 className={`flex items-center justify-between w-full px-3 py-2 text-sm rounded-lg mx-1
                   transition-colors ${
                     language === lang.code
-                      ? "bg-primary text-white"
-                      : "hover:bg-border"
+                      ? "bg-primary text-[#080808]"
+                      : "text-foreground/70 hover:text-foreground hover:bg-white/[0.06]"
                   }`}
               >
                 <div className="flex items-center gap-2">

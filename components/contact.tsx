@@ -199,7 +199,7 @@ export default function Contact() {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="relative bg-white border border-gray-100 shadow-sm rounded-3xl p-8 md:p-10 space-y-6 overflow-hidden"
+            className="relative bg-[#0d0d0d] border border-white/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.6)] rounded-3xl p-8 md:p-10 space-y-6 overflow-hidden"
           >
             <div className="relative z-10 space-y-6">
               <div ref={nameRef}>
@@ -212,7 +212,7 @@ export default function Contact() {
                   type="text"
                   placeholder={t.contact.fullNamePlaceholder}
                   required
-                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg h-12"
+                  className="bg-white/[0.04] border-2 border-white/[0.08] hover:border-primary/40 focus:border-primary focus:bg-white/[0.07] transition-colors rounded-lg h-12"
                 />
               </div>
 
@@ -226,7 +226,7 @@ export default function Contact() {
                   type="email"
                   placeholder={t.contact.emailPlaceholder}
                   required
-                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg h-12"
+                  className="bg-white/[0.04] border-2 border-white/[0.08] hover:border-primary/40 focus:border-primary focus:bg-white/[0.07] transition-colors rounded-lg h-12"
                 />
               </div>
 
@@ -240,7 +240,7 @@ export default function Contact() {
                   placeholder={t.contact.messagePlaceholder}
                   rows={6}
                   required
-                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg resize-none"
+                  className="bg-white/[0.04] border-2 border-white/[0.08] hover:border-primary/40 focus:border-primary focus:bg-white/[0.07] transition-colors rounded-lg resize-none"
                 />
               </div>
 

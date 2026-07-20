@@ -3,7 +3,10 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { motion, useMotionValue, useSpring } from "framer-motion"
+
+gsap.registerPlugin(ScrollTrigger)
 import { Button } from "@/components/ui/button"
 import { FlipWords } from "./ui/shadcn-io/flip-words"
 import { useLanguage } from "@/lib/LanguageContext"
@@ -21,6 +24,7 @@ export function Hero() {
   const buttonsRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
   const curlyRef = useRef<HTMLDivElement>(null)
+  const sphereRef = useRef<HTMLDivElement>(null)
   const [isButtonHovered, setIsButtonHovered] = useState(false)
 
   // Spring-based mouse parallax for the curly shape
@@ -63,19 +67,79 @@ export function Hero() {
         yoyo: true,
         ease: "sine.inOut",
       })
+
+      // Sphere animations — skip if prefers-reduced-motion
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && sphereRef.current) {
+        const sphere = sphereRef.current
+
+        // Float (replaces CSS animate-sphere-drift)
+        gsap.to(sphere, {
+          y: -22,
+          duration: 6.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        })
+
+        // Scroll parallax — sphere drifts up as user scrolls
+        gsap.to(sphere, {
+          yPercent: -14,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 2,
+          },
+        })
+
+        // Orbital ring continuous rotation
+        const ring1 = sphere.querySelector(".orbital-ring-1")
+        const ring2 = sphere.querySelector(".orbital-ring-2")
+        if (ring1) {
+          gsap.set(ring1, { rotateX: 74, rotateZ: -20 })
+          gsap.to(ring1, { rotateZ: 340, duration: 28, repeat: -1, ease: "none" })
+        }
+        if (ring2) {
+          gsap.set(ring2, { rotateX: 62, rotateZ: 35 })
+          gsap.to(ring2, { rotateZ: -325, duration: 44, repeat: -1, ease: "none" })
+        }
+
+        // Corona ambient pulse
+        const corona = sphere.querySelector(":scope > div:first-child") as HTMLElement | null
+        if (corona) {
+          gsap.to(corona, {
+            scale: 1.14,
+            opacity: 0.6,
+            duration: 5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 1,
+          })
+        }
+      }
     }, heroRef)
 
     return () => ctx.revert()
   }, [])
 
+  const handleButtonMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const btn = e.currentTarget
+    const rect = btn.getBoundingClientRect()
+    const dx = e.clientX - (rect.left + rect.width / 2)
+    const dy = e.clientY - (rect.top + rect.height / 2)
+    gsap.to(btn, { x: dx * 0.22, y: dy * 0.22, duration: 0.3, ease: "power2.out", overwrite: "auto" })
+  }
+
   const handleButtonHover = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsButtonHovered(true)
-    gsap.to(e.currentTarget, { scale: 1.02, duration: 0.3, ease: "power2.out" })
+    gsap.to(e.currentTarget, { scale: 1.03, duration: 0.3, ease: "power2.out" })
   }
 
   const handleButtonLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsButtonHovered(false)
-    gsap.to(e.currentTarget, { scale: 1, duration: 0.3, ease: "power2.out" })
+    gsap.to(e.currentTarget, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" })
   }
 
   const handleTelegramClick = () => {
@@ -103,6 +167,57 @@ export function Hero() {
         style={{ animationDelay: "1s" }}
       />
 
+      {/* ── Noirsfera Sphere — brand visual ── */}
+      <div ref={sphereRef} className="absolute top-1/2 right-0 -translate-y-1/2 pointer-events-none translate-x-[15%]">
+        <div className="relative w-[520px] h-[520px]">
+          {/* Outer ambient corona */}
+          <div className="absolute inset-0 rounded-full bg-primary/[0.05] blur-[90px]" />
+          <div className="absolute inset-[40px] rounded-full bg-primary/[0.04] blur-[60px]" />
+          {/* The sphere — polished obsidian shell */}
+          <div
+            className="absolute inset-[80px] rounded-full"
+            style={{
+              background: [
+                "radial-gradient(circle at 36% 28%, rgba(255,255,255,0.09) 0%, transparent 11%)",
+                "radial-gradient(circle at 33% 30%, rgba(0,217,255,0.18) 0%, rgba(0,217,255,0.08) 30%, rgba(8,8,8,0.97) 62%, #030303 100%)",
+              ].join(","),
+              border: "1px solid rgba(255,255,255,0.10)",
+              boxShadow: [
+                "inset 0 1px 0 rgba(255,255,255,0.10)",
+                "inset 0 -1px 0 rgba(0,0,0,0.8)",
+                "inset 0 0 80px rgba(0,217,255,0.06)",
+                "inset 0 0 160px rgba(0,0,0,0.7)",
+                "0 0 120px rgba(0,217,255,0.05)",
+                "0 40px 120px rgba(0,0,0,0.95)",
+              ].join(","),
+            }}
+          />
+          {/* Specular highlight — point light source top-left */}
+          <div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              top: "84px", left: "92px", right: "160px", bottom: "260px",
+              background: "radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 68%)",
+              borderRadius: "50%",
+            }}
+          />
+          {/* Orbital ring 1 — primary, faintly lit */}
+          <div
+            className="orbital-ring-1 absolute inset-[58px] rounded-full"
+            style={{
+              transform: "rotateX(74deg) rotateZ(-20deg)",
+              border: "1px solid rgba(0,217,255,0.13)",
+              boxShadow: "0 0 6px rgba(0,217,255,0.08), inset 0 0 6px rgba(0,217,255,0.04)",
+            }}
+          />
+          {/* Orbital ring 2 — secondary, near-invisible */}
+          <div
+            className="orbital-ring-2 absolute inset-[92px] rounded-full border border-white/[0.06]"
+            style={{ transform: "rotateX(62deg) rotateZ(35deg)" }}
+          />
+        </div>
+      </div>
+
       {/* Curly Liquid Shape — uses currentColor via CSS var so it respects the theme */}
       <motion.div
         style={{ x: springX, y: springY }}
@@ -110,7 +225,7 @@ export function Hero() {
       >
       <div
         ref={curlyRef}
-        className="w-[600px] h-[600px] pointer-events-none opacity-50 blur-[0.5px]"
+        className="w-[600px] h-[600px] pointer-events-none opacity-20 blur-[0.5px]"
         style={{ transform: "translate(20%, -10%)" }}
       >
         <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -138,7 +253,7 @@ export function Hero() {
 
           {/* ── Badge ── */}
           <div ref={badgeRef} className="flex justify-center mb-8">
-            <div className="relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 cursor-default">
+            <div className="relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/[0.12] backdrop-blur-xl hover:bg-white/[0.09] hover:border-primary/30 transition-all duration-300 cursor-default">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400 shadow-lg shadow-green-400/50" />
@@ -195,6 +310,7 @@ export function Hero() {
             <Button
               size="default"
               aria-label="Connect on Telegram"
+              onMouseMove={handleButtonMove}
               onMouseEnter={handleButtonHover}
               onMouseLeave={handleButtonLeave}
               onClick={handleTelegramClick}

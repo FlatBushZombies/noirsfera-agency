@@ -117,12 +117,12 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
+      className="relative py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
     >
       {/* Subtle dot grid */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.35]"
-        style={{ backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+        style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
       />
 
       <div className="relative max-w-7xl mx-auto space-y-20">
@@ -143,7 +143,24 @@ export function Services() {
               ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
-              className="group relative bg-white rounded-2xl p-8 md:p-10 overflow-hidden border border-gray-100 shadow-sm hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.14),0_8px_24px_-4px_rgba(0,0,0,0.07)] hover:border-primary/15 hover:-translate-y-1.5 transition-all duration-500"
+              className="group relative rounded-2xl p-8 md:p-10 overflow-hidden border border-white/[0.07] obsidian-card hover:border-primary/[0.18] hover:-translate-y-1.5"
+              style={{
+                backgroundColor: "#0d0d0d",
+                backgroundImage: [
+                  "radial-gradient(320px circle at var(--cursor-x, 50%) var(--cursor-y, -20%), rgba(255,255,255,0.034) 0%, rgba(255,255,255,0.008) 48%, transparent 72%)",
+                  "repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.009) 3px, rgba(255,255,255,0.009) 4px)",
+                  "repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.013) 3px, rgba(255,255,255,0.013) 4px)",
+                ].join(","),
+              }}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect()
+                e.currentTarget.style.setProperty("--cursor-x", `${((e.clientX - rect.left) / rect.width) * 100}%`)
+                e.currentTarget.style.setProperty("--cursor-y", `${((e.clientY - rect.top) / rect.height) * 100}%`)
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.setProperty("--cursor-x", "50%")
+                e.currentTarget.style.setProperty("--cursor-y", "-20%")
+              }}
             >
               {/* Top Visual Section */}
               <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10 z-10">
@@ -196,7 +213,7 @@ export function Services() {
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/20 hover:bg-primary/[0.03] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
+                  className="w-full flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.04] px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/20 hover:bg-primary/[0.03] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
@@ -220,7 +237,7 @@ export function Services() {
                     {service.details.map((detail, detailIndex) => (
                       <li
                         key={detailIndex}
-                        className="flex items-start gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2"
+                        className="flex items-start gap-3 rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2"
                       >
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
@@ -236,8 +253,10 @@ export function Services() {
         {/* Call to Action */}
         <div
           ref={ctaRef}
-          className="bg-gradient-to-br from-foreground to-foreground/95 rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-foreground/10"
+          className="relative bg-gradient-to-br from-[#0a0a0a] to-[#080808] rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-white/[0.08] overflow-hidden"
         >
+          {/* CTA glow */}
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-64 bg-primary/[0.06] blur-[80px] pointer-events-none rounded-full" />
           <div className="space-y-4 max-w-2xl mx-auto">
             <p className="eyebrow-label">
               {t.services.cta.badge}
