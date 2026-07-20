@@ -37,18 +37,18 @@ export function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
-      tl.from(badgeRef.current, { opacity: 0, y: 20, duration: 0.8, delay: 0.1 })
-        .from(headingRef.current, { opacity: 0, y: 50, duration: 1 }, "-=0.5")
-        .from(descriptionRef.current, { opacity: 0, y: 30, duration: 0.8 }, "-=0.5")
-        .from(avatarsRef.current, { opacity: 0, y: 20, duration: 0.6 }, "-=0.4")
+      tl.from(badgeRef.current, { opacity: 0, y: 24, duration: 0.8, delay: 0.15 })
+        .from(headingRef.current, { opacity: 0, y: 56, duration: 1.1 }, "-=0.45")
+        .from(descriptionRef.current, { opacity: 0, y: 32, duration: 0.85 }, "-=0.5")
         .fromTo(
           Array.from(buttonsRef.current?.children || []),
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, stagger: 0.15, duration: 0.6 },
-          "-=0.3",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, stagger: 0.14, duration: 0.65 },
+          "-=0.4",
         )
+        .from(avatarsRef.current, { opacity: 0, y: 16, duration: 0.6 }, "-=0.25")
 
-      tl.from(curlyRef.current, { opacity: 0, scale: 0.8, duration: 1.2, ease: "back.out(1.7)" }, "-=1")
+      tl.from(curlyRef.current, { opacity: 0, scale: 0.82, duration: 1.4, ease: "back.out(1.7)" }, "-=1.2")
 
       gsap.to(avatarsRef.current, {
         y: -8,
@@ -68,11 +68,9 @@ export function Hero() {
         ease: "sine.inOut",
       })
 
-      // Sphere animations — skip if prefers-reduced-motion
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && sphereRef.current) {
         const sphere = sphereRef.current
 
-        // Float (replaces CSS animate-sphere-drift)
         gsap.to(sphere, {
           y: -22,
           duration: 6.5,
@@ -81,7 +79,6 @@ export function Hero() {
           ease: "sine.inOut",
         })
 
-        // Scroll parallax — sphere drifts up as user scrolls
         gsap.to(sphere, {
           yPercent: -14,
           ease: "none",
@@ -93,7 +90,6 @@ export function Hero() {
           },
         })
 
-        // Orbital ring continuous rotation
         const ring1 = sphere.querySelector(".orbital-ring-1")
         const ring2 = sphere.querySelector(".orbital-ring-2")
         if (ring1) {
@@ -105,7 +101,6 @@ export function Hero() {
           gsap.to(ring2, { rotateZ: -325, duration: 44, repeat: -1, ease: "none" })
         }
 
-        // Corona ambient pulse
         const corona = sphere.querySelector(":scope > div:first-child") as HTMLElement | null
         if (corona) {
           gsap.to(corona, {
@@ -158,18 +153,65 @@ export function Hero() {
       id="about"
       ref={heroRef}
       onMouseMove={handleHeroMouseMove}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-surface"
+      className="relative min-h-screen flex flex-col overflow-hidden bg-background"
     >
-      {/* Premium Liquid Background Blobs */}
-      <div className="absolute top-16 right-0 w-[600px] h-[600px] rounded-full opacity-30 blur-[120px] bg-gradient-to-tr from-primary/30 via-primary/15 to-transparent animate-liquid pointer-events-none" />
-      <div
-        className="absolute bottom-16 left-1/4 w-80 h-80 rounded-full opacity-25 blur-[100px] bg-gradient-to-br from-primary/20 via-primary/10 to-transparent animate-liquid pointer-events-none"
-        style={{ animationDelay: "1s" }}
-      />
+      {/* ── Cinematic background ── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {/* Primary key light — top-right, studio atmosphere */}
+        <div
+          className="absolute top-0 right-0 w-[60vw] h-[75vh] opacity-35 blur-[140px] rounded-full"
+          style={{ background: "radial-gradient(ellipse at 80% 10%, rgba(0,217,255,0.18) 0%, rgba(0,217,255,0.07) 45%, transparent 70%)" }}
+        />
+        {/* Secondary fill — bottom-left, counterbalance */}
+        <div
+          className="absolute bottom-0 left-0 w-[45vw] h-[55vh] opacity-20 blur-[120px] rounded-full"
+          style={{ background: "radial-gradient(ellipse at 20% 90%, rgba(0,217,255,0.13) 0%, transparent 65%)" }}
+        />
+        {/* Vignette — draws focus to center-left content */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse 130% 110% at 28% 45%, transparent 42%, rgba(0,0,0,0.45) 100%)" }}
+        />
+      </div>
 
-      {/* ── Noirsfera Sphere — brand visual ── */}
-      <div ref={sphereRef} className="absolute top-1/2 right-0 -translate-y-1/2 pointer-events-none translate-x-[15%]">
-        <div className="relative w-[520px] h-[520px]">
+      {/* ── Curly liquid shape — mouse-reactive background element ── */}
+      <motion.div
+        style={{ x: springX, y: springY }}
+        className="absolute top-1/4 right-0 pointer-events-none"
+        aria-hidden="true"
+      >
+        <div
+          ref={curlyRef}
+          className="w-[600px] h-[600px] pointer-events-none opacity-[0.26] blur-[0.5px]"
+          style={{ transform: "translate(20%, -10%)" }}
+        >
+          <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <defs>
+              <linearGradient id="curlyGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.4" />
+                <stop offset="50%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.2" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 450 50 Q 400 100 420 150 Q 440 200 380 230 Q 320 260 340 320 Q 360 380 280 400 Q 200 420 220 490"
+              stroke="url(#curlyGradient1)"
+              strokeWidth="85"
+              strokeLinecap="round"
+              fill="none"
+              className="drop-shadow-[0_0_40px_rgba(0,217,255,0.3)]"
+            />
+          </svg>
+        </div>
+      </motion.div>
+
+      {/* ── Noirsfera Sphere — right-side brand anchor ── */}
+      <div
+        ref={sphereRef}
+        className="absolute top-1/2 right-[-5%] -translate-y-[48%] pointer-events-none hidden md:block"
+        aria-hidden="true"
+      >
+        <div className="relative w-[580px] h-[580px]">
           {/* Outer ambient corona */}
           <div className="absolute inset-0 rounded-full bg-primary/[0.05] blur-[90px]" />
           <div className="absolute inset-[40px] rounded-full bg-primary/[0.04] blur-[60px]" />
@@ -196,12 +238,15 @@ export function Hero() {
           <div
             className="absolute rounded-full pointer-events-none"
             style={{
-              top: "84px", left: "92px", right: "160px", bottom: "260px",
+              top: "84px",
+              left: "92px",
+              right: "160px",
+              bottom: "260px",
               background: "radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 68%)",
               borderRadius: "50%",
             }}
           />
-          {/* Orbital ring 1 — primary, faintly lit */}
+          {/* Orbital ring 1 */}
           <div
             className="orbital-ring-1 absolute inset-[58px] rounded-full"
             style={{
@@ -210,7 +255,7 @@ export function Hero() {
               boxShadow: "0 0 6px rgba(0,217,255,0.08), inset 0 0 6px rgba(0,217,255,0.04)",
             }}
           />
-          {/* Orbital ring 2 — secondary, near-invisible */}
+          {/* Orbital ring 2 */}
           <div
             className="orbital-ring-2 absolute inset-[92px] rounded-full border border-white/[0.06]"
             style={{ transform: "rotateX(62deg) rotateZ(35deg)" }}
@@ -218,95 +263,46 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Curly Liquid Shape — uses currentColor via CSS var so it respects the theme */}
-      <motion.div
-        style={{ x: springX, y: springY }}
-        className="absolute top-1/4 right-0 pointer-events-none"
-      >
-      <div
-        ref={curlyRef}
-        className="w-[600px] h-[600px] pointer-events-none opacity-20 blur-[0.5px]"
-        style={{ transform: "translate(20%, -10%)" }}
-      >
-        <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-          <defs>
-            <linearGradient id="curlyGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.4" />
-              <stop offset="50%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.3" />
-              <stop offset="100%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.2" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M 450 50 Q 400 100 420 150 Q 440 200 380 230 Q 320 260 340 320 Q 360 380 280 400 Q 200 420 220 490"
-            stroke="url(#curlyGradient1)"
-            strokeWidth="85"
-            strokeLinecap="round"
-            fill="none"
-            className="drop-shadow-[0_0_40px_rgba(0,217,255,0.3)]"
-          />
-        </svg>
-      </div>
-      </motion.div>
+      {/* ── Editorial content — left-aligned architectural layout ── */}
+      <div className="relative z-10 flex flex-col justify-center flex-1 px-8 sm:px-12 lg:px-20 xl:px-28 pt-28 md:pt-32 pb-24">
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        {/* Content block — constrained to left portion on desktop */}
+        <div className="max-w-full md:max-w-[70vw] lg:max-w-[58vw] xl:max-w-[52vw]">
 
-          {/* ── Badge ── */}
-          <div ref={badgeRef} className="flex justify-center mb-8">
-            <div className="relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/[0.06] border border-white/[0.12] backdrop-blur-xl hover:bg-white/[0.09] hover:border-primary/30 transition-all duration-300 cursor-default">
+          {/* Level 1 — Status indicator */}
+          <div ref={badgeRef} className="mb-8 md:mb-10">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-white/[0.12] backdrop-blur-xl hover:bg-white/[0.09] hover:border-primary/30 transition-all duration-300 cursor-default">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400 shadow-lg shadow-green-400/50" />
               </span>
-              <span className="text-sm font-semibold text-green-500 tracking-wide">{t.hero.availableBadge}</span>
+              <span className="text-sm font-semibold text-green-500 tracking-[0.06em]">{t.hero.availableBadge}</span>
             </div>
           </div>
 
-          {/* ── Heading ── */}
-          <h1
-            ref={headingRef}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[1.05] tracking-tight text-balance font-display mb-8"
-          >
+          {/* Level 2 — Massive editorial headline */}
+          <h1 ref={headingRef} className="hero-heading mb-8 md:mb-10">
             {t.hero.heading.modernising}
             <FlipWords words={t.hero.heading.words} duration={500} letterDelay={0.05} wordDelay={0.3} />
             {t.hero.heading.through}{" "}
             <span className="text-primary relative">
               {t.hero.heading.futuristic}
-              {/* Subtle glow under the accent word */}
               <span className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
             </span>{" "}
             {t.hero.heading.software}
           </h1>
 
-          {/* ── Description ── */}
+          {/* Level 3 — Supporting description */}
           <p
             ref={descriptionRef}
-            className="text-text-secondary md:text-lg lg:text-xl max-w-2xl mx-auto text-base font-medium leading-relaxed mb-12"
+            className="text-base md:text-lg leading-relaxed text-text-secondary max-w-[44ch] mb-10 md:mb-12 font-medium"
           >
             {t.hero.description}
           </p>
 
-          {/* ── Avatars ── */}
-          <div ref={avatarsRef} className="flex justify-center mb-12">
-            <div className="flex -space-x-3">
-              {[
-                { src: "/avatar-1.png", alt: "Client avatar 1" },
-                { src: "/avatar-2.jpg", alt: "Client avatar 2" },
-                { src: "/avatar-3.jpg", alt: "Client avatar 3" },
-              ].map((avatar, i) => (
-                <div
-                  key={i}
-                  className="w-12 h-12 rounded-full border-[2.5px] border-background overflow-hidden relative shadow-[0_4px_16px_rgba(0,0,0,0.2)] ring-1 ring-white/20"
-                  style={{ zIndex: 3 - i }}
-                >
-                  <Image src={avatar.src || "/placeholder.svg"} alt={avatar.alt} fill className="object-cover" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── CTA Buttons ── */}
-          <div ref={buttonsRef} className="flex justify-center items-center gap-4">
+          {/* Level 4 — Primary actions */}
+          <div ref={buttonsRef} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 md:mb-14">
+            {/* Primary CTA */}
             <Button
               size="default"
               aria-label="Connect on Telegram"
@@ -316,17 +312,11 @@ export function Hero() {
               onClick={handleTelegramClick}
               className="btn-cta-primary relative group cursor-pointer backdrop-blur-[32px] text-base px-8 py-4 h-auto rounded-full overflow-hidden"
             >
-              {/* Animated glow */}
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500 pointer-events-none" />
-
-              {/* Shimmer */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
-
-              {/* Top edge highlight */}
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
 
               <div className="flex items-center gap-3 relative z-10">
-                {/* Label — fades out on hover */}
                 <span
                   className="transition-all duration-300 font-bold leading-none"
                   style={{
@@ -339,8 +329,6 @@ export function Hero() {
                 >
                   {t.hero.connectTelegram}
                 </span>
-
-                {/* Hover state — profile + text */}
                 <div
                   className="flex items-center gap-2 transition-all duration-300 flex-nowrap"
                   style={{
@@ -361,25 +349,58 @@ export function Hero() {
                   </div>
                   <span className="text-white/90 font-semibold whitespace-nowrap text-sm">{t.hero.youLetsChat}</span>
                 </div>
-
-                {/* Arrow icon */}
                 <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 group-hover:bg-white/30 transition-colors duration-300">
                   <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M5 12H19M19 12L12 5M19 12L12 19"
-                      stroke="white"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
             </Button>
+
+            {/* Secondary CTA — text link */}
+            <button
+              onClick={() => document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" })}
+              className="group flex items-center gap-2 text-text-secondary hover:text-foreground transition-colors duration-200 text-base font-medium px-2 py-4"
+            >
+              <span>View work</span>
+              <svg
+                className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Level 5 — Trust indicators */}
+          <div ref={avatarsRef} className="flex items-center gap-4">
+            <div className="flex -space-x-3">
+              {[
+                { src: "/avatar-1.png", alt: "Client avatar 1" },
+                { src: "/avatar-2.jpg", alt: "Client avatar 2" },
+                { src: "/avatar-3.jpg", alt: "Client avatar 3" },
+              ].map((avatar, i) => (
+                <div
+                  key={i}
+                  className="w-10 h-10 rounded-full border-[2.5px] border-background overflow-hidden relative shadow-[0_4px_16px_rgba(0,0,0,0.2)] ring-1 ring-white/20"
+                  style={{ zIndex: 3 - i }}
+                >
+                  <Image src={avatar.src || "/placeholder.svg"} alt={avatar.alt} fill className="object-cover" />
+                </div>
+              ))}
+            </div>
+            <p className="text-sm text-text-secondary font-medium">
+              Trusted by 10+ clients
+            </p>
           </div>
 
         </div>
       </div>
+
     </section>
   )
 }
