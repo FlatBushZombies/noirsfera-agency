@@ -77,92 +77,27 @@ function CategoryIcon({ category, className }: { category: Category; className?:
   return <IconStartups className={className} />
 }
 
-// Per-card rotation in degrees, cycles through projects
-const ROTATIONS = [-3.2, 2.1, -1.6, 3.4, -2.8, 1.9, -0.8, 2.4]
+// ── Tag chip icon — cycles sparkle / circle / asterisk ───────────────────────
 
-// Attachment type cycling: pin | clip | tape
-const ATTACHMENTS = ["pin", "clip", "tape", "pin", "clip", "tape", "pin", "clip"] as const
-type AttachmentType = (typeof ATTACHMENTS)[number]
-
-// ── Decorative attachment SVGs ────────────────────────────────────────────────
-
-function PushPin() {
-  return (
-    <svg
-      className="absolute -top-[18px] left-1/2 -translate-x-1/2 z-20"
-      width="26" height="38" viewBox="0 0 26 38" fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Cast shadow on the card below */}
-      <ellipse cx="13" cy="33" rx="6" ry="1.6" fill="rgba(0,0,0,0.35)" />
-      {/* Shaft */}
-      <rect x="11.5" y="16" width="3" height="16" rx="1.5" fill="rgba(255,255,255,0.3)" />
-      {/* Pin head — gradient sphere */}
-      <circle cx="13" cy="12" r="12" fill="url(#pinHeadGradient)" />
-      <circle cx="13" cy="12" r="12" fill="none" stroke="rgba(0,0,0,0.12)" strokeWidth="1" />
-      {/* Sheen */}
-      <ellipse cx="9.5" cy="8" rx="4.2" ry="3.6" fill="rgba(255,255,255,0.45)" />
-      {/* Dark centre dot */}
-      <circle cx="13" cy="12" r="3.2" fill="rgba(0,0,0,0.22)" />
-      <defs>
-        <radialGradient id="pinHeadGradient" cx="35%" cy="30%" r="75%">
-          <stop offset="0%" stopColor="var(--color-primary, #00d9ff)" stopOpacity="0.95" />
-          <stop offset="100%" stopColor="var(--color-primary, #00d9ff)" stopOpacity="0.65" />
-        </radialGradient>
-      </defs>
+function TagChipIcon({ index }: { index: number }) {
+  if (index % 3 === 0) return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" className="flex-shrink-0 opacity-50" aria-hidden>
+      <path d="M7 0 L7.77 6.23 L14 7 L7.77 7.77 L7 14 L6.23 7.77 L0 7 L6.23 6.23 Z" />
     </svg>
   )
-}
-
-function PaperClip() {
-  return (
-    <svg
-      className="absolute -top-4 right-7 z-20 rotate-[8deg]"
-      width="22" height="46" viewBox="0 0 22 46" fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13 3 C6 3 4 8 4 12 L4 38 C4 41.5 6.5 43.5 9.5 43.5 C12.5 43.5 15 41.5 15 38 L15 12 C15 9.5 13.2 7.8 11.3 7.8 C9.4 7.8 7.6 9.5 7.6 12 L7.6 35"
-        stroke="rgba(255,255,255,0.55)"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        fill="none"
-      />
-      <path
-        d="M13 3 C6 3 4 8 4 12 L4 38 C4 41.5 6.5 43.5 9.5 43.5 C12.5 43.5 15 41.5 15 38 L15 12 C15 9.5 13.2 7.8 11.3 7.8 C9.4 7.8 7.6 9.5 7.6 12 L7.6 35"
-        stroke="rgba(0,0,0,0.18)"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-        fill="none"
-        opacity="0.4"
-        transform="translate(0.8, 0.8)"
-      />
+  if (index % 3 === 1) return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 opacity-50" aria-hidden>
+      <circle cx="7" cy="7" r="4.6" stroke="currentColor" strokeWidth="1.6" />
     </svg>
   )
-}
-
-function Tape() {
   return (
-    <div
-      className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20"
-      style={{
-        width: 68,
-        height: 22,
-        background: "linear-gradient(180deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 100%)",
-        backdropFilter: "blur(4px)",
-        border: "1px solid rgba(255,255,255,0.14)",
-        borderTop: "1px solid rgba(255,255,255,0.22)",
-        transform: "translateX(-50%) rotate(-2deg)",
-        boxShadow: "0 3px 10px rgba(0,0,0,0.2)",
-      }}
-    />
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="flex-shrink-0 opacity-50" aria-hidden>
+      <line x1="7" y1="1.5" x2="7" y2="12.5" />
+      <line x1="1.5" y1="7" x2="12.5" y2="7" />
+      <line x1="3.1" y1="3.1" x2="10.9" y2="10.9" />
+      <line x1="10.9" y1="3.1" x2="3.1" y2="10.9" />
+    </svg>
   )
-}
-
-function Attachment({ type }: { type: AttachmentType }) {
-  if (type === "pin")  return <PushPin />
-  if (type === "clip") return <PaperClip />
-  return <Tape />
 }
 
 // ── Single project card ───────────────────────────────────────────────────────
@@ -175,51 +110,39 @@ interface CardProps {
 
 function ProjectCard({ project, index, t }: CardProps) {
   const [hovered, setHovered] = useState(false)
-  const rotation = ROTATIONS[index % ROTATIONS.length]
-  const attachType = ATTACHMENTS[index % ATTACHMENTS.length]
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, rotate: rotation * 0.5, scale: 0.94 }}
-      animate={{ opacity: 1, y: 0, rotate: rotation, scale: 1 }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{
         duration: 0.6,
         delay: index * 0.08,
         ease: [0.21, 0.47, 0.32, 0.98],
       }}
-      whileHover={{ rotate: 0, y: -6, scale: 1.02, zIndex: 20 }}
-      style={{ transformOrigin: "center bottom", position: "relative", zIndex: hovered ? 20 : 1 }}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="group"
+      className="group relative"
     >
-      {/* Attachment decoration */}
-      <Attachment type={attachType} />
-
       {/* ── Card frame ── */}
       <div
         className="relative rounded-2xl overflow-hidden"
         style={{
-          background: "rgba(255,255,255,0.04)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
-          border: "1px solid rgba(255,255,255,0.10)",
+          background: "#fff",
+          border: "1px solid rgba(0,0,0,0.07)",
           boxShadow: hovered
-            ? "0 28px 72px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.14) inset, 0 1px 0 rgba(255,255,255,0.12) inset"
-            : "0 8px 32px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.06) inset",
+            ? "0 24px 48px -12px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.06)"
+            : "0 2px 8px rgba(0,0,0,0.04)",
           transition: "box-shadow 0.5s cubic-bezier(0.32,0.72,0,1)",
         }}
       >
-        {/* ── Top inset highlight line ── */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
-
         {/* ── Photo area ── */}
         <div className="relative overflow-hidden" style={{ aspectRatio: project.category === "Apps" ? "3/2" : "16/10" }}>
           <Image
             src={project.image || "/placeholder.svg?height=600&width=800"}
             alt={project.imageAlt}
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+            className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             priority={index < 3}
           />
@@ -229,22 +152,6 @@ function ProjectCard({ project, index, t }: CardProps) {
             <CategoryIcon category={project.category} />
           </span>
 
-          {/* Tags — bottom left */}
-          <div className="absolute bottom-3 left-3 z-10 flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 3).map((tag, i) => (
-              <span
-                key={i}
-                className="px-2 py-0.5 text-[9px] font-bold tracking-wider text-primary bg-black/50 backdrop-blur-md rounded-full border border-primary/20"
-              >
-                {tag}
-              </span>
-            ))}
-            {project.tags.length > 3 && (
-              <span className="px-2 py-0.5 text-[9px] font-bold tracking-wider text-white/40 bg-black/50 backdrop-blur-md rounded-full border border-white/10">
-                +{project.tags.length - 3}
-              </span>
-            )}
-          </div>
 
           {/* ── Hover overlay ── */}
           <AnimatePresence>
@@ -294,50 +201,40 @@ function ProjectCard({ project, index, t }: CardProps) {
           </AnimatePresence>
         </div>
 
-        {/* ── Bottom info strip ── */}
-        <div
-          className="px-4 pt-4 pb-5 flex flex-col gap-2"
-          style={{
-            background: "rgba(255,255,255,0.025)",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-          }}
-        >
-          <p className="text-foreground text-lg font-bold font-display tracking-tight leading-tight">
-            {project.title}
-          </p>
-
-          {/* Duration + Industry */}
-          <div className="flex items-center gap-4 mt-0.5">
-            <div className="space-y-0.5">
-              <p className="text-[9px] font-black uppercase tracking-[0.14em] text-foreground/30">Duration</p>
-              <p className="text-xs font-bold text-foreground/65">{project.duration}</p>
-            </div>
-            <div className="w-px h-6 bg-white/10" />
-            <div className="space-y-0.5">
-              <p className="text-[9px] font-black uppercase tracking-[0.14em] text-foreground/30">Industry</p>
-              <p className="text-xs font-bold text-foreground/65">{project.industry}</p>
-            </div>
-
-            {/* Mobile CTA arrow */}
+        {/* ── Bottom info strip — studiomodular.be style ── */}
+        <div className="px-5 pt-5 pb-6">
+          {/* Title + mobile external link */}
+          <div className="flex items-start justify-between gap-2 mb-4">
+            <p className="text-foreground text-lg font-bold font-display tracking-tight leading-snug">
+              {project.title}
+            </p>
             <Link
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-auto flex items-center justify-center w-7 h-7 rounded-full border border-white/10 bg-white/5 text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 lg:hidden"
+              className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full border border-foreground/[0.12] bg-foreground/[0.03] text-foreground/35 hover:text-primary hover:border-primary/30 transition-all duration-300 lg:hidden mt-0.5"
+              aria-label={`Open ${project.title}`}
             >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
             </Link>
           </div>
+
+          {/* Tag chips */}
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-foreground/[0.08] bg-foreground/[0.03] text-sm font-medium text-foreground/65"
+              >
+                <TagChipIcon index={i} />
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Soft contact shadow grounding the card */}
-      <div
-        className="absolute inset-x-4 -bottom-2 h-4 -z-10 rounded-full blur-md opacity-40 transition-opacity duration-500 group-hover:opacity-60"
-        style={{ background: "rgba(0,0,0,0.5)" }}
-      />
     </motion.div>
   )
 }
@@ -447,10 +344,10 @@ export default function Portfolio() {
 
       {/* Subtle grid texture overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px)`,
           backgroundSize: "48px 48px",
         }}
       />
@@ -508,13 +405,13 @@ export default function Portfolio() {
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className="relative flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
+                      className="relative flex items-center gap-2 px-5 py-3 rounded-full text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
                     >
                       {/* Dark gradient fill */}
                       {isActive && (
                         <motion.div
                           layoutId="filter-pill-desktop"
-                          className="absolute inset-0 rounded-xl"
+                          className="absolute inset-0 rounded-full"
                           style={{
                             background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #00d9ff) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #00d9ff) 18%, #000) 100%)",
                           }}
@@ -525,7 +422,7 @@ export default function Portfolio() {
                       {isActive && (
                         <motion.div
                           layoutId="filter-border-desktop"
-                          className="absolute inset-0 rounded-xl"
+                          className="absolute inset-0 rounded-full"
                           style={{
                             border: "1px solid",
                             borderColor: "color-mix(in srgb, var(--color-primary, #00d9ff) 55%, transparent)",
@@ -579,7 +476,7 @@ export default function Portfolio() {
                     <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className="relative flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
+                      className="relative flex-shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-full text-sm font-bold tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 overflow-hidden"
                       style={{
                         border: "1px solid",
                         borderColor: isActive
@@ -594,7 +491,7 @@ export default function Portfolio() {
                       {isActive && (
                         <motion.div
                           layoutId="filter-pill-mobile"
-                          className="absolute inset-0 rounded-xl"
+                          className="absolute inset-0 rounded-full"
                           style={{
                             background: "linear-gradient(135deg, color-mix(in srgb, var(--color-primary, #00d9ff) 38%, #000) 0%, color-mix(in srgb, var(--color-primary, #00d9ff) 18%, #000) 100%)",
                           }}
@@ -603,7 +500,7 @@ export default function Portfolio() {
                       )}
                       {/* Inactive fill */}
                       {!isActive && (
-                        <div className="absolute inset-0 rounded-xl" style={{ background: "rgba(255,255,255,0.02)" }} />
+                        <div className="absolute inset-0 rounded-full" style={{ background: "rgba(255,255,255,0.02)" }} />
                       )}
 
                       <CategoryIcon

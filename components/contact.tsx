@@ -199,10 +199,8 @@ export default function Contact() {
           <form
             ref={formRef}
             onSubmit={handleSubmit}
-            className="relative liquid-glass-modal rounded-3xl p-8 md:p-10 space-y-6 overflow-hidden"
+            className="relative bg-white border border-gray-100 shadow-sm rounded-3xl p-8 md:p-10 space-y-6 overflow-hidden"
           >
-            <span className="liquid-noise rounded-3xl" />
-
             <div className="relative z-10 space-y-6">
               <div ref={nameRef}>
                 <Label htmlFor="name" className="text-foreground font-bold mb-3 block text-base">
@@ -214,7 +212,7 @@ export default function Contact() {
                   type="text"
                   placeholder={t.contact.fullNamePlaceholder}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg h-12"
                 />
               </div>
 
@@ -228,7 +226,7 @@ export default function Contact() {
                   type="email"
                   placeholder={t.contact.emailPlaceholder}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg h-12 backdrop-blur-sm"
+                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg h-12"
                 />
               </div>
 
@@ -242,7 +240,7 @@ export default function Contact() {
                   placeholder={t.contact.messagePlaceholder}
                   rows={6}
                   required
-                  className="bg-white/60 border-2 border-border hover:border-primary/40 focus:border-primary transition-colors rounded-lg resize-none backdrop-blur-sm"
+                  className="bg-gray-50 border-2 border-border hover:border-primary/40 focus:border-primary focus:bg-white transition-colors rounded-lg resize-none"
                 />
               </div>
 

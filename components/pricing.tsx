@@ -260,8 +260,11 @@ function PricingCard({
   return (
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
-        <Card className="relative bg-white/10 backdrop-blur-3xl border-2 border-white/30 hover:border-primary/50 overflow-hidden group hover:shadow-[0_25px_60px_-15px_rgba(0,217,255,0.4),0_8px_32px_rgba(0,217,255,0.2)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full">
-          <span className="liquid-noise rounded-2xl absolute inset-0" />
+        <Card
+          className={`relative bg-white border border-gray-100 hover:border-primary/30 overflow-hidden group shadow-sm hover:shadow-[0_25px_60px_-15px_rgba(0,217,255,0.15),0_8px_32px_rgba(0,217,255,0.08)] transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
+            currentPackage.popular ? "ring-2 ring-primary/20 shadow-[0_8px_32px_rgba(0,217,255,0.08)]" : ""
+          }`}
+        >
           <div className="flex flex-col h-full relative z-10">
             <div className="min-h-[80px] flex items-start mb-6">
               <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-tight font-display">
@@ -277,20 +280,20 @@ function PricingCard({
                   <button
                     key={tier}
                     onClick={() => setSelectedPackage(tier)}
-                    className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 backdrop-blur-md shadow-lg hover:shadow-xl ${
+                    className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
                       isSelected
-                        ? "bg-primary/40 text-white border border-primary/50"
-                        : "bg-white/10 text-foreground hover:bg-primary/10 border border-white/20"
+                        ? "bg-foreground text-white shadow-md"
+                        : "bg-gray-100 text-foreground/60 hover:bg-gray-200"
                     }`}
                   >
                     {pkg.icon && (
-                      <span className={`w-4 h-4 ${isSelected ? "text-white drop-shadow-lg" : "text-primary"}`}>
+                      <span className={`w-4 h-4 ${isSelected ? "text-primary" : "text-primary/70"}`}>
                         {pkg.icon}
                       </span>
                     )}
                     <span className="whitespace-nowrap">{pkg.name}</span>
                     {pkg.popular && (
-                      <span className="absolute -top-3 -right-3 bg-primary/90 backdrop-blur-md text-white text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-lg font-bold border border-white/30">
+                      <span className="absolute -top-3 -right-3 bg-primary text-[#0a0a0a] text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-md font-bold">
                         {translations.pricing.mostPopular}
                       </span>
                     )}
@@ -300,7 +303,7 @@ function PricingCard({
             </div>
 
             <div className="text-center mb-8 min-h-[140px] flex flex-col justify-center">
-              <div className="text-5xl md:text-6xl font-black text-foreground mb-3 font-display tracking-tight">
+              <div className="text-6xl md:text-7xl font-black text-foreground mb-2 font-display tracking-tighter leading-none">
                 {currentPlan.price}
               </div>
               {currentPlan.priceRange && <div className="text-sm text-text-secondary/70 mb-2">{currentPlan.priceRange}</div>}
@@ -309,11 +312,11 @@ function PricingCard({
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4 pr-2 flex-1 overflow-auto min-h-[300px] max-h-[400px]">
+            <div className="space-y-3 md:space-y-4 pr-2 flex-1 min-h-[300px]">
               {currentPlan.features.map((feature, index) => (
                 <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
-                  <div className="w-5 h-5 rounded-full bg-primary/50 backdrop-blur-md flex items-center justify-center mt-0.5 flex-shrink-0 shadow-md border border-white/20">
-                    <Check className="w-3 h-3 text-white font-bold drop-shadow-sm" strokeWidth={3} />
+                  <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mt-0.5 flex-shrink-0">
+                    <Check className="w-3 h-3 text-primary font-bold" strokeWidth={3} />
                   </div>
                   <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
                 </div>

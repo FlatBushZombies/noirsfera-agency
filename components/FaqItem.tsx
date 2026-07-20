@@ -3,7 +3,6 @@ import type React from "react"
 import clsx from "clsx"
 import { motion, AnimatePresence } from "framer-motion"
 import { Plus, Minus } from "lucide-react"
-import { useScrollGlass, getScrollGlassClass } from "@/lib/use-scroll-glass"
 
 interface FaqItemProps {
   item: {
@@ -18,7 +17,6 @@ interface FaqItemProps {
 
 const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId }) => {
   const isActive = activeId === item.id
-  const isScrolled = useScrollGlass(120)
 
   const toggleActive = () => {
     setActiveId(isActive ? null : item.id)
@@ -30,8 +28,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
         type="button"
         className={clsx(
           "relative flex w-full cursor-pointer items-start justify-between gap-6 px-6 py-5 rounded-2xl text-left transition-all duration-300",
-          getScrollGlassClass(isScrolled),
-          "backdrop-blur-xl border-2 border-white/30 hover:border-primary/50",
+          "bg-white border border-gray-100 hover:border-primary/30 hover:bg-gray-50/50 shadow-sm hover:shadow-md",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50",
           isActive && "border-primary/50",
         )}
@@ -59,10 +56,10 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
         {/* Toggle Icon */}
         <div
           className={clsx(
-            "relative flex w-12 h-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-md backdrop-blur-xl z-10",
+            "relative flex w-12 h-12 items-center justify-center rounded-full border-2 transition-all duration-300 flex-shrink-0 shadow-md z-10",
             isActive
               ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-              : "border-primary/20 hover:border-primary hover:shadow-md hover:shadow-primary/15 bg-white/20 group-hover:bg-primary/5",
+              : "border-gray-200 hover:border-primary hover:shadow-md hover:shadow-primary/15 bg-white group-hover:bg-primary/5",
           )}
         >
           {isActive ? (
@@ -84,8 +81,7 @@ const FaqItem: React.FC<FaqItemProps> = ({ item, index, activeId, setActiveId })
             transition={{ duration: 0.4, ease: [0.4, 0.0, 0.2, 1] }}
             className="overflow-hidden"
           >
-            <div className="relative text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-primary/40 ml-0 mt-2 rounded-r-lg overflow-hidden bg-gradient-to-r from-primary/8 to-primary/4 backdrop-blur-xl">
-              <span className="liquid-noise rounded-r-lg opacity-50" />
+            <div className="relative text-base leading-relaxed tracking-wide text-text-secondary px-6 py-5 border-l-4 border-primary/40 ml-0 mt-2 rounded-r-lg overflow-hidden bg-gradient-to-r from-primary/8 to-primary/4">
               <span className="relative z-10">{item.answer}</span>
             </div>
           </motion.div>

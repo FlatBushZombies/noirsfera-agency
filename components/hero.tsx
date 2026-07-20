@@ -3,6 +3,7 @@
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
+import { motion, useMotionValue, useSpring } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { FlipWords } from "./ui/shadcn-io/flip-words"
 import { useLanguage } from "@/lib/LanguageContext"
@@ -21,6 +22,12 @@ export function Hero() {
   const badgeRef = useRef<HTMLDivElement>(null)
   const curlyRef = useRef<HTMLDivElement>(null)
   const [isButtonHovered, setIsButtonHovered] = useState(false)
+
+  // Spring-based mouse parallax for the curly shape
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const springX = useSpring(mouseX, { stiffness: 40, damping: 15, mass: 1.5 })
+  const springY = useSpring(mouseY, { stiffness: 40, damping: 15, mass: 1.5 })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -75,10 +82,18 @@ export function Hero() {
     window.open("https://t.me/itsslucki", "_blank")
   }
 
+  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = heroRef.current?.getBoundingClientRect()
+    if (!rect) return
+    mouseX.set((e.clientX - (rect.left + rect.width / 2)) * 0.06)
+    mouseY.set((e.clientY - (rect.top + rect.height / 2)) * 0.06)
+  }
+
   return (
     <section
       id="about"
       ref={heroRef}
+      onMouseMove={handleHeroMouseMove}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-surface"
     >
       {/* Premium Liquid Background Blobs */}
@@ -89,9 +104,13 @@ export function Hero() {
       />
 
       {/* Curly Liquid Shape — uses currentColor via CSS var so it respects the theme */}
+      <motion.div
+        style={{ x: springX, y: springY }}
+        className="absolute top-1/4 right-0 pointer-events-none"
+      >
       <div
         ref={curlyRef}
-        className="absolute top-1/4 right-0 w-[600px] h-[600px] pointer-events-none opacity-50 blur-[0.5px]"
+        className="w-[600px] h-[600px] pointer-events-none opacity-50 blur-[0.5px]"
         style={{ transform: "translate(20%, -10%)" }}
       >
         <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -112,15 +131,14 @@ export function Hero() {
           />
         </svg>
       </div>
+      </motion.div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
 
           {/* ── Badge ── */}
           <div ref={badgeRef} className="flex justify-center mb-8">
-            <div className="relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/10 border border-white/25 backdrop-blur-[32px] hover:bg-white/15 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.1)] hover:shadow-[0_16px_64px_rgba(0,0,0,0.15)] cursor-default">
-              {/* Top highlight */}
-              <div className="absolute inset-x-0 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            <div className="relative inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 cursor-default">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400 shadow-lg shadow-green-400/50" />

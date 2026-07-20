@@ -91,7 +91,7 @@ export function Testimonials() {
   }, [trackWidth, isPaused, controls])
 
   return (
-    <section id="testimonials" className="relative pt-12 md:pt-16 pb-10 md:pb-20 bg-background overflow-hidden">
+    <section id="testimonials" className="relative py-20 md:py-28 bg-background overflow-hidden">
       {/* Ambient blob */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-primary/5 blur-[120px] pointer-events-none" />
 
@@ -107,7 +107,7 @@ export function Testimonials() {
           <p className="eyebrow-label mb-4">
             {t.testimonials.badge}
           </p>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground font-display leading-tight tracking-tight text-balance">
+          <h2 className="section-heading">
             {t.testimonials.heading}
           </h2>
         </motion.div>
@@ -152,18 +152,15 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       style={{ perspective: "1000px" }}
     >
-      {/* Glass card */}
+      {/* Card */}
       <div
         className={`
           relative h-full flex flex-col p-6 md:p-7 rounded-3xl overflow-hidden
-          bg-white/[0.04] backdrop-blur-[24px]
+          bg-white
           border transition-all duration-500
-          ${hovered ? "border-primary/40 shadow-[0_12px_48px_rgba(0,0,0,0.18),0_0_0_1px_rgba(0,217,255,0.15)]" : "border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.08)]"}
+          ${hovered ? "border-primary/40 shadow-[0_12px_48px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,217,255,0.12)]" : "border-gray-100 shadow-sm"}
         `}
       >
-        {/* Top-edge glass highlight */}
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
-
         {/* Primary glow on hover */}
         <div
           className={`absolute inset-0 bg-gradient-to-br from-primary/[0.06] to-transparent transition-opacity duration-500 pointer-events-none rounded-3xl ${hovered ? "opacity-100" : "opacity-0"}`}
@@ -177,7 +174,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         </div>
 
         {/* Opening quote glyph */}
-        <div className="absolute top-5 right-6 text-5xl font-black text-white/[0.04] leading-none select-none pointer-events-none font-display">
+        <div className="absolute top-5 right-6 text-5xl font-black text-gray-100 leading-none select-none pointer-events-none font-display">
           ❝
         </div>
 
@@ -187,13 +184,13 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         </p>
 
         {/* Divider */}
-        <div className="w-full h-px bg-gradient-to-r from-white/10 via-white/[0.06] to-transparent mb-5 relative z-10" />
+        <div className="w-full h-px bg-gray-100 mb-5 relative z-10" />
 
         {/* Author row */}
         <div className="flex items-center gap-3 relative z-10">
           {/* Avatar with ring */}
           <div className="relative flex-shrink-0">
-            <div className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-300 ${hovered ? "border-primary/50" : "border-white/15"}`}>
+            <div className={`w-10 h-10 rounded-full overflow-hidden border-2 transition-all duration-300 ${hovered ? "border-primary/50" : "border-gray-200"}`}>
               <Image
                 src={item.image || "/placeholder.svg"}
                 alt={`${item.name} avatar`}

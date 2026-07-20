@@ -117,9 +117,15 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
+      className="relative py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto space-y-20">
+      {/* Subtle dot grid */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.35]"
+        style={{ backgroundImage: "radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+      />
+
+      <div className="relative max-w-7xl mx-auto space-y-20">
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <p className="eyebrow-label">
             {t.services.sectionBadge}
@@ -137,10 +143,8 @@ export function Services() {
               ref={(el: HTMLDivElement | null) => {
                 cardsRef.current[index] = el
               }}
-              className="group relative liquid-glass-card rounded-2xl p-8 md:p-10 overflow-hidden border border-primary/10 shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_18px_60px_rgba(0,0,0,0.08)] transition-all duration-300"
+              className="group relative bg-white rounded-2xl p-8 md:p-10 overflow-hidden border border-gray-100 shadow-sm hover:shadow-[0_24px_60px_-12px_rgba(0,0,0,0.14),0_8px_24px_-4px_rgba(0,0,0,0.07)] hover:border-primary/15 hover:-translate-y-1.5 transition-all duration-500"
             >
-              <span className="liquid-noise rounded-2xl" />
-
               {/* Top Visual Section */}
               <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10 z-10">
                 <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
@@ -192,7 +196,7 @@ export function Services() {
                 {/* Accordion Toggle */}
                 <button
                   onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between rounded-xl border border-primary/15 bg-white/70 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/30 hover:bg-primary/[0.04] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
+                  className="w-full flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/20 hover:bg-primary/[0.03] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
                   aria-expanded={openIndex === index}
                   aria-controls={`details-${index}`}
                 >
@@ -216,7 +220,7 @@ export function Services() {
                     {service.details.map((detail, detailIndex) => (
                       <li
                         key={detailIndex}
-                        className="flex items-start gap-3 rounded-lg border border-primary/10 bg-white/70 px-3 py-2"
+                        className="flex items-start gap-3 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2"
                       >
                         <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
                         <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>

@@ -44,33 +44,11 @@ export default function NavBar() {
         style={{
           ["--x" as any]: pos.x,
           ["--y" as any]: pos.y,
-          animation: "glassWobble 6s ease-in-out infinite",
-          background: `
-            radial-gradient(
-              600px circle at var(--x) var(--y),
-              rgba(255,255,255,0.28),
-              transparent 35%
-            ),
-            radial-gradient(
-              900px circle at calc(var(--x) - 100px) calc(var(--y) - 80px),
-              rgba(255,255,255,0.12),
-              transparent 50%
-            ),
-            linear-gradient(
-              180deg,
-              rgba(255,255,255,0.22),
-              rgba(255,255,255,0.08)
-            )
-          `,
-          backdropFilter: "blur(18px) saturate(160%)",
-          WebkitBackdropFilter: "blur(18px) saturate(160%)",
-          boxShadow: `
-            inset 0 1px 0 rgba(255,255,255,0.65),
-            inset 0 -1px 0 rgba(255,255,255,0.18),
-            inset 1px 0 0 rgba(255,255,255,0.08),
-            inset -1px 0 0 rgba(255,255,255,0.08),
-            0 24px 70px rgba(0,0,0,0.35)
-          `,
+          background: `radial-gradient(280px circle at var(--x) var(--y), rgba(0,217,255,0.05), transparent 65%), rgba(250,250,250,0.88)`,
+          backdropFilter: "blur(20px) saturate(160%)",
+          WebkitBackdropFilter: "blur(20px) saturate(160%)",
+          border: "1px solid rgba(0,0,0,0.06)",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.05)",
         }}
         className="
           fixed top-4 left-1/2 -translate-x-1/2 z-50
@@ -78,12 +56,9 @@ export default function NavBar() {
           px-5 py-3
           w-[calc(100%-2rem)] max-w-sm
           rounded-full
-          border border-white/25
           md:max-w-none md:w-auto md:px-8 md:py-3.5 md:gap-12
         "
       >
-        {/* Top-edge highlight — the one detail that elevates glass */}
-        <div className="absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/60 to-transparent pointer-events-none" />
 
         {/* Logo */}
         <div className="relative z-10 flex items-center gap-2 select-none">
@@ -106,15 +81,15 @@ export default function NavBar() {
                     relative cursor-pointer px-4 py-2 rounded-full font-medium tracking-wide transition-all duration-200
                     focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50
                     ${isActive
-                      ? "text-foreground bg-white/10"
-                      : "text-foreground/60 hover:text-foreground/90 hover:bg-white/[0.06]"
+                      ? "text-foreground"
+                      : "text-foreground/55 hover:text-foreground hover:bg-foreground/[0.04]"
                     }
                   `}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-0 rounded-full bg-white/10 border border-white/15"
+                      className="absolute inset-0 rounded-full bg-foreground/[0.06] border border-foreground/[0.08]"
                       transition={{ type: "spring", stiffness: 380, damping: 36 }}
                     />
                   )}
@@ -130,12 +105,12 @@ export default function NavBar() {
           <LanguageSwitcher />
 
           {/* Divider — only on desktop */}
-          <div className="hidden md:block w-px h-4 bg-white/20 mx-1" />
+          <div className="hidden md:block w-px h-4 bg-foreground/15 mx-1" />
 
           {/* Mobile menu button */}
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+            className="md:hidden w-8 h-8 rounded-full flex items-center justify-center hover:bg-foreground/[0.06] transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             aria-label="Open menu"
           >
             <Menu size={17} strokeWidth={2.5} />
@@ -163,24 +138,21 @@ export default function NavBar() {
               className="
                 absolute inset-x-4 top-[4.5rem]
                 rounded-3xl
-                border border-white/20
-                bg-white/10
-                backdrop-blur-2xl
+                border border-gray-100
+                bg-white
+                shadow-[0_16px_48px_rgba(0,0,0,0.1)]
                 overflow-hidden
               "
             >
-              {/* Top highlight */}
-              <div className="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
-
               {/* Header row inside menu */}
-              <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/10">
+              <div className="flex items-center justify-between px-6 pt-5 pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--color-primary,#00D9FF)]" />
                   <span className="font-black tracking-[0.12em] uppercase text-sm">noirsfera</span>
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                  className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-foreground/[0.06] transition-colors duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                   aria-label="Close menu"
                 >
                   <X size={17} strokeWidth={2.5} />
@@ -195,7 +167,7 @@ export default function NavBar() {
                     initial={{ opacity: 0, x: -12 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.06, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-medium text-foreground/80 hover:text-foreground hover:bg-white/8 transition-all duration-200 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+                    className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-base font-medium text-foreground/70 hover:text-foreground hover:bg-gray-50 transition-all duration-200 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
                     onClick={() => {
                       scrollTo(id);
                       setOpen(false);

@@ -68,7 +68,7 @@ const FAQ = () => {
         <div className="relative">
           {/* Rotating Founder Image */}
           <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
-            <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-white/60 bg-white/20 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.2),0_0_0_1px_rgba(255,255,255,0.8),inset_0_1px_0_rgba(255,255,255,0.9)]">
+            <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-gray-200 bg-white shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentIndex}
