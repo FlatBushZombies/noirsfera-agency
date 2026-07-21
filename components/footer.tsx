@@ -96,7 +96,7 @@ export default function Footer() {
   }
 
   return (
-    <footer ref={sectionRef} className="relative bg-[#040404] text-white overflow-hidden">
+    <footer ref={sectionRef} className="relative bg-background text-white overflow-hidden">
       <div className="relative z-10 px-6 py-16 md:py-24 lg:py-32">
         <div className="max-w-7xl mx-auto">
           {/* Hero Section with CTA */}
@@ -114,7 +114,7 @@ export default function Footer() {
 
             {/* Content */}
             <div className="relative z-10">
-              <h2 ref={headingRef} className="text-4xl md:text-5xl lg:text-6xl font-black font-display mb-8 leading-tight tracking-tight text-balance">
+              <h2 ref={headingRef} className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-8 leading-[0.98] tracking-[-0.03em] text-balance">
                 {t.footer.heading.line1},
                 <br />
                 {t.footer.heading.line2}

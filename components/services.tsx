@@ -119,10 +119,10 @@ export function Services() {
       id="services"
       className="relative py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
     >
-      {/* Subtle dot grid */}
+      {/* Atmospheric depth — no patterns */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.35]"
-        style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,217,255,0.04) 0%, transparent 70%)" }}
       />
 
       <div className="relative max-w-7xl mx-auto space-y-20">
@@ -167,7 +167,7 @@ export function Services() {
                 <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
                 {index === 0 && (
                   <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
-                    <span className="text-sm font-bold text-foreground">
+                    <span className="text-sm font-bold text-black">
                       {t.services.items.fullstack.scalableGrowth}
                     </span>
                     <div className="w-12 h-6 bg-gradient-to-r from-primary to-[#0db8d7] rounded-full flex items-center justify-end px-1 shadow-md">
@@ -186,10 +186,10 @@ export function Services() {
                 {index === 2 && (
                   <div className="relative space-y-2 w-full px-6">
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">{t.services.items.uiux.userRetention}</span>
+                      <span className="text-xs font-bold text-black">{t.services.items.uiux.userRetention}</span>
                     </div>
                     <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-foreground">{t.services.items.uiux.conversions}</span>
+                      <span className="text-xs font-bold text-black">{t.services.items.uiux.conversions}</span>
                     </div>
                   </div>
                 )}
@@ -261,7 +261,7 @@ export function Services() {
             <p className="eyebrow-label">
               {t.services.cta.badge}
             </p>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight text-balance font-display">
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[0.98] tracking-[-0.03em] text-balance font-display">
               {t.services.cta.heading}
             </h3>
             <p className="text-lg text-white/80 font-medium leading-relaxed">{t.services.cta.description}</p>

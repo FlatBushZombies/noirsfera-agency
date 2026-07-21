@@ -368,18 +368,10 @@ export default function Portfolio() {
       id="portfolio"
       className="w-full bg-surface py-20 md:py-28 lg:py-36 relative overflow-hidden"
     >
-      {/* ── Floating ambient blobs ── */}
-      <div className="absolute top-10 left-1/3 w-96 h-96 rounded-full bg-gradient-to-tr from-primary/20 via-primary/10 to-transparent blur-[120px] opacity-40 animate-liquid pointer-events-none" />
-      <div className="absolute bottom-16 right-1/4 w-80 h-80 rounded-full bg-gradient-to-br from-primary/15 via-primary/10 to-transparent blur-[100px] opacity-30 animate-liquid pointer-events-none" />
-
-      {/* Subtle grid texture overlay */}
+      {/* Atmospheric depth */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`,
-          backgroundSize: "48px 48px",
-        }}
+        style={{ background: "radial-gradient(ellipse 80% 45% at 60% 15%, rgba(0,217,255,0.05) 0%, transparent 65%)" }}
       />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-16">

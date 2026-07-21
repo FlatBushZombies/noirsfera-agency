@@ -4,27 +4,28 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #050505;
-  --surface: #080808;
+  /* Matte-black charcoal stack — each step is perceivably distinct */
+  --background: #07070a;   /* obsidian base — cool-dark charcoal, not pure void */
+  --surface: #0d0d11;      /* raised surface — sections, panels */
   --foreground: #f0f0f0;
   --text-secondary: rgba(240,240,240,0.5);
   --primary: #00d9ff;
   --border: rgba(255,255,255,0.07);
 
-  --card: #0a0a0a;
+  --card: #131317;         /* card background — clearly elevated from surface */
   --card-foreground: #f0f0f0;
-  --popover: #0d0d0d;
+  --popover: #171720;
   --popover-foreground: #f0f0f0;
-  --primary-foreground: #080808;
-  --secondary: #101010;
+  --primary-foreground: #07070a;
+  --secondary: #191920;    /* secondary surfaces — rich cool-charcoal */
   --secondary-foreground: #f0f0f0;
-  --muted: #101010;
+  --muted: #1e1e28;        /* muted areas — deepest tonal personality */
   --muted-foreground: rgba(240,240,240,0.45);
-  --accent: #161616;
+  --accent: #1c1c24;
   --accent-foreground: #f0f0f0;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --input: #1a1a1a;
+  --input: #1a1a22;
   --ring: rgba(0,217,255,0.25);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -32,11 +33,11 @@
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: #0d0d0d;
+  --sidebar: #0d0d11;
   --sidebar-foreground: #f0f0f0;
   --sidebar-primary: #00d9ff;
-  --sidebar-primary-foreground: #080808;
-  --sidebar-accent: #161616;
+  --sidebar-primary-foreground: #07070a;
+  --sidebar-accent: #1c1c24;
   --sidebar-accent-foreground: #f0f0f0;
   --sidebar-border: rgba(255,255,255,0.07);
   --sidebar-ring: rgba(0,217,255,0.25);
