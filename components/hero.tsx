@@ -157,20 +157,20 @@ export function Hero() {
     >
       {/* ── Cinematic background ── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Primary key light — top-right, studio atmosphere */}
+        {/* Primary key light — top-center halo */}
         <div
-          className="absolute top-0 right-0 w-[60vw] h-[75vh] opacity-35 blur-[140px] rounded-full"
-          style={{ background: "radial-gradient(ellipse at 80% 10%, rgba(0,217,255,0.18) 0%, rgba(0,217,255,0.07) 45%, transparent 70%)" }}
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[70vh] opacity-30 blur-[160px] rounded-full"
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,217,255,0.20) 0%, rgba(0,217,255,0.06) 55%, transparent 75%)" }}
         />
-        {/* Secondary fill — bottom-left, counterbalance */}
+        {/* Secondary fill — bottom atmospheric */}
         <div
-          className="absolute bottom-0 left-0 w-[45vw] h-[55vh] opacity-20 blur-[120px] rounded-full"
-          style={{ background: "radial-gradient(ellipse at 20% 90%, rgba(0,217,255,0.13) 0%, transparent 65%)" }}
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[40vh] opacity-15 blur-[100px] rounded-full"
+          style={{ background: "radial-gradient(ellipse at 50% 100%, rgba(0,217,255,0.10) 0%, transparent 70%)" }}
         />
-        {/* Vignette — draws focus to center-left content */}
+        {/* Vignette — pulls edges dark, centers attention */}
         <div
           className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 130% 110% at 28% 45%, transparent 42%, rgba(0,0,0,0.45) 100%)" }}
+          style={{ background: "radial-gradient(ellipse 120% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.55) 100%)" }}
         />
       </div>
 
@@ -205,10 +205,10 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Noirsfera Sphere — right-side brand anchor ── */}
+      {/* ── Noirsfera Sphere — centered background anchor ── */}
       <div
         ref={sphereRef}
-        className="absolute top-1/2 right-[-5%] -translate-y-[48%] pointer-events-none hidden md:block"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[52%] pointer-events-none hidden md:block"
         aria-hidden="true"
       >
         <div className="relative w-[580px] h-[580px]">
@@ -263,14 +263,14 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Editorial content — left-aligned architectural layout ── */}
-      <div className="relative z-10 flex flex-col justify-center flex-1 px-8 sm:px-12 lg:px-20 xl:px-28 pt-28 md:pt-32 pb-24">
+      {/* ── Centered hero content ── */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 sm:px-10 lg:px-16 pt-28 md:pt-32 pb-24 text-center">
 
-        {/* Content block — constrained to left portion on desktop */}
-        <div className="max-w-full md:max-w-[70vw] lg:max-w-[58vw] xl:max-w-[52vw]">
+        {/* Content block — centered, max-width for readability */}
+        <div className="w-full max-w-4xl mx-auto">
 
           {/* Level 1 — Status indicator */}
-          <div ref={badgeRef} className="mb-8 md:mb-10">
+          <div ref={badgeRef} className="flex justify-center mb-8 md:mb-10">
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-white/[0.12] backdrop-blur-xl hover:bg-white/[0.09] hover:border-primary/30 transition-all duration-300 cursor-default">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
@@ -295,13 +295,13 @@ export function Hero() {
           {/* Level 3 — Supporting description */}
           <p
             ref={descriptionRef}
-            className="text-base md:text-lg leading-relaxed text-text-secondary max-w-[44ch] mb-10 md:mb-12 font-medium"
+            className="text-base md:text-lg leading-relaxed text-text-secondary max-w-[52ch] mx-auto mb-10 md:mb-12 font-medium"
           >
             {t.hero.description}
           </p>
 
           {/* Level 4 — Primary actions */}
-          <div ref={buttonsRef} className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 md:mb-14">
+          <div ref={buttonsRef} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 md:mb-14">
             {/* Primary CTA */}
             <Button
               size="default"
@@ -377,7 +377,7 @@ export function Hero() {
           </div>
 
           {/* Level 5 — Trust indicators */}
-          <div ref={avatarsRef} className="flex items-center gap-4">
+          <div ref={avatarsRef} className="flex items-center justify-center gap-4">
             <div className="flex -space-x-3">
               {[
                 { src: "/avatar-1.png", alt: "Client avatar 1" },

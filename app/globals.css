@@ -1,3 +1,4 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -44,9 +45,10 @@
 }
 
 @theme inline {
-  --font-sans: "Geist", "Geist Fallback";
+  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback";
-  --font-display: "Geist", "Geist Fallback";
+  --font-display: "Satoshi", var(--font-inter), "Inter", sans-serif;
+  --font-jakarta: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -357,26 +359,72 @@
     @apply text-sm md:text-base font-semibold text-primary uppercase tracking-widest;
   }
 
-  /* Primary section heading — unified type scale + tracking across all sections */
+  /* ── Type scale — Satoshi-led hierarchy ─────────────────────────────── */
+
+  /* H1 — Satoshi Bold 92, hero display only */
+  .hero-heading {
+    font-family: "Satoshi", var(--font-sans), sans-serif;
+    font-size: clamp(2.5rem, 5vw + 1.5rem, 5.75rem); /* max ≈ 92px */
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    color: var(--foreground);
+    text-wrap: balance;
+  }
+
+  /* H2 — Satoshi Bold, section headings */
   .section-heading {
-    font-size: clamp(2.5rem, 6vw + 0.5rem, 7.5rem);
+    font-family: "Satoshi", var(--font-sans), sans-serif;
+    font-size: clamp(2rem, 4vw + 0.5rem, 4.5rem);
     font-weight: 700;
     line-height: 0.98;
     letter-spacing: -0.03em;
     color: var(--foreground);
-    font-family: var(--font-display);
     text-wrap: balance;
   }
 
-  /* Hero heading — editorial display scale, semi-bold for luxury refinement */
-  .hero-heading {
-    font-size: clamp(3rem, 7.5vw + 0.5rem, 8.5rem);
-    font-weight: 600;
-    line-height: 0.96;
-    letter-spacing: -0.028em;
+  /* H3 — Satoshi Medium 36px */
+  .heading-3 {
+    font-family: "Satoshi", var(--font-sans), sans-serif;
+    font-size: 2.25rem;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     color: var(--foreground);
-    font-family: var(--font-display);
-    text-wrap: balance;
+  }
+
+  /* H4 — Plus Jakarta Sans Semibold 24px */
+  .heading-4 {
+    font-family: var(--font-jakarta), "Plus Jakarta Sans", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--foreground);
+  }
+
+  /* Body large — Inter Display 24px */
+  .body-large {
+    font-family: var(--font-sans), "Inter", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* Body medium — Inter Display 18px */
+  .body-medium {
+    font-family: var(--font-sans), "Inter", sans-serif;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Body small — Inter Regular 15px */
+  .body-small {
+    font-family: var(--font-sans), "Inter", sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.65;
   }
 
   /* Primary CTA — machined aluminum feel with anodized cyan surface */
