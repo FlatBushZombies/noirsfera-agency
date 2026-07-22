@@ -116,7 +116,7 @@ export default function NavBar() {
         <div className="relative z-10 flex items-center gap-2 select-none">
           {/* Accent dot */}
           <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--color-primary,#00D9FF)] flex-shrink-0" />
-          <span className="font-black tracking-[0.12em] uppercase text-sm text-foreground">
+          <span className="font-black tracking-[0.12em] lowercase text-sm text-foreground">
             noirsfera
           </span>
         </div>
