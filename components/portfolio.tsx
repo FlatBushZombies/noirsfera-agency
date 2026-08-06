@@ -126,6 +126,7 @@ function ProjectCard({ project, index, t }: CardProps) {
           boxShadow: hovered
             ? "0 32px 72px -16px rgba(0,0,0,0.9), 0 8px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)"
             : "0 4px 24px rgba(0,0,0,0.5)",
+          transform: hovered ? "translateY(-6px)" : "translateY(0)",
         }}
       >
         {/* Photo area */}

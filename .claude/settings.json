@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(command -v chromium-cli)",
+      "Bash(curl -s -o /tmp/page.html -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Bash(taskkill //PID 4184 //F)",
+      "Bash(powershell -Command \"Stop-Process -Id 4184 -Force\")"
+    ]
+  }
+}

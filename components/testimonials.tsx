@@ -91,7 +91,7 @@ export function Testimonials() {
   }, [trackWidth, isPaused, controls])
 
   return (
-    <section id="testimonials" className="relative py-20 md:py-28 bg-background overflow-hidden">
+    <section id="testimonials" className="relative py-20 md:py-28 lg:py-36 bg-background overflow-hidden">
       {/* Ambient blob */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-primary/[0.08] blur-[120px] pointer-events-none" />
 

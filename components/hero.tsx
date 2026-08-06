@@ -50,25 +50,29 @@ export function Hero() {
 
       tl.from(curlyRef.current, { opacity: 0, scale: 0.82, duration: 1.4, ease: "back.out(1.7)" }, "-=1.2")
 
-      gsap.to(avatarsRef.current, {
-        y: -8,
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      })
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
-      gsap.to(curlyRef.current, {
-        y: -15,
-        x: 10,
-        rotation: 5,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      })
+      if (!reduceMotion) {
+        gsap.to(avatarsRef.current, {
+          y: -8,
+          duration: 2,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        })
 
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && sphereRef.current) {
+        gsap.to(curlyRef.current, {
+          y: -15,
+          x: 10,
+          rotation: 5,
+          duration: 4,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        })
+      }
+
+      if (!reduceMotion && sphereRef.current) {
         const sphere = sphereRef.current
 
         gsap.to(sphere, {

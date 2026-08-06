@@ -283,7 +283,7 @@ function PricingCard({
     <div className="flex flex-col h-full">
       <div ref={cardRef} className="h-full flex flex-col">
         <Card
-          className={`relative bg-[#0d0d0d] border border-white/[0.08] hover:border-primary/25 overflow-hidden group obsidian-card transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
+          className={`relative bg-[#0d0d0d] border border-white/[0.08] hover:border-primary/25 hover:-translate-y-1.5 overflow-hidden group obsidian-card transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
             currentPackage.popular ? "ring-1 ring-primary/30" : ""
           }`}
           style={{
