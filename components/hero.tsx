@@ -4,11 +4,12 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { motion, useMotionValue, useSpring } from "framer-motion"
+import { useMotionValue, useSpring } from "framer-motion"
 
 gsap.registerPlugin(ScrollTrigger)
 import { Button } from "@/components/ui/button"
 import { FlipWords } from "./ui/shadcn-io/flip-words"
+import { HeroVisual } from "./hero-visual"
 import { useLanguage } from "@/lib/LanguageContext"
 import { getTranslations } from "@/lib/translations"
 import Image from "next/image"
@@ -23,15 +24,18 @@ export function Hero() {
   const avatarsRef = useRef<HTMLDivElement>(null)
   const buttonsRef = useRef<HTMLDivElement>(null)
   const badgeRef = useRef<HTMLDivElement>(null)
-  const curlyRef = useRef<HTMLDivElement>(null)
-  const sphereRef = useRef<HTMLDivElement>(null)
+  const ribbonRef = useRef<HTMLDivElement>(null)
+  const artifactRef = useRef<HTMLDivElement>(null)
   const [isButtonHovered, setIsButtonHovered] = useState(false)
 
-  // Spring-based mouse parallax for the curly shape
+  // Spring-based mouse parallax — two independent springs off the same
+  // pointer position so the ribbon and artifact drift out of sync (depth cue).
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
-  const springX = useSpring(mouseX, { stiffness: 40, damping: 15, mass: 1.5 })
-  const springY = useSpring(mouseY, { stiffness: 40, damping: 15, mass: 1.5 })
+  const ribbonX = useSpring(mouseX, { stiffness: 40, damping: 15, mass: 1.5 })
+  const ribbonY = useSpring(mouseY, { stiffness: 40, damping: 15, mass: 1.5 })
+  const artifactX = useSpring(mouseX, { stiffness: 22, damping: 24, mass: 2.4 })
+  const artifactY = useSpring(mouseY, { stiffness: 22, damping: 24, mass: 2.4 })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,7 +52,8 @@ export function Hero() {
         )
         .from(avatarsRef.current, { opacity: 0, y: 16, duration: 0.6 }, "-=0.25")
 
-      tl.from(curlyRef.current, { opacity: 0, scale: 0.82, duration: 1.4, ease: "back.out(1.7)" }, "-=1.2")
+      tl.from(ribbonRef.current, { opacity: 0, scale: 0.9, duration: 1.4, ease: "power3.out" }, "-=1.2")
+      tl.from(artifactRef.current, { opacity: 0, scale: 0.92, y: 30, duration: 1.6, ease: "power3.out" }, "-=1.3")
 
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
 
@@ -61,30 +66,39 @@ export function Hero() {
           ease: "sine.inOut",
         })
 
-        gsap.to(curlyRef.current, {
-          y: -15,
-          x: 10,
-          rotation: 5,
-          duration: 4,
+        // Ribbon — slow, heavy drift. No fast spins.
+        gsap.to(ribbonRef.current, {
+          y: -20,
+          x: 14,
+          rotation: 3,
+          duration: 13,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
         })
       }
 
-      if (!reduceMotion && sphereRef.current) {
-        const sphere = sphereRef.current
+      if (!reduceMotion && artifactRef.current) {
+        const artifact = artifactRef.current
 
-        gsap.to(sphere, {
-          y: -22,
-          duration: 6.5,
+        gsap.to(artifact, {
+          y: -20,
+          duration: 9,
           repeat: -1,
           yoyo: true,
           ease: "sine.inOut",
         })
 
-        gsap.to(sphere, {
-          yPercent: -14,
+        gsap.to(artifact, {
+          rotation: 2.2,
+          duration: 17,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        })
+
+        gsap.to(artifact, {
+          yPercent: -12,
           ease: "none",
           scrollTrigger: {
             trigger: heroRef.current,
@@ -94,28 +108,42 @@ export function Hero() {
           },
         })
 
-        const ring1 = sphere.querySelector(".orbital-ring-1")
-        const ring2 = sphere.querySelector(".orbital-ring-2")
-        if (ring1) {
-          gsap.set(ring1, { rotateX: 74, rotateZ: -20 })
-          gsap.to(ring1, { rotateZ: 340, duration: 28, repeat: -1, ease: "none" })
-        }
-        if (ring2) {
-          gsap.set(ring2, { rotateX: 62, rotateZ: 35 })
-          gsap.to(ring2, { rotateZ: -325, duration: 44, repeat: -1, ease: "none" })
+        // Slow specular gleam traveling across the polished surface
+        const glint = artifact.querySelector(".artifact-glint")
+        if (glint) {
+          gsap.set(glint, { x: -90 })
+          gsap.to(glint, { x: 90, duration: 15, repeat: -1, yoyo: true, ease: "sine.inOut" })
         }
 
-        const corona = sphere.querySelector(":scope > div:first-child") as HTMLElement | null
+        // Internal glow seam — the "crack of light" breathes
+        const seamCore = artifact.querySelector(".artifact-seam-core")
+        if (seamCore) {
+          gsap.to(seamCore, { opacity: 0.95, duration: 3.4, repeat: -1, yoyo: true, ease: "sine.inOut" })
+        }
+
+        const corona = artifact.querySelector(".artifact-corona")
         if (corona) {
           gsap.to(corona, {
-            scale: 1.14,
-            opacity: 0.6,
-            duration: 5,
+            scale: 1.12,
+            opacity: 0.65,
+            duration: 5.5,
             repeat: -1,
             yoyo: true,
             ease: "sine.inOut",
             delay: 1,
           })
+        }
+
+        // Orbital rings — very slow, heavy rotation; no fast spins
+        const ring1 = artifact.querySelector(".orbital-ring-1")
+        const ring2 = artifact.querySelector(".orbital-ring-2")
+        if (ring1) {
+          gsap.set(ring1, { rotateX: 74, rotateZ: -20 })
+          gsap.to(ring1, { rotateZ: 340, duration: 32, repeat: -1, ease: "none" })
+        }
+        if (ring2) {
+          gsap.set(ring2, { rotateX: 62, rotateZ: 35 })
+          gsap.to(ring2, { rotateZ: -325, duration: 48, repeat: -1, ease: "none" })
         }
       }
     }, heroRef)
@@ -178,94 +206,15 @@ export function Hero() {
         />
       </div>
 
-      {/* ── Curly liquid shape — mouse-reactive background element ── */}
-      <motion.div
-        style={{ x: springX, y: springY }}
-        className="absolute top-1/4 right-0 pointer-events-none"
-        aria-hidden="true"
-      >
-        <div
-          ref={curlyRef}
-          className="w-[600px] h-[600px] pointer-events-none opacity-[0.26] blur-[0.5px]"
-          style={{ transform: "translate(20%, -10%)" }}
-        >
-          <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-            <defs>
-              <linearGradient id="curlyGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.4" />
-                <stop offset="50%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="var(--color-primary, #00D9FF)" stopOpacity="0.2" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M 450 50 Q 400 100 420 150 Q 440 200 380 230 Q 320 260 340 320 Q 360 380 280 400 Q 200 420 220 490"
-              stroke="url(#curlyGradient1)"
-              strokeWidth="85"
-              strokeLinecap="round"
-              fill="none"
-              className="drop-shadow-[0_0_40px_rgba(0,217,255,0.3)]"
-            />
-          </svg>
-        </div>
-      </motion.div>
-
-      {/* ── Noirsfera Sphere — centered background anchor ── */}
-      <div
-        ref={sphereRef}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[52%] pointer-events-none hidden md:block"
-        aria-hidden="true"
-      >
-        <div className="relative w-[580px] h-[580px]">
-          {/* Outer ambient corona */}
-          <div className="absolute inset-0 rounded-full bg-primary/[0.05] blur-[90px]" />
-          <div className="absolute inset-[40px] rounded-full bg-primary/[0.04] blur-[60px]" />
-          {/* The sphere — polished obsidian shell */}
-          <div
-            className="absolute inset-[80px] rounded-full"
-            style={{
-              background: [
-                "radial-gradient(circle at 36% 28%, rgba(255,255,255,0.09) 0%, transparent 11%)",
-                "radial-gradient(circle at 33% 30%, rgba(0,217,255,0.18) 0%, rgba(0,217,255,0.08) 30%, rgba(8,8,8,0.97) 62%, #030303 100%)",
-              ].join(","),
-              border: "1px solid rgba(255,255,255,0.10)",
-              boxShadow: [
-                "inset 0 1px 0 rgba(255,255,255,0.10)",
-                "inset 0 -1px 0 rgba(0,0,0,0.8)",
-                "inset 0 0 80px rgba(0,217,255,0.06)",
-                "inset 0 0 160px rgba(0,0,0,0.7)",
-                "0 0 120px rgba(0,217,255,0.05)",
-                "0 40px 120px rgba(0,0,0,0.95)",
-              ].join(","),
-            }}
-          />
-          {/* Specular highlight — point light source top-left */}
-          <div
-            className="absolute rounded-full pointer-events-none"
-            style={{
-              top: "84px",
-              left: "92px",
-              right: "160px",
-              bottom: "260px",
-              background: "radial-gradient(ellipse at 38% 28%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 68%)",
-              borderRadius: "50%",
-            }}
-          />
-          {/* Orbital ring 1 */}
-          <div
-            className="orbital-ring-1 absolute inset-[58px] rounded-full"
-            style={{
-              transform: "rotateX(74deg) rotateZ(-20deg)",
-              border: "1px solid rgba(0,217,255,0.13)",
-              boxShadow: "0 0 6px rgba(0,217,255,0.08), inset 0 0 6px rgba(0,217,255,0.04)",
-            }}
-          />
-          {/* Orbital ring 2 */}
-          <div
-            className="orbital-ring-2 absolute inset-[92px] rounded-full border border-white/[0.06]"
-            style={{ transform: "rotateX(62deg) rotateZ(35deg)" }}
-          />
-        </div>
-      </div>
+      {/* ── Sculptural composition — faceted obsidian artifact + translucent ribbon ── */}
+      <HeroVisual
+        artifactRef={artifactRef}
+        ribbonRef={ribbonRef}
+        artifactX={artifactX}
+        artifactY={artifactY}
+        ribbonX={ribbonX}
+        ribbonY={ribbonY}
+      />
 
       {/* ── Centered hero content ── */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 sm:px-10 lg:px-16 pt-28 md:pt-32 pb-24 text-center">
