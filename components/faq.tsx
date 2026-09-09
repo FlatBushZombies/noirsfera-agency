@@ -66,7 +66,7 @@ export default function FAQ() {
       <div className="wrap">
         <div className="sec-head">
           <p className="eyebrow">Questions</p>
-          <h2 className="display">Before you write to us.</h2>
+          <h2 className="section-heading">Before you write to us.</h2>
         </div>
 
         <div className="faq" ref={containerRef}>

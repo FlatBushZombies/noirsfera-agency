@@ -25,7 +25,7 @@ export function Services() {
       <div className="wrap">
         <div className="sec-head">
           <p className="eyebrow">What we do</p>
-          <h2 className="display">Three disciplines, one team.</h2>
+          <h2 className="section-heading">Three disciplines, one team.</h2>
           <p className="lede">
             No handoffs between agencies. Design, engineering and data sit in the same room and ship the same week.
           </p>
@@ -34,7 +34,7 @@ export function Services() {
         <div className="services">
           {SERVICES.map((service) => (
             <article className="service" key={service.title}>
-              <h3>{service.title}</h3>
+              <h3 className="heading-3">{service.title}</h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                 <p className="body-2">{service.description}</p>
                 <div className="service-tags">
