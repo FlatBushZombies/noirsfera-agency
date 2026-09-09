@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 
 interface Project {
   id: string
@@ -11,6 +12,7 @@ interface Project {
   industry: string
   link: string | null
   frameLabel: string
+  image: string
   figures?: { value: string; label: string }[]
 }
 
@@ -25,6 +27,7 @@ const PROJECTS: Project[] = [
     industry: "SaaS",
     link: "https://tutschool.ru/",
     frameLabel: "tutschool.ru",
+    image: "/tutschool-bg.png",
     figures: [
       { value: "3 weeks", label: "Concept to launch" },
       { value: "+80%", label: "Returning students" },
@@ -40,6 +43,7 @@ const PROJECTS: Project[] = [
     industry: "Resort",
     link: "https://resonant-sunflower-1bb1e7.netlify.app/",
     frameLabel: "resonant-sunflower-1bb1e7.netlify.app",
+    image: "/camp-guide.png",
   },
   {
     id: "dmbPay",
@@ -50,6 +54,7 @@ const PROJECTS: Project[] = [
     industry: "FinTech",
     link: "https://jocular-sfogliatella-55a4c9.netlify.app/",
     frameLabel: "jocular-sfogliatella-55a4c9.netlify.app",
+    image: "/dmbpay-bg.png",
   },
   {
     id: "oakwood",
@@ -60,6 +65,7 @@ const PROJECTS: Project[] = [
     industry: "Education",
     link: "https://oakwoodesl.com/",
     frameLabel: "oakwoodesl.com",
+    image: "/oakwood.jpg",
   },
   {
     id: "duoApp",
@@ -71,6 +77,7 @@ const PROJECTS: Project[] = [
     industry: "Lifestyle",
     link: null,
     frameLabel: "duo · iOS app",
+    image: "/duo-app.png",
   },
   {
     id: "quickhands",
@@ -82,6 +89,7 @@ const PROJECTS: Project[] = [
     industry: "Services",
     link: null,
     frameLabel: "quickhands · Android app",
+    image: "/quickhands-app.png",
   },
 ]
 
@@ -147,22 +155,21 @@ export default function Portfolio() {
             )}
           </div>
           <div className="case-visual">
-            <div className="frame" aria-hidden="true">
+            <div className="frame">
               <div className="frame-bar">
                 <span className="dot" />
                 <span className="dot" />
                 <span className="dot" />
                 <span className="frame-url">{project.frameLabel}</span>
               </div>
-              <div className="frame-body">
-                <div className="skel title" />
-                <div className="skel w70" />
-                <div className="skel w45" />
-                <div className="skel-row">
-                  <div className="skel-card" />
-                  <div className="skel-card" />
-                  <div className="skel-card" />
-                </div>
+              <div className="frame-shot-wrap">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} preview`}
+                  fill
+                  className="frame-shot"
+                  sizes="(max-width: 768px) 100vw, 640px"
+                />
               </div>
             </div>
           </div>

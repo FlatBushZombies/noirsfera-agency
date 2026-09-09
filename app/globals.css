@@ -328,7 +328,7 @@ section{ padding-block: var(--band); }
   padding: clamp(24px, 4vw, 44px);
   display: grid; place-items: center;
 }
-/* a small, honest browser frame instead of a stock screenshot */
+/* a browser frame around the real project screenshot */
 .frame{
   width: 100%; max-width: 640px; border: 1px solid var(--hairline-2); border-radius: 14px;
   background: var(--surface-2); overflow: hidden;
@@ -343,12 +343,8 @@ section{ padding-block: var(--band); }
   margin-left: 8px; font-size: .75rem; color: var(--text-3);
   font-variant-numeric: tabular-nums;
 }
-.frame-body{ padding: 22px; display: flex; flex-direction: column; gap: 12px; }
-.skel{ height: 10px; border-radius: 999px; background: rgba(255,255,255,.07); }
-.skel.title{ height: 20px; width: 58%; background: rgba(233,226,212,.22); }
-.skel.w70{ width: 70%; } .skel.w45{ width: 45%; }
-.skel-row{ display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 6px; }
-.skel-card{ height: 62px; border-radius: 10px; background: rgba(255,255,255,.05); border: 1px solid var(--hairline); }
+.frame-shot-wrap{ position: relative; width: 100%; aspect-ratio: 16 / 10; background: var(--ink-2); }
+.frame-shot{ object-fit: cover; object-position: top center; }
 
 /* Pricing */
 .plans{ display: grid; gap: 18px; }
