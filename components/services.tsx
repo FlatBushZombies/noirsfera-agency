@@ -1,285 +1,52 @@
-"use client"
-
-import { useEffect, useRef, useState, useMemo } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Plus, Minus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/lib/LanguageContext"
-import { getTranslations } from "@/lib/translations"
-
-gsap.registerPlugin(ScrollTrigger)
+const SERVICES = [
+  {
+    title: "Fullstack development",
+    description:
+      "Scalable web and mobile applications built to survive their own growth — clean APIs, a database schema that won't need rewriting, and cloud deployment you own from day one.",
+    tags: ["API development", "Database design", "Cloud deployment", "Source code ownership"],
+  },
+  {
+    title: "AI engineering & data",
+    description:
+      "Machine learning and predictive analytics integrated into the product people already use — not a separate dashboard nobody opens.",
+    tags: ["Model integration", "Predictive analytics", "Data pipelines", "Internal tooling"],
+  },
+  {
+    title: "UI/UX design",
+    description:
+      "Research, prototyping and a design system your team can extend after we leave. Two concepts, tested with real users, before a line of production code.",
+    tags: ["User research", "Prototyping", "Design systems", "Usability testing"],
+  },
+]
 
 export function Services() {
-  const { language } = useLanguage()
-  const t = getTranslations(language)
-
-  const services = useMemo(
-    () => [
-      {
-        title: t.services.items.fullstack.title,
-        subtitle: t.services.items.fullstack.subtitle,
-        details: t.services.items.fullstack.details,
-      },
-      {
-        title: t.services.items.aiEngineering.title,
-        subtitle: t.services.items.aiEngineering.subtitle,
-        details: t.services.items.aiEngineering.details,
-      },
-      {
-        title: t.services.items.uiux.title,
-        subtitle: t.services.items.uiux.subtitle,
-        details: t.services.items.uiux.details,
-      },
-    ],
-    [t],
-  )
-
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-  const ctaRef = useRef<HTMLDivElement>(null)
-  const [openIndex, setOpenIndex] = useState<number | null>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current) return
-
-    const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card, index) => {
-        if (!card) return
-
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 80, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.9,
-            delay: index * 0.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 95%",
-              toggleActions: "play none none none",
-              once: true,
-            },
-          },
-        )
-      })
-
-      if (ctaRef.current) {
-        gsap.fromTo(
-          ctaRef.current,
-          { opacity: 0, y: 60, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: ctaRef.current,
-              start: "top 90%",
-              toggleActions: "play none none none",
-              once: true,
-            },
-          },
-        )
-      }
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  const toggleAccordion = (index: number) => {
-    setOpenIndex((prev) => {
-      const el = document.getElementById(`details-${index}`)
-      if (!el) return prev
-
-      if (prev === index) {
-        gsap.to(el, { height: 0, duration: 0.35, ease: "power2.inOut" })
-        return null
-      }
-
-      const scrollHeight = el.scrollHeight
-      gsap.to(el, { height: scrollHeight, duration: 0.4, ease: "power2.out" })
-
-      if (prev !== null) {
-        const prevEl = document.getElementById(`details-${prev}`)
-        if (prevEl) gsap.to(prevEl, { height: 0, duration: 0.25, ease: "power2.inOut" })
-      }
-
-      return index
-    })
-  }
-
   return (
-    <section
-      ref={sectionRef}
-      id="services"
-      className="relative py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8 bg-background overflow-hidden"
-    >
-      {/* Atmospheric depth — no patterns */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,217,255,0.04) 0%, transparent 70%)" }}
-      />
-
-      <div className="relative max-w-7xl mx-auto space-y-20">
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <p className="eyebrow-label">
-            {t.services.sectionBadge}
+    <section id="services">
+      <div className="wrap">
+        <div className="sec-head">
+          <p className="eyebrow">What we do</p>
+          <h2 className="display">Three disciplines, one team.</h2>
+          <p className="lede">
+            No handoffs between agencies. Design, engineering and data sit in the same room and ship the same week.
           </p>
-          <h2 className="section-heading">
-            {t.services.heading}
-          </h2>
-          <p className="text-lg text-text-secondary font-medium leading-relaxed">{t.services.subheading}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              ref={(el: HTMLDivElement | null) => {
-                cardsRef.current[index] = el
-              }}
-              className="group relative rounded-2xl p-8 md:p-10 overflow-hidden border border-white/[0.07] obsidian-card hover:border-primary/[0.18] hover:-translate-y-1.5"
-              style={{
-                backgroundColor: "#0d0d0d",
-                backgroundImage: [
-                  "radial-gradient(320px circle at var(--cursor-x, 50%) var(--cursor-y, -20%), rgba(255,255,255,0.034) 0%, rgba(255,255,255,0.008) 48%, transparent 72%)",
-                  "repeating-linear-gradient(45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.009) 3px, rgba(255,255,255,0.009) 4px)",
-                  "repeating-linear-gradient(-45deg, transparent 0px, transparent 3px, rgba(255,255,255,0.013) 3px, rgba(255,255,255,0.013) 4px)",
-                ].join(","),
-              }}
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect()
-                e.currentTarget.style.setProperty("--cursor-x", `${((e.clientX - rect.left) / rect.width) * 100}%`)
-                e.currentTarget.style.setProperty("--cursor-y", `${((e.clientY - rect.top) / rect.height) * 100}%`)
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.setProperty("--cursor-x", "50%")
-                e.currentTarget.style.setProperty("--cursor-y", "-20%")
-              }}
-            >
-              {/* Top Visual Section */}
-              <div className="relative mb-8 h-40 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center overflow-hidden border border-primary/10 z-10">
-                <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
-                {index === 0 && (
-                  <div className="relative flex items-center gap-3 bg-white rounded-full px-6 py-3 shadow-lg">
-                    <span className="text-sm font-bold text-black">
-                      {t.services.items.fullstack.scalableGrowth}
+        <div className="services">
+          {SERVICES.map((service) => (
+            <article className="service" key={service.title}>
+              <h3>{service.title}</h3>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                <p className="body-2">{service.description}</p>
+                <div className="service-tags">
+                  {service.tags.map((tag) => (
+                    <span className="tag" key={tag}>
+                      {tag}
                     </span>
-                    <div className="w-12 h-6 bg-gradient-to-r from-primary to-[#0db8d7] rounded-full flex items-center justify-end px-1 shadow-md">
-                      <div className="w-4 h-4 bg-white rounded-full" />
-                    </div>
-                  </div>
-                )}
-                {index === 1 && (
-                  <div className="relative text-center">
-                    <div className="text-6xl font-black text-primary leading-none mb-1">200%</div>
-                    <div className="bg-primary text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-lg">
-                      {t.services.items.aiEngineering.aiPowered}
-                    </div>
-                  </div>
-                )}
-                {index === 2 && (
-                  <div className="relative space-y-2 w-full px-6">
-                    <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-black">{t.services.items.uiux.userRetention}</span>
-                    </div>
-                    <div className="bg-white rounded-full px-4 py-2 shadow-md border-2 border-primary/20">
-                      <span className="text-xs font-bold text-black">{t.services.items.uiux.conversions}</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Text Content */}
-              <div className="relative space-y-6 z-10">
-                <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-primary">
-                      {t.services.sectionBadge}
-                    </span>
-                    <span className="text-[11px] font-bold text-foreground/70">0{index + 1}</span>
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight font-display">
-                    {service.title}
-                  </h3>
-                  <p className="text-base text-text-secondary leading-relaxed font-medium">{service.subtitle}</p>
-                </div>
-
-                {/* Accordion Toggle */}
-                <button
-                  onClick={() => toggleAccordion(index)}
-                  className="w-full flex items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.04] px-4 py-3 text-sm font-bold text-foreground hover:text-primary hover:border-primary/20 hover:bg-primary/[0.03] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 group/toggle"
-                  aria-expanded={openIndex === index}
-                  aria-controls={`details-${index}`}
-                >
-                  <span>{openIndex === index ? t.services.showLess : t.services.showMore}</span>
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 group-hover/toggle:bg-primary/15 transition-colors">
-                    {openIndex === index ? (
-                      <Minus className="w-4 h-4 text-primary transition-transform" />
-                    ) : (
-                      <Plus className="w-4 h-4 text-primary transition-colors" />
-                    )}
-                  </span>
-                </button>
-
-                {/* Accordion Content */}
-                <div
-                  id={`details-${index}`}
-                  className="overflow-hidden transition-all duration-300"
-                  style={{ height: 0 }}
-                >
-                  <ul className="space-y-3 pt-3">
-                    {service.details.map((detail, detailIndex) => (
-                      <li
-                        key={detailIndex}
-                        className="flex items-start gap-3 rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2"
-                      >
-                        <span className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        <span className="text-sm text-text-secondary font-medium leading-relaxed">{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  ))}
                 </div>
               </div>
-            </div>
+            </article>
           ))}
-        </div>
-
-        {/* Call to Action */}
-        <div
-          ref={ctaRef}
-          className="relative bg-gradient-to-br from-[#0a0a0a] to-[#080808] rounded-3xl p-12 md:p-16 lg:p-20 text-center space-y-8 mt-24 border border-white/[0.08] overflow-hidden"
-        >
-          {/* CTA glow */}
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-96 h-64 bg-primary/[0.06] blur-[80px] pointer-events-none rounded-full" />
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <p className="eyebrow-label">
-              {t.services.cta.badge}
-            </p>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[0.98] tracking-[-0.03em] text-balance font-display">
-              {t.services.cta.heading}
-            </h3>
-            <p className="text-lg text-white/80 font-medium leading-relaxed">{t.services.cta.description}</p>
-          </div>
-          <Button
-            asChild
-            className="btn-cta-primary relative group hover:scale-[1.02] px-10 py-5 text-lg rounded-full h-auto overflow-hidden"
-          >
-            <a href="https://t.me/itsslucki" target="_blank" rel="noopener noreferrer" aria-label="Start via Telegram">
-              {/* Animated glow background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
-
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-              <span className="relative z-10">{t.services.cta.button}</span>
-            </a>
-          </Button>
         </div>
       </div>
     </section>

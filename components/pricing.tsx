@@ -1,404 +1,100 @@
-"use client"
-
-import type React from "react"
-import { useState, useEffect, useRef, useMemo } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Check, Zap } from "lucide-react"
-import { useLanguage } from "@/lib/LanguageContext"
-import { getTranslations, type Translations } from "@/lib/translations"
-
-type PricingPlan = "oneTime" | "subscription"
-type PackageTier = "starter" | "growth" | "professional"
-
-interface PackageData {
-  name: string
-  icon?: React.ReactNode
-  popular?: boolean
-  oneTime: {
-    price: string
-    priceRange?: string
-    period: string
-    features: string[]
-    description?: string
-  }
-  subscription: {
-    price: string
-    priceRange?: string
-    period: string
-    features: string[]
-    description?: string
-  }
-}
-
-interface PricingCardData {
-  title: string
-  packages: {
-    starter: PackageData
-    growth: PackageData
-    professional: PackageData
-  }
-}
-
 export default function Pricing() {
-  const { language } = useLanguage()
-  const t = getTranslations(language)
-
-  const pricingData = useMemo<PricingCardData[]>(
-    () => [
-      {
-        title: t.pricing.webDevelopment.title,
-        packages: {
-          starter: {
-            name: t.pricing.webDevelopment.starter.name,
-            oneTime: {
-              price: "$1,200",
-              priceRange: "$1,200 - $2,000",
-              period: t.pricing.webDevelopment.starter.oneTime.period,
-              description: t.pricing.webDevelopment.starter.oneTime.description,
-              features: t.pricing.webDevelopment.starter.oneTime.features,
-            },
-            subscription: {
-              price: "$150",
-              priceRange: "$150 - $200/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.starter.subscription.description,
-              features: t.pricing.webDevelopment.starter.subscription.features,
-            },
-          },
-          growth: {
-            name: t.pricing.webDevelopment.growth.name,
-            popular: true,
-            icon: <Zap className="w-4 h-4" />,
-            oneTime: {
-              price: "$2,200",
-              priceRange: "$2,200 - $3,000",
-              period: t.pricing.webDevelopment.growth.oneTime.period,
-              description: t.pricing.webDevelopment.growth.oneTime.description,
-              features: t.pricing.webDevelopment.growth.oneTime.features,
-            },
-            subscription: {
-              price: "$250",
-              priceRange: "$250 - $350/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.growth.subscription.description,
-              features: t.pricing.webDevelopment.growth.subscription.features,
-            },
-          },
-          professional: {
-            name: t.pricing.webDevelopment.professional.name,
-            oneTime: {
-              price: "$3,200",
-              priceRange: "$3,200 - $6,000+",
-              period: t.pricing.webDevelopment.professional.oneTime.period,
-              description: t.pricing.webDevelopment.professional.oneTime.description,
-              features: t.pricing.webDevelopment.professional.oneTime.features,
-            },
-            subscription: {
-              price: "$400",
-              priceRange: "$400 - $600/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.webDevelopment.professional.subscription.description,
-              features: t.pricing.webDevelopment.professional.subscription.features,
-            },
-          },
-        },
-      },
-      {
-        title: t.pricing.productDesign.title,
-        packages: {
-          starter: {
-            name: t.pricing.productDesign.startupMvp.name,
-            oneTime: {
-              price: "$2,000",
-              priceRange: "$2,000 - $4,000",
-              period: t.pricing.productDesign.startupMvp.oneTime.period,
-              description: t.pricing.productDesign.startupMvp.oneTime.description,
-              features: t.pricing.productDesign.startupMvp.oneTime.features,
-            },
-            subscription: {
-              price: "$100",
-              priceRange: "$100 - $200/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.startupMvp.subscription.description,
-              features: t.pricing.productDesign.startupMvp.subscription.features,
-            },
-          },
-          growth: {
-            name: t.pricing.productDesign.growth.name,
-            popular: true,
-            icon: <Zap className="w-4 h-4" />,
-            oneTime: {
-              price: "$5,000",
-              priceRange: "$5,000 - $10,000",
-              period: t.pricing.productDesign.growth.oneTime.period,
-              description: t.pricing.productDesign.growth.oneTime.description,
-              features: t.pricing.productDesign.growth.oneTime.features,
-            },
-            subscription: {
-              price: "$250",
-              priceRange: "$250 - $550/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.growth.subscription.description,
-              features: t.pricing.productDesign.growth.subscription.features,
-            },
-          },
-          professional: {
-            name: t.pricing.productDesign.scale.name,
-            oneTime: {
-              price: "$12,000",
-              priceRange: "$12,000 - $20,000+",
-              period: t.pricing.productDesign.scale.oneTime.period,
-              description: t.pricing.productDesign.scale.oneTime.description,
-              features: t.pricing.productDesign.scale.oneTime.features,
-            },
-            subscription: {
-              price: "$750",
-              priceRange: "$750 - $1,000/mo",
-              period: t.pricing.perMonth,
-              description: t.pricing.productDesign.scale.subscription.description,
-              features: t.pricing.productDesign.scale.subscription.features,
-            },
-          },
-        },
-      },
-    ],
-    [t],
-  )
-
-  const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([])
-  const headingAreaRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current) return
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-
-    gsap.registerPlugin(ScrollTrigger)
-
-    const ctx = gsap.context(() => {
-      // Section heading reveal
-      if (headingAreaRef.current) {
-        gsap.fromTo(
-          headingAreaRef.current,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: headingAreaRef.current, start: "top 85%", once: true },
-          }
-        )
-      }
-
-      // Cards — scroll-triggered, not on mount
-      cardsRef.current.forEach((card, index) => {
-        if (!card) return
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 80, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.85,
-            delay: index * 0.12,
-            ease: "back.out(1.2)",
-            scrollTrigger: { trigger: card, start: "top 88%", once: true },
-          },
-        )
-      })
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      id="pricing"
-      className="relative min-h-screen bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="relative max-w-7xl mx-auto">
-        <div ref={headingAreaRef} className="text-center mb-20 max-w-3xl mx-auto">
-          <p className="eyebrow-label mb-4">
-            {t.pricing.badge}
-          </p>
-          <h2 className="section-heading mb-6">
-            {t.pricing.heading}
-          </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed font-medium">
-            {t.pricing.subheading}
-          </p>
+    <section id="pricing">
+      <div className="wrap">
+        <div className="sec-head">
+          <p className="eyebrow">Pricing</p>
+          <h2 className="display">Fixed scope. Fixed price.</h2>
+          <p className="lede">Two ways to work with us. Both quoted up front, both leaving you with the source code.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {pricingData.map((card, index) => (
-            <PricingCard key={index} data={card} cardRef={(el) => (cardsRef.current[index] = el)} translations={t} />
-          ))}
+        <div className="plans">
+          <div className="plan">
+            <div className="plan-top">
+              <p className="eyebrow">Web development</p>
+              <div className="price">
+                $2,200 <small>one-time</small>
+              </div>
+              <p className="body-2">A marketing site or landing platform that earns its traffic. 5 pages included.</p>
+            </div>
+            <ul>
+              <li>
+                <span className="check">✓</span>
+                <span>2 design concepts</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Responsive across desktop, tablet and mobile</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Wireframes and custom layout</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Framer development</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Full source code ownership</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>1 month of free support</span>
+              </li>
+            </ul>
+            <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
+              <p className="plan-note">Additional pages +$200 each. Growth tier runs $2,200–$3,000.</p>
+              <a className="btn btn-ghost" href="#contact">
+                Get a quote
+              </a>
+            </div>
+          </div>
+
+          <div className="plan featured">
+            <div className="plan-top">
+              <span className="plan-badge">Most popular</span>
+              <p className="eyebrow">Product design &amp; build</p>
+              <div className="price">
+                $5,000 <small>from, one-time</small>
+              </div>
+              <p className="body-2">A full startup MVP — mobile app plus admin dashboard, in the stores.</p>
+            </div>
+            <ul>
+              <li>
+                <span className="check">✓</span>
+                <span>2 design concepts, advanced UI/UX</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Mobile app plus admin dashboard</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>1–3 month delivery</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>App Store and Play Store launch</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>Weekly updates over Slack, Loom and calls</span>
+              </li>
+              <li>
+                <span className="check">✓</span>
+                <span>1 month of support after launch</span>
+              </li>
+            </ul>
+            <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 12 }}>
+              <p className="plan-note">Scale tier runs $5,000–$10,000 depending on surface area.</p>
+              <a className="btn btn-primary" href="#contact">
+                Book a call
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  )
-}
-
-function PricingCard({
-  data,
-  cardRef,
-  translations,
-}: {
-  data: PricingCardData
-  cardRef: (el: HTMLDivElement | null) => void
-  translations: Translations
-}) {
-  const [plan, setPlan] = useState<PricingPlan>("oneTime")
-  const [selectedPackage, setSelectedPackage] = useState<PackageTier>("growth")
-
-  const currentPackage = data.packages[selectedPackage]
-  const currentPlan = currentPackage[plan]
-
-  const ToggleSwitch = ({ className = "" }: { className?: string }) => (
-    <div className={`flex items-center justify-center gap-3 ${className}`}>
-      <button
-        onClick={() => setPlan(plan === "oneTime" ? "subscription" : "oneTime")}
-        className={`relative w-16 h-8 rounded-full transition-all duration-300 border backdrop-blur-xl shadow-md ${
-          plan === "subscription" ? "bg-primary/70 border-primary/50" : "bg-white/20 border-primary"
-        }`}
-        aria-label="Toggle pricing plan"
-      >
-        <div
-          className={`absolute top-1 w-6 h-6 rounded-full shadow-xl border border-white/50 transition-transform duration-300
-          ${plan === "subscription" ? "translate-x-8 bg-white/80" : "translate-x-1 bg-black/80 shadow-[0_0_12px_2px_rgba(0,217,255,0.5)]"}
-        `}
-        />
-      </button>
-      <span className="text-sm font-semibold text-foreground">{translations.pricing.subscription}</span>
-    </div>
-  )
-
-  return (
-    <div className="flex flex-col h-full">
-      <div ref={cardRef} className="h-full flex flex-col">
-        <Card
-          className={`relative bg-[#0d0d0d] border border-white/[0.08] hover:border-primary/25 hover:-translate-y-1.5 overflow-hidden group obsidian-card transition-all duration-500 rounded-2xl p-8 md:p-10 flex flex-col h-full ${
-            currentPackage.popular ? "ring-1 ring-primary/30" : ""
-          }`}
-          style={{
-            backgroundImage: [
-              "radial-gradient(380px circle at var(--cursor-x, 50%) var(--cursor-y, -10%), rgba(255,255,255,0.030) 0%, rgba(255,255,255,0.006) 52%, transparent 75%)",
-              "repeating-linear-gradient(0deg, transparent 0px, transparent 2px, rgba(255,255,255,0.007) 2px, rgba(255,255,255,0.007) 3px)",
-            ].join(","),
-          }}
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect()
-            e.currentTarget.style.setProperty("--cursor-x", `${((e.clientX - rect.left) / rect.width) * 100}%`)
-            e.currentTarget.style.setProperty("--cursor-y", `${((e.clientY - rect.top) / rect.height) * 100}%`)
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.setProperty("--cursor-x", "50%")
-            e.currentTarget.style.setProperty("--cursor-y", "-10%")
-          }}
-        >
-          <div className="flex flex-col h-full relative z-10">
-            <div className="min-h-[80px] flex items-start mb-6">
-              <h3 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight leading-tight font-display">
-                {data.title}
-              </h3>
-            </div>
-
-            <div className="flex gap-2 mb-8 flex-wrap min-h-[60px] items-center justify-center">
-              {(Object.keys(data.packages) as PackageTier[]).map((tier) => {
-                const pkg = data.packages[tier]
-                const isSelected = selectedPackage === tier
-                return (
-                  <button
-                    key={tier}
-                    onClick={() => setSelectedPackage(tier)}
-                    className={`relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                      isSelected
-                        ? "bg-white/[0.12] text-foreground border border-white/[0.16] shadow-none"
-                        : "bg-white/[0.04] text-foreground/50 border border-white/[0.06] hover:bg-white/[0.08] hover:text-foreground/80"
-                    }`}
-                  >
-                    {pkg.icon && (
-                      <span className={`w-4 h-4 ${isSelected ? "text-primary" : "text-primary/70"}`}>
-                        {pkg.icon}
-                      </span>
-                    )}
-                    <span className="whitespace-nowrap">{pkg.name}</span>
-                    {pkg.popular && (
-                      <span className="absolute -top-3 -right-3 bg-primary text-[#0a0a0a] text-xs px-2.5 py-1 rounded-full whitespace-nowrap shadow-md font-bold">
-                        {translations.pricing.mostPopular}
-                      </span>
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-
-            <div className="text-center mb-8 min-h-[140px] flex flex-col justify-center">
-              <div className="text-6xl md:text-7xl font-black text-foreground mb-2 font-display tracking-tighter leading-none">
-                {currentPlan.price}
-              </div>
-              {currentPlan.priceRange && <div className="text-sm text-text-secondary/70 mb-2">{currentPlan.priceRange}</div>}
-              <div className="text-text-secondary text-base font-semibold tracking-wide">
-                {plan === "subscription" ? translations.pricing.perMonth : currentPlan.period}
-              </div>
-            </div>
-
-            <div className="space-y-3 md:space-y-4 pr-2 flex-1 min-h-[300px]">
-              {currentPlan.features.map((feature, index) => (
-                <div key={`${plan}-${selectedPackage}-${index}`} className="flex items-start gap-3 text-text-secondary">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mt-0.5 flex-shrink-0">
-                    <Check className="w-3 h-3 text-primary font-bold" strokeWidth={3} />
-                  </div>
-                  <span className="text-sm md:text-base leading-relaxed font-medium">{feature}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 flex justify-center">
-              <ToggleSwitch />
-            </div>
-          </div>
-        </Card>
-
-        {/* PRIMARY COLOR CTA BUTTONS BELOW CARD */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-6">
-          <a
-            href="https://wa.me/79778148423"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative group w-full sm:w-1/2"
-          >
-            <Button className="btn-cta-primary relative w-full h-14 md:h-16 text-base md:text-lg rounded-full hover:scale-[1.02] overflow-hidden">
-              {/* Animated glow background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
-
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-
-              <span className="relative z-10">{translations.pricing.scheduleAMeeting}</span>
-            </Button>
-          </a>
-
-          <a
-            href="https://t.me/itsslucki"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative group w-full sm:w-1/2"
-          >
-            <Button
-              className="w-full h-14 md:h-16 bg-transparent border-2 border-primary text-primary md:text-lg hover:bg-primary hover:text-primary-foreground rounded-full transition-colors shadow-none"
-            >
-              {translations.pricing.connectTelegram}
-            </Button>
-          </a>
-        </div>
-      </div>
-    </div>
   )
 }

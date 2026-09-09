@@ -1,162 +1,85 @@
 "use client"
-import { useEffect, useState, useMemo, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import FaqItem from "./FaqItem"
-import { motion, AnimatePresence } from "framer-motion"
-import { useLanguage } from "@/lib/LanguageContext"
-import { getTranslations } from "@/lib/translations"
 
-gsap.registerPlugin(ScrollTrigger)
+import { useEffect, useRef } from "react"
 
-const FAQ = () => {
-  const { language } = useLanguage()
-  const t = getTranslations(language)
+const FAQ_ITEMS = [
+  {
+    question: "Who is behind Noirsfera?",
+    answer:
+      "A small, senior team of designers and engineers working directly with founders — no account managers between you and the people building your product.",
+  },
+  {
+    question: "How long does a project take?",
+    answer:
+      "A website is typically 2–4 weeks. A full product MVP — mobile app plus dashboard — runs 1 to 3 months, with weekly builds you can use along the way.",
+  },
+  {
+    question: "Do you design both web and mobile applications?",
+    answer:
+      "Yes. Most engagements ship a web platform and a native mobile app from the same design system, plus the admin tooling to run them.",
+  },
+  {
+    question: "How secure are the systems you build?",
+    answer:
+      "Authentication, encrypted data at rest and in transit, scoped access for admin roles, and dependency auditing before launch. Security review is part of delivery, not an add-on.",
+  },
+  {
+    question: "Do you offer post-launch support?",
+    answer:
+      "Every package includes one month of support after launch. Ongoing retainers are available if you'd rather not staff it internally yet.",
+  },
+  {
+    question: "Can you integrate with our existing tools?",
+    answer:
+      "Yes — CRMs, payment providers, analytics, internal APIs. We map the integrations during scoping so nothing surfaces as a surprise mid-build.",
+  },
+  {
+    question: "Can I customise the package?",
+    answer: "Always. The tiers are starting points; tell us the scope and we'll quote it as a fixed price before any work begins.",
+  },
+]
 
-  const founders = useMemo(
-    () => [
-      { src: "/logo.png", alt: t.faq.founderAlt },
-      { src: "/logo.png", alt: t.faq.founderAlt },
-    ],
-    [t],
-  )
+export default function FAQ() {
+  const containerRef = useRef<HTMLDivElement>(null)
 
-  const [activeId, setActiveId] = useState<string | number | null>(null)
-  const faqItems = t.faq.items
-  const halfLength = Math.floor(faqItems.length / 2)
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const sectionRef = useRef<HTMLElement>(null)
-  const headerRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
-
+  // One answer open at a time — the FAQ stays scannable
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % founders.length)
-    }, 4000)
-    return () => clearInterval(interval)
-  }, [founders.length])
+    const container = containerRef.current
+    if (!container) return
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-
-    const ctx = gsap.context(() => {
-      // Section header reveal
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current,
-          { opacity: 0, y: 44 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: { trigger: headerRef.current, start: "top 85%", once: true },
-          }
-        )
+    const items = Array.from(container.querySelectorAll("details.q"))
+    const onToggle = (e: Event) => {
+      const target = e.currentTarget as HTMLDetailsElement
+      if (target.open) {
+        items.forEach((other) => {
+          if (other !== target) (other as HTMLDetailsElement).open = false
+        })
       }
+    }
 
-      // FAQ grid items stagger
-      if (gridRef.current) {
-        gsap.fromTo(
-          Array.from(gridRef.current.children),
-          { opacity: 0, y: 32 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out",
-            stagger: 0.07,
-            scrollTrigger: { trigger: gridRef.current, start: "top 82%", once: true },
-          }
-        )
-      }
-    }, sectionRef)
-
-    return () => ctx.revert()
+    items.forEach((item) => item.addEventListener("toggle", onToggle))
+    return () => items.forEach((item) => item.removeEventListener("toggle", onToggle))
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      id="faq"
-      className="relative w-full bg-gradient-to-b from-background via-background to-surface py-20 md:py-28 lg:py-36"
-    >
-      {/* Background blobs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/[0.12] rounded-full blur-3xl -mr-48" />
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/[0.10] rounded-full blur-3xl -ml-48" />
-      </div>
-
-      {/* Section Header */}
-      <div ref={headerRef} className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10 pb-16 md:pb-20">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="eyebrow-label mb-4">
-            {t.faq.badge}
-          </p>
-
-          <h2 className="section-heading mb-6">
-            {t.faq.heading}{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 text-primary">
-                {t.faq.questions}
-              </span>
-              <span className="absolute bottom-1 left-0 w-full h-4 bg-primary/20 blur-sm -rotate-1" />
-            </span>
-          </h2>
-
-          <p className="text-lg md:text-xl leading-relaxed text-text-secondary font-medium">
-            {t.faq.subheading}
-          </p>
+    <section id="faq">
+      <div className="wrap">
+        <div className="sec-head">
+          <p className="eyebrow">Questions</p>
+          <h2 className="display">Before you write to us.</h2>
         </div>
-      </div>
 
-      {/* FAQ Content */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="relative">
-          {/* Rotating Founder Image */}
-          <div className="absolute -top-14 left-1/2 -translate-x-1/2 z-20 hidden lg:block">
-            <div className="relative w-20 h-20 overflow-hidden rounded-full border-2 border-white/[0.12] bg-[#0d0d0d] shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currentIndex}
-                  src={founders[currentIndex].src}
-                  alt={founders[currentIndex].alt}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-                />
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* FAQ Grid */}
-          <div ref={gridRef} className="grid lg:grid-cols-2 gap-4 lg:gap-12 pt-8">
-            {faqItems.slice(0, halfLength).map((item, index) => (
-              <FaqItem
-                key={item.id}
-                item={item}
-                index={index}
-                activeId={activeId}
-                setActiveId={setActiveId}
-              />
-            ))}
-            {faqItems.slice(halfLength).map((item, index) => (
-              <FaqItem
-                key={item.id}
-                item={item}
-                index={halfLength + index}
-                activeId={activeId}
-                setActiveId={setActiveId}
-              />
-            ))}
-          </div>
+        <div className="faq" ref={containerRef}>
+          {FAQ_ITEMS.map((item, index) => (
+            <details className="q" key={item.question} open={index === 0}>
+              <summary>
+                {item.question} <span className="chev">+</span>
+              </summary>
+              <p className="answer body-2">{item.answer}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
   )
 }
-
-export default FAQ
