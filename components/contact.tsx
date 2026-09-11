@@ -4,7 +4,7 @@ export default function Contact() {
       <div className="wrap">
         <div className="cta">
           <p className="eyebrow">Next step</p>
-          <h2 className="section-heading" style={{ maxWidth: "16ch" }}>
+          <h2 className="display" style={{ maxWidth: "16ch" }}>
             Tell us what you&apos;re building.
           </h2>
           <p className="lede" style={{ textAlign: "center" }}>

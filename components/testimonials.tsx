@@ -31,7 +31,7 @@ export function Testimonials() {
       <div className="wrap">
         <div className="sec-head">
           <p className="eyebrow">Clients</p>
-          <h2 className="section-heading">What they said afterwards.</h2>
+          <h2 className="display">What they said afterwards.</h2>
         </div>
         <div className="quotes">
           {QUOTES.map((q) => (

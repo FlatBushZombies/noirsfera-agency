@@ -4,7 +4,7 @@ export default function Pricing() {
       <div className="wrap">
         <div className="sec-head">
           <p className="eyebrow">Pricing</p>
-          <h2 className="section-heading">Fixed scope. Fixed price.</h2>
+          <h2 className="display">Fixed scope. Fixed price.</h2>
           <p className="lede">Two ways to work with us. Both quoted up front, both leaving you with the source code.</p>
         </div>
 

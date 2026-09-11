@@ -18,6 +18,23 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
+    id: "nextupBoxing",
+    title: "Next Up Boxing League",
+    description:
+      "“Showcasing Elite Amateurs™” — the digital home ring for an amateur boxing league: fight-night ticketing, a free livestream, fighter profiles, live rankings and a champions wall, all built to put the spotlight on the next generation of talent, card by card.",
+    tags: ["Sports platform", "Web app", "Event ticketing", "Live streaming"],
+    duration: "Ongoing",
+    industry: "Amateur boxing",
+    link: "https://nextup-boxing.vercel.app/",
+    frameLabel: "nextup-boxing.vercel.app",
+    image: "/nextup-boxing.png",
+    figures: [
+      { value: "12th", label: "Fight Night in the series" },
+      { value: "Live", label: "Free YouTube stream" },
+      { value: "Sept 12", label: "Next event, Stereo Garden" },
+    ],
+  },
+  {
     id: "tutschool",
     title: "TutSchool",
     description:
@@ -102,7 +119,7 @@ export default function Portfolio() {
       <div className="wrap">
         <div className="sec-head">
           <p className="eyebrow">Selected work</p>
-          <h2 className="section-heading">{project.title}</h2>
+          <h2 className="display">{project.title}</h2>
           <p className="lede">{project.description}</p>
         </div>
 

@@ -43,7 +43,7 @@ export function Hero() {
       <div className="wrap hero-grid">
         <div className="hero-copy">
           <p className="eyebrow seq">Software studio · Est. for founders</p>
-          <h1 className="hero-heading seq d1">
+          <h1 className="display seq d1">
             Modernising business through <em>futuristic software</em>.
           </h1>
           <p className="lede seq d2">
