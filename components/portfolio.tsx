@@ -47,9 +47,9 @@ const OWN: Project[] = [
     line: "On-demand services marketplace",
     href: "#",
     frames: [
-      { src: "/projects/quickhands-1.png", alt: "QuickHands — find specialists near you" },
-      { src: "/projects/quickhands-2.png", alt: "QuickHands — hire available specialists" },
-      { src: "/projects/quickhands-3.png", alt: "QuickHands — manage your tasks" },
+      { src: "/projects/quickhands-1.jpg", alt: "QuickHands — find specialists near you" },
+      { src: "/projects/quickhands-2.jpg", alt: "QuickHands — hire available specialists" },
+      { src: "/projects/quickhands-3.jpg", alt: "QuickHands — manage your tasks" },
     ],
   },
   {
@@ -58,9 +58,9 @@ const OWN: Project[] = [
     line: "Mobile app, built and run in-house",
     href: "#",
     frames: [
-      { src: "/projects/duo-1.png", alt: "Duo — match movies together" },
-      { src: "/projects/duo-2.png", alt: "Duo — swipe to match" },
-      { src: "/projects/duo-3.png", alt: "Duo — enjoy movie nights" },
+      { src: "/projects/duo-1.jpg", alt: "Duo — match movies together" },
+      { src: "/projects/duo-2.jpg", alt: "Duo — swipe to match" },
+      { src: "/projects/duo-3.jpg", alt: "Duo — enjoy movie nights" },
     ],
   },
 ]
@@ -174,7 +174,7 @@ function Sequence({ frames }: { frames: Frame[] }) {
           src={f.src}
           alt={f.alt}
           style={css(
-            `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);opacity:${i === active ? 1 : 0};transition:opacity 700ms ${EASE}`,
+            `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:${i === active ? 1 : 0};transition:opacity 700ms ${EASE}`,
           )}
         />
       ))}
