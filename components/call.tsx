@@ -6,6 +6,7 @@ import { css } from "@/lib/css"
 import { Calendar } from "@/components/booking/calendar"
 import { TimeSlot } from "@/components/booking/time-slot"
 import { DsInput } from "@/components/forms/ds-input"
+import { Cursor } from "@/components/cursor"
 
 const RU: Record<string, string> = {
   "Book a": "Запишитесь на",
@@ -165,6 +166,7 @@ export function Call() {
       data-screen-label="Call"
       style={css("--radius-md:4px;background:var(--white);color:var(--ink-950);font-family:var(--font-sans);min-height:100vh;display:flex;flex-direction:column")}
     >
+      <Cursor />
       <header style={css("position:relative;height:108px;display:flex;align-items:center;justify-content:center")}>
         <span style={css("position:absolute;left:clamp(16px,2.6vw,50px);top:54px;transform:translateY(-50%);font:400 12px/1 var(--font-mono);color:var(--ink-600)")}>
           noirsfera.com

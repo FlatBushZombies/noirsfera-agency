@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { css } from "@/lib/css"
+import { Cursor } from "@/components/cursor"
 
 const RU: Record<string, string> = {
   "shipped": "запущено",
@@ -30,20 +31,38 @@ const RU: Record<string, string> = {
 
 const EASE = "cubic-bezier(.22,1,.36,1)"
 
+type Frame = { src: string; alt: string }
 type Project = {
   name: string
   type: string
   line: string
   href: string
-  image: string
-  alt: string
-  image2?: string
-  alt2?: string
+  frames: Frame[]
 }
 
 const OWN: Project[] = [
-  { name: "QuickHands", type: "Our app", line: "On-demand services marketplace", href: "#", image: "/quickhands-app.png", alt: "QuickHands — product preview" },
-  { name: "Duo", type: "Our app", line: "Mobile app, built and run in-house", href: "#", image: "/duo-app.png", alt: "Duo — product preview" },
+  {
+    name: "QuickHands",
+    type: "Our app",
+    line: "On-demand services marketplace",
+    href: "#",
+    frames: [
+      { src: "/projects/quickhands-1.png", alt: "QuickHands — find specialists near you" },
+      { src: "/projects/quickhands-2.png", alt: "QuickHands — hire available specialists" },
+      { src: "/projects/quickhands-3.png", alt: "QuickHands — manage your tasks" },
+    ],
+  },
+  {
+    name: "Duo",
+    type: "Our app",
+    line: "Mobile app, built and run in-house",
+    href: "#",
+    frames: [
+      { src: "/projects/duo-1.png", alt: "Duo — match movies together" },
+      { src: "/projects/duo-2.png", alt: "Duo — swipe to match" },
+      { src: "/projects/duo-3.png", alt: "Duo — enjoy movie nights" },
+    ],
+  },
 ]
 
 const CLIENT_PROJECTS: Project[] = [
@@ -52,15 +71,45 @@ const CLIENT_PROJECTS: Project[] = [
     type: "Sports",
     line: "Event ticketing and live streaming",
     href: "#",
-    image: "/projects/nextup-login.gif",
-    alt: "Next Up Boxing League members login screen",
-    image2: "/projects/nextup-home.gif",
-    alt2: "Next Up Boxing League homepage — Where champions are forged",
+    frames: [
+      { src: "/projects/nextup-login.gif", alt: "Next Up Boxing League members login screen" },
+      { src: "/projects/nextup-home.gif", alt: "Next Up Boxing League homepage — Where champions are forged" },
+    ],
   },
-  { name: "TutSchool", type: "Education", line: "Tutoring platform for students and tutors", href: "#", image: "/tutschool.png", alt: "TutSchool — product preview" },
-  { name: "Camp Guide", type: "Marketplace", line: "Discovery and booking for camps", href: "#", image: "/camp-guide.png", alt: "Camp Guide — product preview" },
-  { name: "DMB Pay+", type: "Fintech", line: "Payments app, designed and built end to end", href: "#", image: "/dmbpay-bg.png", alt: "DMB Pay+ — product preview" },
-  { name: "Oakwood ESL", type: "Education", line: "Website and enrolment for a language school", href: "#", image: "/oakwood.jpg", alt: "Oakwood ESL — product preview" },
+  {
+    name: "TutSchool",
+    type: "Education",
+    line: "Tutoring platform for students and tutors",
+    href: "#",
+    frames: [
+      { src: "/projects/tutschool-1.png", alt: "TutSchool — website" },
+      { src: "/projects/tutschool-2.png", alt: "TutSchool — mobile screens" },
+    ],
+  },
+  {
+    name: "Camp Guide",
+    type: "Marketplace",
+    line: "Discovery and booking for camps",
+    href: "#",
+    frames: [{ src: "/camp-guide.png", alt: "Camp Guide — product preview" }],
+  },
+  {
+    name: "DMB Pay+",
+    type: "Fintech",
+    line: "Payments app, designed and built end to end",
+    href: "#",
+    frames: [{ src: "/dmbpay-bg.png", alt: "DMB Pay+ — product preview" }],
+  },
+  {
+    name: "Oakwood ESL",
+    type: "Education",
+    line: "Website and enrolment for a language school",
+    href: "#",
+    frames: [
+      { src: "/projects/oakwood-1.webp", alt: "Oakwood ESL — students in class" },
+      { src: "/projects/oakwood-2.webp", alt: "Oakwood ESL — circle time" },
+    ],
+  },
 ]
 
 function SectionRule() {
@@ -88,16 +137,7 @@ function CardGrid({ items, t }: { items: Project[]; t: (s: string) => string }) 
       {items.map((p) => (
         <a key={p.name} href={p.href} style={css("display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit")}>
           <div style={css("position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink-100)")}>
-            {p.image2 ? (
-              <Crossfade a={p.image} altA={p.alt} b={p.image2} altB={p.alt2 || p.alt} />
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={p.image}
-                alt={p.alt}
-                style={css("position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)")}
-              />
-            )}
+            <Sequence frames={p.frames} />
           </div>
           <div style={css("display:flex;justify-content:space-between;align-items:baseline;gap:16px")}>
             <span style={css("font:500 15px/1.3 var(--font-sans);letter-spacing:-0.015em")}>
@@ -111,28 +151,33 @@ function CardGrid({ items, t }: { items: Project[]; t: (s: string) => string }) 
   )
 }
 
-function Crossfade({ a, altA, b, altB }: { a: string; altA: string; b: string; altB: string }) {
-  const [second, setSecond] = useState(false)
+// Crossfades through a project's real screenshots every 7s, exactly like the
+// artifact's Next Up Boxing League treatment (Math.floor(Date.now()/7000) % n) —
+// generalized here to any frame count so every project with more than one real
+// shot on hand gets the same "sequencing" look. A single-frame project just
+// renders statically.
+function Sequence({ frames }: { frames: Frame[] }) {
+  const [active, setActive] = useState(0)
   useEffect(() => {
-    const tick = () => setSecond(Math.floor(Date.now() / 7000) % 2 === 1)
+    if (frames.length < 2) return
+    const tick = () => setActive(Math.floor(Date.now() / 7000) % frames.length)
     tick()
     const iv = window.setInterval(tick, 1000)
     return () => window.clearInterval(iv)
-  }, [])
+  }, [frames.length])
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={a}
-        alt={altA}
-        style={css(`position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);opacity:${second ? 0 : 1};transition:opacity 700ms ${EASE}`)}
-      />
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={b}
-        alt={altB}
-        style={css(`position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);opacity:${second ? 1 : 0};transition:opacity 700ms ${EASE}`)}
-      />
+      {frames.map((f, i) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={f.src}
+          src={f.src}
+          alt={f.alt}
+          style={css(
+            `position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04);opacity:${i === active ? 1 : 0};transition:opacity 700ms ${EASE}`,
+          )}
+        />
+      ))}
     </>
   )
 }
@@ -166,6 +211,7 @@ export function Portfolio() {
 
   return (
     <div data-screen-label="Portfolio" style={css("background:var(--white);color:var(--ink-950);font-family:var(--font-sans);min-height:100vh")}>
+      <Cursor />
       <header style={css("position:relative;height:108px;display:flex;align-items:center;justify-content:center")}>
         <span style={css("position:absolute;left:clamp(16px,2.6vw,50px);top:54px;transform:translateY(-50%);font:400 12px/1 var(--font-mono);color:var(--ink-600)")}>
           noirsfera.com
