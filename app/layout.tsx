@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Manrope, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import { LanguageProvider } from "@/lib/LanguageContext";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -14,13 +21,6 @@ const instrumentSerif = Instrument_Serif({
   subsets: ["latin", "latin-ext"],
   weight: "400",
   style: ["normal", "italic"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400"],
   display: "swap",
 });
 
@@ -107,10 +107,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${manrope.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}>
-        <LanguageProvider>{children}</LanguageProvider>
-      </body>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrumentSerif.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
