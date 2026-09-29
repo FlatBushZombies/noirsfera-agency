@@ -32,12 +32,13 @@ const RU: Record<string, string> = {
 const EASE = "cubic-bezier(.22,1,.36,1)"
 
 type Frame = { src: string; alt: string }
+type Media = { kind: "video"; src: string; alt: string } | { kind: "sequence"; frames: Frame[] }
 type Project = {
   name: string
   type: string
   line: string
   href: string
-  frames: Frame[]
+  media: Media
 }
 
 const OWN: Project[] = [
@@ -46,22 +47,14 @@ const OWN: Project[] = [
     type: "Our app",
     line: "On-demand services marketplace",
     href: "#",
-    frames: [
-      { src: "/projects/quickhands-1.jpg", alt: "QuickHands — find specialists near you" },
-      { src: "/projects/quickhands-2.jpg", alt: "QuickHands — hire available specialists" },
-      { src: "/projects/quickhands-3.jpg", alt: "QuickHands — manage your tasks" },
-    ],
+    media: { kind: "video", src: "/gifs/quickhands.mp4", alt: "QuickHands — product preview" },
   },
   {
     name: "Duo",
     type: "Our app",
     line: "Mobile app, built and run in-house",
     href: "#",
-    frames: [
-      { src: "/projects/duo-1.jpg", alt: "Duo — match movies together" },
-      { src: "/projects/duo-2.jpg", alt: "Duo — swipe to match" },
-      { src: "/projects/duo-3.jpg", alt: "Duo — enjoy movie nights" },
-    ],
+    media: { kind: "video", src: "/gifs/duo-app.mp4", alt: "Duo — product preview" },
   },
 ]
 
@@ -71,44 +64,41 @@ const CLIENT_PROJECTS: Project[] = [
     type: "Sports",
     line: "Event ticketing and live streaming",
     href: "#",
-    frames: [
-      { src: "/projects/nextup-login.gif", alt: "Next Up Boxing League members login screen" },
-      { src: "/projects/nextup-home.gif", alt: "Next Up Boxing League homepage — Where champions are forged" },
-    ],
+    media: {
+      kind: "sequence",
+      frames: [
+        { src: "/projects/nextup-login.gif", alt: "Next Up Boxing League members login screen" },
+        { src: "/projects/nextup-home.gif", alt: "Next Up Boxing League homepage — Where champions are forged" },
+      ],
+    },
   },
   {
     name: "TutSchool",
     type: "Education",
     line: "Tutoring platform for students and tutors",
     href: "#",
-    frames: [
-      { src: "/projects/tutschool-1.png", alt: "TutSchool — website" },
-      { src: "/projects/tutschool-2.png", alt: "TutSchool — mobile screens" },
-    ],
+    media: { kind: "video", src: "/gifs/tutschool.mp4", alt: "TutSchool — product preview" },
   },
   {
     name: "Camp Guide",
     type: "Marketplace",
     line: "Discovery and booking for camps",
     href: "#",
-    frames: [{ src: "/camp-guide.png", alt: "Camp Guide — product preview" }],
+    media: { kind: "video", src: "/gifs/camp-guide.mp4", alt: "Camp Guide — product preview" },
   },
   {
     name: "DMB Pay+",
     type: "Fintech",
     line: "Payments app, designed and built end to end",
     href: "#",
-    frames: [{ src: "/dmbpay-bg.png", alt: "DMB Pay+ — product preview" }],
+    media: { kind: "video", src: "/gifs/dmbpay.mp4", alt: "DMB Pay+ — product preview" },
   },
   {
     name: "Oakwood ESL",
     type: "Education",
     line: "Website and enrolment for a language school",
     href: "#",
-    frames: [
-      { src: "/projects/oakwood-1.webp", alt: "Oakwood ESL — students in class" },
-      { src: "/projects/oakwood-2.webp", alt: "Oakwood ESL — circle time" },
-    ],
+    media: { kind: "video", src: "/gifs/oakwood.mp4", alt: "Oakwood ESL — product preview" },
   },
 ]
 
@@ -137,7 +127,7 @@ function CardGrid({ items, t }: { items: Project[]; t: (s: string) => string }) 
       {items.map((p) => (
         <a key={p.name} href={p.href} style={css("display:flex;flex-direction:column;gap:14px;text-decoration:none;color:inherit")}>
           <div style={css("position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink-100)")}>
-            <Sequence frames={p.frames} />
+            {p.media.kind === "video" ? <LoopVideo src={p.media.src} alt={p.media.alt} /> : <Sequence frames={p.media.frames} />}
           </div>
           <div style={css("display:flex;justify-content:space-between;align-items:baseline;gap:16px")}>
             <span style={css("font:500 15px/1.3 var(--font-sans);letter-spacing:-0.015em")}>
@@ -148,6 +138,23 @@ function CardGrid({ items, t }: { items: Project[]; t: (s: string) => string }) 
         </a>
       ))}
     </div>
+  )
+}
+
+// Real product footage exported as mp4 — autoplaying, looping, muted, so it
+// just interpolates on its own with no manual crossfade timer needed.
+function LoopVideo({ src, alt }: { src: string; alt: string }) {
+  return (
+    <video
+      src={src}
+      aria-label={alt}
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="metadata"
+      style={css("position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center")}
+    />
   )
 }
 
